@@ -4,10 +4,10 @@ export class role1586468280867 implements MigrationInterface {
 
     async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(new Table({
-            name: "rol",
+            name: "role",
             columns: [
                 {
-                    name: "id",
+                    name: "ID_Role",
                     type: "int",
                     isPrimary: true
                 },
