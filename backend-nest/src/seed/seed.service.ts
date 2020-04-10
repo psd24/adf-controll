@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 
+// we have 2 roles and 3 organizations as default (seed data) I hope all make sense. anything else?
 const roleNames = ['admin', 'customer'];
 const organizationNames = ['google', 'microsoft', 'apple'];
 const defaultPassword = 'password';
@@ -20,6 +21,7 @@ export class SeedService {
                 name: 'admin',
                 email: 'admin@admin.com',
                 role: roles[0].id,
+                code: 'simple code',
                 organization: organizations[0].id,
                 password: defaultPassword,
             });

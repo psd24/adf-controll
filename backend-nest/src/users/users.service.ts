@@ -32,6 +32,7 @@ export class UsersService {
         const newUser = new User();
         newUser.email = userDto.email;
         newUser.name = userDto.name;
+        newUser.code = userDto.code;
         newUser.password = userDto.password;
 
         newUser.role = await this.rolesRepository.findOne({ id: userDto.role });
