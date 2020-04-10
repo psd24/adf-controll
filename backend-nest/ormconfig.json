@@ -5,14 +5,20 @@
    "username": "root",
    "password": "",
    "database": "adfcontroll",
-   "entities": [
-      "dist/**/*.entity{.ts,.js}"
-   ],
    "synchronize": true,
+   "logging": false,
+   "entities": [
+      "src/entity/**/*.ts"
+   ],
    "migrations": [
-      "migration/*.ts"
+      "src/migration/**/*.ts"
+   ],
+   "subscribers": [
+      "src/subscriber/**/*.ts"
    ],
    "cli": {
-      "migrationsDir": "migration"
+      "entitiesDir": "src/entity",
+      "migrationsDir": "src/migration",
+      "subscribersDir": "src/subscriber"
    }
 }
