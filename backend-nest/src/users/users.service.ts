@@ -20,7 +20,12 @@ export class UsersService {
     ) {}
 
     async findByEmail(email: string): Promise<User | undefined> {
-        return this.usersRepository.findOne({ email });
+        return this.usersRepository.findOne({
+            relations: ['role', 'organization'],
+            where: {
+                email,
+            },
+        });
     }
 
     async register(userDto: RegisterUserDto): Promise<User> {
@@ -40,7 +45,9 @@ export class UsersService {
             throw new BadRequestException('Invalid role id.');
         }
 
-        newUser.organization = await this.organizationsRepository.findOne({ id: userDto.organization });
+        newUser.organization = await this.organizationsRepository.findOne({
+            id: userDto.organization,
+        });
         if (!newUser.organization) {
             throw new BadRequestException('Invalid organization id.');
         }
