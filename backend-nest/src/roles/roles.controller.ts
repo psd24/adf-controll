@@ -21,7 +21,7 @@ export class RolesController {
     @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
     @ApiOkResponse({ type: Role })
-    @Post()
+    @Post('create')
     post(@Body() roleDto: RolesDto) {
         return this.service.createRole(roleDto)
     }
