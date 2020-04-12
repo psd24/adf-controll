@@ -9,6 +9,9 @@ export class Organization {
     @Column()
     name: string;
 
+    @Column()
+    code: string;
+
     @OneToMany(() => User, user => user.role)
     users: User[];
 
