@@ -7,11 +7,12 @@ import { UsersModule } from './users/users.module';
 import { SeedModule } from './seed/seed.module';
 import { RolesModule } from './roles/roles.module';
 import { OrganizationsModule } from './organizations/organizations.module';
+import { EventsModule } from './events/events.module';
 
 import * as ormconfig from './ormconfig';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(ormconfig), AuthModule, UsersModule, SeedModule, RolesModule, OrganizationsModule],
+  imports: [TypeOrmModule.forRoot(ormconfig), AuthModule, UsersModule, SeedModule, RolesModule, OrganizationsModule, EventsModule],
   controllers: [AppController],
   providers: [AppService],
 })
