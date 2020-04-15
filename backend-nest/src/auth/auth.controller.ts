@@ -27,6 +27,8 @@ export class AuthController {
       return req.user;
     }
   
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
     @ApiOkResponse({ type: User })
     @Post('register')
     async register(@Body() registerDto: RegisterUserDto): Promise<User> {
