@@ -1,0 +1,42 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content color="primary" padding class="text-center">
+    <form #forma="ngForm" (ngSubmit)="login(forma)" class="mt-5 form-group">
+        <div class="row">
+            <div class="col text-center">
+                <h3>Login</h3>
+            </div>
+        </div>
+
+        <div class="row m-1">
+            <div class="col">
+                <ion-input class="form-control" name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
+            </div>
+        </div>
+
+        <div class="row m-1">
+            <div class="col">
+                <ion-input class="form-control" name="password" type="password" placeholder="Password" ngModel required (key.enter)="login(forma)"></ion-input>
+            </div>
+        </div>
+
+        <div class="row m-1">
+            <div class="col">
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                <!-- <ion-button size="large" type="submit" [disabled]="forma.invalid" expand="block">Login</ion-button> -->
+            </div>
+        </div>
+    </form>
+
+    <!-- <ion-row>
+    <div text-center>
+        If you don't have an account, please 
+      <a routerLink='/register'>
+        register</a> first!
+    </div>
+  </ion-row> -->
+</ion-content>
