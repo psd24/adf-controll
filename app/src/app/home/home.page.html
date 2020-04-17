@@ -9,15 +9,32 @@
 <ion-content [fullscreen]="true">
     <ion-header collapse="condense">
         <ion-toolbar>
-            <ion-title size="large">Blank</ion-title>
+            <ion-title size="large">{{ usuario.role }}</ion-title>
         </ion-toolbar>
     </ion-header>
 
     <div id="container">
-        <strong>Ready to create an app?</strong>
-        <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
 
-        <br>
+        <ion-card>
+            <ion-card-header>
+                <ion-card-subtitle>{{ usuario.code}}</ion-card-subtitle>
+                <ion-card-title>{{ usuario.name }}</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+                <div class="row">
+                    <div class="col">
+                        <label>Organization: {{ usuario.organization}}</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label>Email: {{ usuario.email}}</label>
+                    </div>
+                </div>
+            </ion-card-content>
+        </ion-card>
+
         <div class="row">
             <div class="col">
                 <button class="btn btn-outline-danger" (click)="logout()">Salir</button>

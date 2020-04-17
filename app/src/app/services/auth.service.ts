@@ -11,7 +11,7 @@ import { stringify } from 'querystring';
 export class AuthService {
 
   usuario: UserModel = new UserModel();
-  private url = 'http://localhost:3000/doc/';
+  private url = 'http://localhost:3000/';
 
   userToken: string;
 
