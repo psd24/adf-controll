@@ -1,5 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { User } from "./user.entity";
+import { Vehicle } from "./vehicle.entity";
+import { Camera } from "./camera.entity";
 
 @Entity('organization')
 export class Organization {
@@ -14,6 +16,12 @@ export class Organization {
 
     @OneToMany(() => User, user => user.role)
     users: User[];
+
+    @OneToMany(type => Vehicle, vehicle => vehicle.organization)
+    vehicle: Vehicle[];
+
+    @OneToMany(type => Camera, camera => camera.organization)
+    camera: Camera[];
 
     constructor(name: string) {
         this.name = name;
