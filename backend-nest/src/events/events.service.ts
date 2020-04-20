@@ -27,7 +27,7 @@ export class EventsService {
         newUserEvent.population = userEventDto.population;
         newUserEvent.dateInit = userEventDto.dateInit;
         newUserEvent.dateEnd = userEventDto.dateEnd;
-        newUserEvent.organization = await this.organizationRepository.findOne({ id: userEventDto.organizationId });
+        newUserEvent.organization = await this.organizationRepository.findOne({ id: organizationId });
         return await this.userEventRepository.save(newUserEvent);
     }
 
@@ -40,7 +40,6 @@ export class EventsService {
                 }
             }
         })
-        console.log(findList);
         return findList;
     }
 

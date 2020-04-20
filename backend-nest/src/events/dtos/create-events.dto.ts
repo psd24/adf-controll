@@ -27,8 +27,4 @@ export class CreateEventsDto {
     @IsDateString()
     dateEnd: Date;
     
-    @ApiProperty({ required: true })
-    @IsNotEmpty()
-    @IsNumber()
-    organizationId: number;
 }
