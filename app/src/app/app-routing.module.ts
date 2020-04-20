@@ -10,8 +10,17 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
+    path: 'voluntary',
+    loadChildren: () => import('./voluntary/voluntary.module').then( m => m.VoluntaryPageModule)
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then( m => m.AdminPageModule)
+  },
+  {
     path:'**',pathMatch:'full', redirectTo:'login'
   }
+
 
 ];
 

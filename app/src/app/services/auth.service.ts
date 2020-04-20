@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { UserModel } from "../models/user.model";
-import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { stringify } from 'querystring';
+import { ToastController } from '@ionic/angular';
+import { async } from '@angular/core/testing';
+import { ok } from 'assert';
 
 @Injectable({
   providedIn: 'root'
@@ -16,60 +17,47 @@ export class AuthService {
   userToken: string;
 
 
-  constructor( private http: HttpClient, private router: Router ) {
+  constructor( private http: HttpClient, private router: Router, public toastController: ToastController ) {
     console.log('Servicio agregado');
     this.leerToken();
    }
-   
+
+   async presentToast( mensaje : string ) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 2000,
+      color: "danger"
+    });
+    toast.present();
+  }
+
    logout(){
      localStorage.removeItem('token');
      this.router.navigateByUrl('/login');
    }
 
    login( user:UserModel ){
-     
-    Swal.fire({
-      title: 'Loading',
-      text: 'wait please',
-      confirmButtonText: 'Cool',
-      allowOutsideClick: false
-    });
-    Swal.showLoading();
-    // Swal.fire({
-    //   position: 'center',
-    //   icon: 'success',
-    //   title: 'Has iniciado sesion',
-    //   showConfirmButton: false
-    // });
 
-    console.log(user);
-    return this.http.post('http://localhost:3000/auth/login', user).subscribe( resp => {
+    this.http.post('http://localhost:3000/auth/login', user).subscribe( resp => {
+      if (resp['accessToken'] === null) {
+        return;
+      }
       
-      // if (resp === null) {
-      //   return "OK";
-      // }
+      if (resp['role']['name']  === null) {
+        this.presentToast('Este usuario no tiene rol asignado ');
+        return;
+      } 
+      
       this.guardarToken( resp['accessToken'])
-      console.log(resp);
-      Swal.stopTimer();
-      setTimeout(() => {
-      Swal.close();
       
-      this.router.navigateByUrl(`/home/${resp['role']['name']}`);
-      }, 200);
+      this.router.navigateByUrl(`/${resp['role']['name']}`);
+      console.log(resp);
 
-    }, (err)=>{
-      console.log(err.error.message);
-      // Swal.close();
+    }, err => {
 
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: 'Email or Password Incorrect',
-        showCloseButton: true
-      });
-      return err;
+      this.presentToast(err.error.message);
+
     });
-    // if( forma.invalid ){ return; }
    }
 
    private guardarToken( idToken: string ){
@@ -102,7 +90,7 @@ export class AuthService {
 
     return this.userToken.length > 2;
 
-    
+
 
     const expira = Number(localStorage.getItem('expira'));
 
@@ -121,5 +109,5 @@ export class AuthService {
   }
 
 
-  
+
 }
