@@ -24,8 +24,8 @@ export class Organization {
     @OneToMany(type => Camera, camera => camera.organization)
     camera: Camera[];
 
-    @OneToMany(type => UserEvent, userEvent => userEvent.organization)
-    userEvent: UserEvent[];
+    @OneToMany(type => UserEvent, events => events.organization)
+    events: UserEvent[];
 
     constructor(name: string) {
         this.name = name;

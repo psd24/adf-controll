@@ -2,6 +2,7 @@ import { Injectable, BadRequestException, NotFoundException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEvent } from '../entities/user-event.entity';
 import { User } from '../entities/user.entity';
+import { Organization } from '../entities/organization.entity';
 import { Repository, getConnection } from 'typeorm';
 import { CreateEventsDto } from '../events/dtos/create-events.dto';
 import { CreateEventUserDto } from './dtos/create-event-user.dto';
@@ -14,24 +15,33 @@ export class EventsService {
         private readonly userEventRepository: Repository<UserEvent>,
         @InjectRepository(User)
         private readonly userRepository: Repository<User>,
+        @InjectRepository(Organization)
+        private readonly organizationRepository: Repository<Organization>,
     ){}
 
-    async create(userEventDto: CreateEventsDto) : Promise<UserEvent>{
+    async create(userEventDto: CreateEventsDto, organizationId:number) : Promise<UserEvent>{
+
         const newUserEvent = new UserEvent()
         newUserEvent.name = userEventDto.name;
         newUserEvent.description = userEventDto.description;
         newUserEvent.population = userEventDto.population;
         newUserEvent.dateInit = userEventDto.dateInit;
         newUserEvent.dateEnd = userEventDto.dateEnd;
+        newUserEvent.organization = await this.organizationRepository.findOne({ id: userEventDto.organizationId });
         return await this.userEventRepository.save(newUserEvent);
     }
 
-    async list(organizationId:number){
-        return await this.userEventRepository.find({
-            where: {
-                organizationId
+    async list(organization:number){
+        let findList = await this.userEventRepository.find({
+            relations: ["organization"],
+            where:{
+                organization: {
+                    id:organization
+                }
             }
         })
+        console.log(findList);
+        return findList;
     }
 
     async createEventUser(createEventUserDto: CreateEventUserDto){

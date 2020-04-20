@@ -16,9 +16,8 @@ export class EventsController {
     @UseGuards(JwtAuthGuard)
     @ApiOkResponse({ type: UserEvent })
     @Post('create')
-    async register(@Body() registerDto: CreateEventsDto): Promise<UserEvent> {
-        console.log(registerDto)
-        return this.authService.create(registerDto);
+    async register(@Body() registerDto: CreateEventsDto, @Request() req): Promise<UserEvent> {
+        return this.authService.create(registerDto, req.user.organization.id);
     }
 
     @ApiBearerAuth()

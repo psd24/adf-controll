@@ -28,8 +28,8 @@ export class UserEvent {
     @JoinTable()
     users: User[];
 
-    @ManyToOne(type => Organization, organization => organization.userEvent)
-    organization: Organization[];
+    @ManyToOne(() => Organization, organization => organization.events)
+    organization: Organization;
 
     @ManyToMany(() => Vehicle, vehicle => vehicle.events)
     @JoinTable()
