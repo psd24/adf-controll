@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne } from "typeorm";
 import { User } from "./user.entity";
 import { Vehicle } from './vehicle.entity';
+import { Organization } from './organization.entity';
 
 @Entity('event')
 export class UserEvent {
@@ -26,6 +27,9 @@ export class UserEvent {
     @ManyToMany(() => User, user => user.events)
     @JoinTable()
     users: User[];
+
+    @ManyToOne(type => Organization, organization => organization.userEvent)
+    organization: Organization[];
 
     @ManyToMany(() => Vehicle, vehicle => vehicle.events)
     @JoinTable()

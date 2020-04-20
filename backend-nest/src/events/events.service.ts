@@ -26,6 +26,14 @@ export class EventsService {
         return await this.userEventRepository.save(newUserEvent);
     }
 
+    async list(organizationId:number){
+        return await this.userEventRepository.find({
+            where: {
+                organizationId
+            }
+        })
+    }
+
     async createEventUser(createEventUserDto: CreateEventUserDto){
         try {
             await getConnection()

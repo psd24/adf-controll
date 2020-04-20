@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { User } from "./user.entity";
 import { Vehicle } from "./vehicle.entity";
 import { Camera } from "./camera.entity";
+import { UserEvent } from "./user-event.entity";
 
 @Entity('organization')
 export class Organization {
@@ -22,6 +23,9 @@ export class Organization {
 
     @OneToMany(type => Camera, camera => camera.organization)
     camera: Camera[];
+
+    @OneToMany(type => UserEvent, userEvent => userEvent.organization)
+    userEvent: UserEvent[];
 
     constructor(name: string) {
         this.name = name;
