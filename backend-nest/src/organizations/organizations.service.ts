@@ -16,7 +16,21 @@ export class OrganizationsService {
         return this.organizationsRepository.find();
     }
 
+    async getOneOrganizations(_id: number): Promise<Organization[]> {
+        return await this.organizationsRepository.find({
+            where: [{ "id": _id }]
+        });
+    }
+
     async createOrganization(organizationDto: CreateOrganizationDto ): Promise<Organization>{
         return this.organizationsRepository.save(organizationDto);
+    }
+
+    async update(organization: Organization) {
+        this.organizationsRepository.save(organization)
+    }
+
+    async delete(organization: Organization) {
+        this.organizationsRepository.delete(organization);
     }
 }

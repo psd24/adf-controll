@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Get, Post, Body } from '@nestjs/common';
+import { Controller, UseGuards, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
 import { OrganizationsService } from './organizations.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
@@ -20,9 +20,31 @@ export class OrganizationsController {
 
     @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
+    @Get(':id')
+    getOrganization(@Param() params) {
+        return this.organizationsService.getOneOrganizations(params.id);
+    }
+
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
     @ApiOkResponse({ type: Organization })
-    @Post('create')
+    @Post()
     post(@Body() organizationDto: CreateOrganizationDto) {
         return this.organizationsService.createOrganization(organizationDto)
     }
+
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    @Put()
+    update(@Body() organization: Organization) {
+        return this.organizationsService.update(organization);
+    }
+
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    @Delete(':id')
+    deleteUser(@Param() params) {
+        return this.organizationsService.delete(params.id);
+    }
+
 }
