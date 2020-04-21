@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Body, Post } from '@nestjs/common';
+import { Controller, Get, UseGuards, Body, Post, Delete, Param, Put } from '@nestjs/common';
 import { RolesService } from './roles.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
@@ -20,9 +20,33 @@ export class RolesController {
 
     @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
+    @Get(':id')
+    getRole(@Param() params) {
+        return this.service.getRole(params.id);
+    }
+
+
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
     @ApiOkResponse({ type: Role })
-    @Post('create')
+    @Post()
     post(@Body() roleDto: RolesDto) {
         return this.service.createRole(roleDto)
     }
+
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    @Delete(':id')
+    delete(@Param() params) {
+        return this.service.delete(params.id);
+    }
+
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    @Put()
+    update(@Body() role: Role) {
+        return this.service.update(role);
+    }
+
+
 }
