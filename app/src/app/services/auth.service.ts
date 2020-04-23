@@ -47,11 +47,10 @@ export class AuthService {
         this.presentToast('Este usuario no tiene rol asignado ');
         return;
       } 
-      
-      this.guardarToken( resp['accessToken'])
+      this.guardarToken( resp['accessToken'], JSON.stringify(resp['role']))
       
       this.router.navigateByUrl(`/${resp['role']['name']}`);
-      console.log(resp);
+      console.log(resp['role']);
 
     }, err => {
 
@@ -60,9 +59,10 @@ export class AuthService {
     });
    }
 
-   private guardarToken( idToken: string ){
+   private guardarToken( idToken: string, role: any ){
     this.userToken = idToken;
     localStorage.setItem( 'token', idToken );
+    localStorage.setItem( 'role', role );
 
     let hoy = new Date;
     hoy.setSeconds( 3600 );
