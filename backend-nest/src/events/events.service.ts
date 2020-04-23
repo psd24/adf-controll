@@ -58,4 +58,23 @@ export class EventsService {
             return ({success: false, message: 'Failed!'});
         }
     }
+
+    async deleteEventUser(createEventUserDto: CreateEventUserDto){
+        try {
+            await getConnection()
+            .createQueryBuilder()
+            .delete()
+            .from('event_users_user')
+            .where(
+                 "eventId = :eventId", { eventId: createEventUserDto.eventId }
+            )
+            .andWhere(
+                "userIDUser = :userIDUser", { userIDUser: createEventUserDto.userIDUser }
+            )
+            .execute();
+            return ({success: true, message: 'Delete successfully!'})
+        } catch (err) {
+            return ({success: false, message: 'Failed!'});
+        }
+    }
 }

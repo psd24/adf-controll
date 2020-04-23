@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Request } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Request, Delete, Get } from '@nestjs/common';
 import { EventsService } from './events.service';
 import { UserEvent } from '../entities/user-event.entity';
 import { CreateEventsDto } from '../events/dtos/create-events.dto';
@@ -22,15 +22,22 @@ export class EventsController {
 
     @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
-    @Post('list')
+    @Get('list')
     async list(@Request() req) {
         return this.authService.list(req.user.organization.id);
     }
 
     @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
-    @Post('create/user-event')
+    @Post('user-event')
     async createEventUser(@Body() createEventUserDto: CreateEventUserDto) {
         return this.authService.createEventUser(createEventUserDto);
+    }
+    
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    @Delete('user-event')
+    async deleteEventUser(@Body() createEventUserDto: CreateEventUserDto) {
+        return this.authService.deleteEventUser(createEventUserDto);
     }
 }
