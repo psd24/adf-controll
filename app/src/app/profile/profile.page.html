@@ -1,0 +1,45 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>My Profile</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <div id="container">
+
+        <ion-card>
+            <ion-card-header>
+                <ion-card-subtitle>{{ usuario.code}}</ion-card-subtitle>
+                <ion-card-title>{{ usuario.name }}</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+                <div class="row">
+                    <div class="col">
+                        <label>Organization: {{ usuario.organization }}</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label>Email: {{ usuario.email}}</label>
+                    </div>
+                </div>
+            </ion-card-content>
+        </ion-card>
+    </div>
+
+
+    <ion-grid>
+        <ion-row>
+            <ion-col size="6" text-center size-lg offset="3">
+                <ion-button color="danger" expand="full" (click)="logout()">Salir</ion-button>
+            </ion-col>
+        </ion-row>
+
+    </ion-grid>
+
+</ion-content>

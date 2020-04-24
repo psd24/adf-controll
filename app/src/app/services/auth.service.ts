@@ -49,7 +49,8 @@ export class AuthService {
       } 
       this.guardarToken( resp['accessToken'], JSON.stringify(resp['role']))
       
-      this.router.navigateByUrl(`/${resp['role']['name']}`);
+      // this.router.navigateByUrl(`/${resp['role']['name']}`);
+      this.router.navigateByUrl('home');
       console.log(resp['role']);
 
     }, err => {

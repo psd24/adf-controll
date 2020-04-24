@@ -11,11 +11,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AuthInterceptorService } from './interceptor/auth-interceptor.service';
+import { MenusPageModule } from './menus/menus.module';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, MenusPageModule],
   providers: [
     StatusBar,
     SplashScreen,
