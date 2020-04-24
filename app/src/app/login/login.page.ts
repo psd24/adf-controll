@@ -21,10 +21,9 @@ export class LoginPage implements OnInit {
   }
 
   login(forma: NgForm){
-
     console.log(forma);
     
-    this.authService.login(forma.value);
+      this.authService.login(forma.form.value);
 
   }
 
