@@ -11,18 +11,24 @@ import { UsersService } from '../services/users.service';
 })
 export class ProfilePage implements OnInit {
   
-  usuario:UserModel = new UserModel();
+  profile:UserModel = new UserModel();
 
-  role:string;
+  constructor( 
+    private auth: AuthService,
+    public activeRoute: ActivatedRoute,
+    private _us: UsersService
+  ) { }
 
-  constructor( private auth: AuthService, public activeRoute: ActivatedRoute, private _us: UsersService ) {
-    _us.getUser().subscribe( user => {
-      this.usuario = user as UserModel;
-      console.log(this.usuario);
-      
-    });
-  }
   ngOnInit() {
+    this._us.getUser().subscribe(
+      (profile) => {
+        this.profile = profile;
+        console.log(this.profile);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   logout(){

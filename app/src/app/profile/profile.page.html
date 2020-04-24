@@ -13,19 +13,19 @@
 
         <ion-card>
             <ion-card-header>
-                <ion-card-subtitle>{{ usuario.code}}</ion-card-subtitle>
-                <ion-card-title>{{ usuario.name }}</ion-card-title>
+                <ion-card-subtitle>{{ profile.code}}</ion-card-subtitle>
+                <ion-card-title>{{ profile.name }}</ion-card-title>
             </ion-card-header>
 
             <ion-card-content>
                 <div class="row">
                     <div class="col">
-                        <label>Organization: {{ usuario.organization }}</label>
+                        <label>Organization: {{ profile.organization.name }}</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <label>Email: {{ usuario.email}}</label>
+                        <label>Email: {{ profile.email}}</label>
                     </div>
                 </div>
             </ion-card-content>
