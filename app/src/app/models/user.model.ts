@@ -1,4 +1,5 @@
 import { OrganizationModel } from './organization.model';
+import { RoleModel } from './role.model';
 
 export class UserModel{
 
@@ -7,5 +8,6 @@ export class UserModel{
     name: string;
     password: string;
     organization: OrganizationModel;
+    role: RoleModel;
 
 }

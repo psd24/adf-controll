@@ -16,8 +16,8 @@ export class RolesService {
         return this.rolesRepository.find();
     }
 
-    async getRole(_id: number): Promise<Role[]> {
-        return await this.rolesRepository.find({
+    async getRole(_id: number): Promise<Role> {
+        return await this.rolesRepository.findOne({
             where: [{ "id": _id }]
         });
     }

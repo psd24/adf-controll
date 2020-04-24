@@ -26,8 +26,13 @@ const routes: Routes = [
     loadChildren: () => import('./menus/side/side.page').then( m => m.SidePage)
   },
   {
+    path: 'role',
+    loadChildren: () => import('./role/role.module').then( m => m.RolePageModule)
+  },
+  {
     path:'**',pathMatch:'full', redirectTo:'login'
-  }
+  },
+
 
 ];
 

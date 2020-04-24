@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Crear Rol</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="formCreateRole" (ngSubmit)="submitForm()" novalidate>
+    <ion-item lines="full">
+      <ion-input formControlName="name" type="text" placeholder="Nombre" required></ion-input>
+    </ion-item>
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="success" expand="block">Guardar</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+
+</ion-content>

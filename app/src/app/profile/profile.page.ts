@@ -10,10 +10,10 @@ import { UsersService } from '../services/users.service';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  
-  profile:UserModel = new UserModel();
 
-  constructor( 
+  profile: UserModel = new UserModel();
+
+  constructor(
     private auth: AuthService,
     public activeRoute: ActivatedRoute,
     private _us: UsersService
@@ -21,9 +21,9 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
     this._us.getUser().subscribe(
-      (profile) => {
+      (profile: UserModel) => {
         this.profile = profile;
-        console.log(this.profile);
+        console.log(this.profile.organization.name);
       },
       (error) => {
         console.log(error);
@@ -31,7 +31,7 @@ export class ProfilePage implements OnInit {
     );
   }
 
-  logout(){
+  logout() {
     this.auth.logout();
   }
 
