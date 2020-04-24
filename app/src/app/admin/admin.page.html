@@ -8,7 +8,7 @@
             <ion-button [routerLink]="['/admin/profile']">
                 <ion-icon slot="icon-only" name="person-circle"></ion-icon>
             </ion-button>
-            <ion-button color="danger">
+            <ion-button color="danger" (click)="logout()">
                 <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
             </ion-button>
         </ion-buttons>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../services/event.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-admin',
@@ -10,7 +11,7 @@ export class AdminPage implements OnInit {
 
   events: [] = [];
 
-  constructor( private _es: EventService ) { }
+  constructor( private _es: EventService, private auth: AuthService ) { }
 
   ngOnInit() {
 
@@ -29,5 +30,8 @@ export class AdminPage implements OnInit {
     });
   }
 
+  logout(){
+    this.auth.logout();
+  }
 
 }
