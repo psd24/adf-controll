@@ -13,6 +13,10 @@ const routes: Routes = [
     loadChildren: () => import('../../voluntary/voluntary.module').then( m => m.VoluntaryPageModule)
   },
   {
+    path: 'role',
+    loadChildren: () => import('../../role/role.module').then( m => m.RolePageModule)
+  },
+  {
     path: 'admin',
     loadChildren: () => import('../../admin/admin.module').then( m => m.AdminPageModule)
   },
