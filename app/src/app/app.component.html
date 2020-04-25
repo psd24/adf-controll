@@ -1,16 +1,16 @@
 <ion-app>
     <ion-split-pane contentId="main-content">
         <ion-menu contentId="main-content" type="overlay">
-            <ion-content>
+            <ion-content color="gucat-orange">
                 <ion-list id="inbox-list">
                     <ion-header>
-                        <ion-toolbar>
+                        <ion-toolbar color="gucat-green">
                             <ion-title>Menu</ion-title>
                         </ion-toolbar>
                     </ion-header>
                     <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
                         <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="full"
-                            detail="false" [class.selected]="selectedIndex == i">
+                            detail="false" [class.selected]="selectedIndex == i" color="gucat-green">
                             <ion-label>{{ p.title }}</ion-label>
                         </ion-item>
                     </ion-menu-toggle>
