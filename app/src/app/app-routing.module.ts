@@ -22,10 +22,6 @@ const routes: Routes = [
     loadChildren: () => import('./admin/admin.module').then( m => m.AdminPageModule)
   },
   {
-    path: 'side',
-    loadChildren: () => import('./menus/side/side.page').then( m => m.SidePage)
-  },
-  {
     path: 'role',
     loadChildren: () => import('./role/role.module').then( m => m.RolePageModule)
   },
