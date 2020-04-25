@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { UserModel } from '../models/user.model';
-import { ActivatedRoute } from '@angular/router';
 import { UsersService } from '../services/users.service';
 
 @Component({
@@ -11,19 +10,18 @@ import { UsersService } from '../services/users.service';
 })
 export class ProfilePage implements OnInit {
 
-  profile: UserModel = new UserModel();
+  public profile: UserModel = new UserModel();
 
   constructor(
     private auth: AuthService,
-    public activeRoute: ActivatedRoute,
-    private _us: UsersService
+    private usersService: UsersService
   ) { }
 
   ngOnInit() {
-    this._us.getUser().subscribe(
+    this.usersService.getUser().subscribe(
       (profile: UserModel) => {
         this.profile = profile;
-        console.log(this.profile.organization.name);
+        console.log(this.profile);
       },
       (error) => {
         console.log(error);

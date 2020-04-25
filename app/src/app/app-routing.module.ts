@@ -26,6 +26,10 @@ const routes: Routes = [
     loadChildren: () => import('./role/role.module').then( m => m.RolePageModule)
   },
   {
+    path: 'organization',
+    loadChildren: () => import('./organization/organization.module').then( m => m.OrganizationPageModule)
+  },
+  {
     path:'**',pathMatch:'full', redirectTo:'login'
   },
 

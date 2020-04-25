@@ -20,6 +20,10 @@ export class AppComponent implements OnInit {
       title: 'Role',
       url: '/role',
     },
+    {
+      title: 'Organización',
+      url: '/organization',
+    },
   ];
 
   constructor(

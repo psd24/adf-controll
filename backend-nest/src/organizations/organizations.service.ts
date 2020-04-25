@@ -16,8 +16,8 @@ export class OrganizationsService {
         return this.organizationsRepository.find();
     }
 
-    async getOneOrganizations(_id: number): Promise<Organization[]> {
-        return await this.organizationsRepository.find({
+    async getOneOrganizations(_id: number): Promise<Organization> {
+        return await this.organizationsRepository.findOne({
             where: [{ "id": _id }]
         });
     }

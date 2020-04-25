@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="gucat-green">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>edit</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="gucat-orange">
+
+  <ion-grid>
+    <ion-row>
+      <form [formGroup]="formCreateOrganization" (ngSubmit)="submitForm()" novalidate>
+        <ion-item lines="full">
+          <ion-input formControlName="name" type="text" placeholder="Nombre" required></ion-input>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-input formControlName="code" type="text" placeholder="Codigo" required></ion-input>
+        </ion-item>
+        <ion-col>
+          <ion-button type="submit" color="gucat-green" expand="block">Actualizar</ion-button>
+        </ion-col>
+      </form>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
