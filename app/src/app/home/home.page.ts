@@ -26,7 +26,6 @@ export class HomePage implements OnInit{
   ngOnInit() {
     const getRole: string = localStorage.getItem('role');
     this.role = JSON.parse(getRole)
-    console.log(this.role.name);
   }
 
   logout(){

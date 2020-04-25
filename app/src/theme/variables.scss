@@ -67,6 +67,40 @@
     --ion-color-light-contrast-rgb: 0, 0, 0;
     --ion-color-light-shade: #d7d8da;
     --ion-color-light-tint: #f5f6f9;
+
+    /** GuaitaCat orange **/
+    --ion-color-gucat-orange: #f6b400;
+    --ion-color-gucat-orange-rgb: 246,180,0;
+    --ion-color-gucat-orange-contrast: #000000;
+    --ion-color-gucat-orange-contrast-rgb: 0,0,0;
+    --ion-color-gucat-orange-shade: #d89e00;
+    --ion-color-gucat-orange-tint: #f7bc1a;
+
+    /** GuaitaCat green **/
+    --ion-color-gucat-green: #3ea027;
+    --ion-color-gucat-green-rgb: 62,160,39;
+    --ion-color-gucat-green-contrast: #ffffff;
+    --ion-color-gucat-green-contrast-rgb: 255,255,255;
+    --ion-color-gucat-green-shade: #378d22;
+    --ion-color-gucat-green-tint: #51aa3d;
+}
+
+.ion-color-gucat-orange {
+    --ion-color-base: var(--ion-color-gucat-orange);
+    --ion-color-base-rgb: var(--ion-color-gucat-orange-rgb);
+    --ion-color-contrast: var(--ion-color-gucat-orange-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-gucat-orange-contrast-rgb);
+    --ion-color-shade: var(--ion-color-gucat-orange-shade);
+    --ion-color-tint: var(--ion-color-gucat-orange-tint);
+}
+
+.ion-color-gucat-green {
+    --ion-color-base: var(--ion-color-gucat-green);
+    --ion-color-base-rgb: var(--ion-color-gucat-green-rgb);
+    --ion-color-contrast: var(--ion-color-gucat-green-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-gucat-green-contrast-rgb);
+    --ion-color-shade: var(--ion-color-gucat-green-shade);
+    --ion-color-tint: var(--ion-color-gucat-green-tint);
 }
 
 @media (prefers-color-scheme: dark) {
