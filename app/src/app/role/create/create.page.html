@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="gucat-green">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -7,17 +7,19 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="gucat-orange">
 
-  <form [formGroup]="formCreateRole" (ngSubmit)="submitForm()" novalidate>
-    <ion-item lines="full">
-      <ion-input formControlName="name" type="text" placeholder="Nombre" required></ion-input>
-    </ion-item>
+  <ion-grid>
     <ion-row>
-      <ion-col>
-        <ion-button type="submit" color="success" expand="block">Guardar</ion-button>
-      </ion-col>
+      <form [formGroup]="formCreateRole" (ngSubmit)="submitForm()" novalidate>
+        <ion-item lines="full">
+          <ion-input formControlName="name" type="text" placeholder="Nombre" required></ion-input>
+        </ion-item>
+        <ion-col>
+          <ion-button type="submit" color="gucat-green" expand="block">Guardar</ion-button>
+        </ion-col>
+      </form>
     </ion-row>
-  </form>
+  </ion-grid>
 
 </ion-content>

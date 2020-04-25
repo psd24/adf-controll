@@ -1,23 +1,27 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="gucat-green">
     <ion-buttons slot="start">
-      <ion-menu-button autoHide="false"></ion-menu-button>
+      <ion-menu-button autoHide="false" color="gucat-white"></ion-menu-button>
     </ion-buttons>
     <ion-title>Rol</ion-title>
-      <ion-buttons slot="end">
-          <ion-button [routerLink]="['/role/create']">
-              <ion-icon slot="icon-only" name="add"></ion-icon>
-          </ion-button>
-      </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/role/create']">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="gucat-orange">
 
-  <ion-item lines="full" *ngFor="let role of roles; index as i;">
+  <ion-item lines="full" *ngFor="let role of roles; index as i;" color="gucat-green">
     <ion-label slot="start">{{role.name}}</ion-label>
-    <ion-label slot="end"><ion-icon name="pencil-outline" (click)="editRole(role.id)"></ion-icon></ion-label>
-    <ion-label slot="end"><ion-icon name="trash-outline" (click)="removeRole(i, role.id)"></ion-icon></ion-label>
+    <ion-label slot="end">
+      <ion-icon name="pencil-outline" (click)="editRole(role.id)"></ion-icon>
+    </ion-label>
+    <ion-label slot="end">
+      <ion-icon name="trash-outline" (click)="removeRole(i, role.id)"></ion-icon>
+    </ion-label>
   </ion-item>
 
 </ion-content>
