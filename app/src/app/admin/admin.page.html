@@ -1,76 +1,19 @@
 <ion-header>
-    <ion-toolbar>
+    <ion-toolbar color="gucat-green">
         <ion-buttons slot="start">
-            <ion-menu-button autoHide="false"></ion-menu-button>
+            <ion-menu-button autoHide="false" color="gucat-white"></ion-menu-button>
         </ion-buttons>
-        <ion-title>Services</ion-title>
-        <ion-buttons slot="secondary">
-            <ion-button [routerLink]="['/admin/profile']">
-                <ion-icon slot="icon-only" name="person-circle"></ion-icon>
-            </ion-button>
-            <ion-button color="danger" (click)="logout()">
-                <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
-            </ion-button>
-        </ion-buttons>
+        <ion-title>Organizaciones</ion-title>
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="gucat-orange">
 
-    <div class="row mt-5">
-        <div class="col">
-
-        </div>
-    </div>
-
-    <div class="row">
-        <ion-list class="col">
-            <ion-item class="row" [routerLink]="['/admin/service/1']">
-                <ion-card class="col">
-                    <ion-card-header>
-                        <ion-card-title>Title</ion-card-title>
-                        <ion-card-subtitle>Population</ion-card-subtitle>
-                    </ion-card-header>
-
-                    <ion-card-content>
-                        <label>
-                            <span>12/01/2020</span><span>17:00 - 20:00</span>
-                        </label>
-                        <div>
-                            <label>Total inscrits: 4</label>
-                        </div>
-                    </ion-card-content>
-                </ion-card>
-            </ion-item>
-            <ion-item class="row" [routerLink]="['/admin/service/1']">
-                <ion-card class="col">
-                    <ion-card-header>
-                        <ion-card-title>Title</ion-card-title>
-                        <ion-card-subtitle>Population</ion-card-subtitle>
-                    </ion-card-header>
-
-                    <ion-card-content>
-                        <label>
-                            <span>12/01/2020</span><span>17:00 - 20:00</span>
-                        </label>
-                        <div>
-                            <label>Total inscrits: 4</label>
-                        </div>
-                    </ion-card-content>
-                </ion-card>
-            </ion-item>
-        </ion-list>
-    </div>
-
-    <div class="row text-center mt-2">
-        <div class="col">
-            <button class="btn btn-primary" [routerLink]="['/admin']">Services</button>
-        </div>
-        <div class="col">
-            <button class="btn btn-primary" [routerLink]="['/admin/profile']">Profile</button>
-        </div>
-    </div>
-
-
+    <ion-item lines="full" *ngFor="let organization of organizations; index as i;" color="gucat-green" (click)="organizationId(organization.id)">
+        <ion-label slot="end" class="ion-text-end">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-label>
+        <ion-label slot="start">{{organization.name}}</ion-label>
+    </ion-item>
 
 </ion-content>

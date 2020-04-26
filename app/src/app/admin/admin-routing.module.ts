@@ -19,7 +19,11 @@ const routes: Routes = [
   {
     path: 'service/:id',
     loadChildren: () => import('./service/service.module').then( m => m.ServicePageModule)
+  },  {
+    path: 'menu',
+    loadChildren: () => import('./menu/menu.module').then( m => m.MenuPageModule)
   }
+
 ];
 
 @NgModule({

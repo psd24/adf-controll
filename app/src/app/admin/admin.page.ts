@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { EventService } from '../services/event.service';
-import { AuthService } from '../services/auth.service';
+import { OrganizationService } from '../services/organization.service';
+import { OrganizationModel } from '../models/organization.model';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -9,29 +10,39 @@ import { AuthService } from '../services/auth.service';
 })
 export class AdminPage implements OnInit {
 
-  events: [] = [];
+  public organizations: OrganizationModel
 
-  constructor( private _es: EventService, private auth: AuthService ) { }
+  constructor( 
+    private organizationrvice: OrganizationService,
+    private router: Router,
+    ) { }
 
   ngOnInit() {
-
-    // this.getEvents();
-    
+    this.getOrganization();
   }
 
-  getEvents(){
-    this._es.getEvents().subscribe( events => {
-      console.log(events);
-      
-      // return events;
-    }, err => {
-      console.log(err);
-      
-    });
+  ionViewWillEnter() {
+    this.getOrganization();
   }
 
-  logout(){
-    this.auth.logout();
+  getOrganization() {
+    this.organizationrvice.index().subscribe(
+      (organization: OrganizationModel) => {
+        this.organizations = organization;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  organizationId(organizationId) {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        organizationId: organizationId
+      }
+    };
+    this.router.navigate(['admin/menu'], navigationExtras);
   }
 
 }

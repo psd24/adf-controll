@@ -24,6 +24,10 @@ export class AppComponent implements OnInit {
       title: 'Organización',
       url: '/organization',
     },
+    {
+      title: 'Administrar',
+      url: '/admin',
+    },
   ];
 
   constructor(
