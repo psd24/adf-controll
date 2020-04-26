@@ -20,6 +20,13 @@ export class OrganizationsController {
 
     @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
+    @Get('count')
+    getCount() {
+        return this.organizationsService.organizationsCount();
+    }
+
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
     @Get(':id')
     getOrganization(@Param() params) {
         return this.organizationsService.getOneOrganizations(params.id);

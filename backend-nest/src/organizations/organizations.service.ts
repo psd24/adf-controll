@@ -33,4 +33,8 @@ export class OrganizationsService {
     async delete(organization: Organization) {
         this.organizationsRepository.delete(organization);
     }
+
+    async organizationsCount(): Promise<number> {
+        return this.organizationsRepository.count();
+    }
 }

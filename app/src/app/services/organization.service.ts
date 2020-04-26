@@ -67,4 +67,15 @@ export class OrganizationService {
         );
     }
 
+    count(): Observable<any> {
+        return this.http.get(this.backendUrl + 'organizations/count').pipe(
+            map(res => {
+                return res;
+            }),
+            catchError(error => {
+                return throwError(error.error)
+            })
+        );
+    }
+
 }
