@@ -73,4 +73,8 @@ export class UsersService {
     async organizationsCount(): Promise<number> {
         return this.organizationsRepository.count();
     }
+
+    async usersCount(): Promise<number> {
+        return this.usersRepository.count();
+    }
 }

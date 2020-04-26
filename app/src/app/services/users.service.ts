@@ -24,5 +24,16 @@ export class UsersService {
       })
     );
   }
+
+  count(): Observable<any> {
+    return this.http.get(this.backendUrl + 'auth/user/count').pipe(
+        map(res => {
+            return res;
+        }),
+        catchError(error => {
+            return throwError(error.error)
+        })
+    );
+}
   
 }

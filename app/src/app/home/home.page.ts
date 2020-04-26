@@ -3,6 +3,7 @@ import { AuthService } from '../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { RoleModel } from '../models/role.model';
 import { OrganizationService } from '../services/organization.service';
+import { UsersService } from '../services/users.service';
 
 @Component({
   selector: 'app-home',
@@ -13,11 +14,13 @@ export class HomePage implements OnInit{
 
   public role: RoleModel;
   public organizationCount: number;
+  public userCount: number;
 
   constructor( 
     private auth: AuthService,
     public activeRoute: ActivatedRoute,
-    private organizationService: OrganizationService 
+    private organizationService: OrganizationService,
+    private usersService: UsersService 
     ) {
     // _us.getUser().subscribe( user => {
     //   this.usuario = user as UserModel;
@@ -34,6 +37,16 @@ export class HomePage implements OnInit{
       (organizationCount) => {
         this.organizationCount = organizationCount;
         console.log(this.organizationCount)
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    this.usersService.count().subscribe(
+      (userCount) => {
+        this.userCount = userCount;
+        console.log(this.userCount)
       },
       (error) => {
         console.log(error);
