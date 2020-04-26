@@ -25,7 +25,7 @@ export class EventService {
   }
 
   getEventsAdmin(params): Observable<any> {
-    return this.http.get(this.backendUrl + 'events/list/query/' + params).pipe(
+    return this.http.get(this.backendUrl + 'events/admin/list/' + params).pipe(
       map(res => {
         return res;
       }),

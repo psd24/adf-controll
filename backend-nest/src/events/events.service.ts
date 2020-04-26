@@ -43,6 +43,18 @@ export class EventsService {
         return findList;
     }
 
+    async adminList(organization:number){
+        let findList = await this.userEventRepository.find({
+            relations: ["organization"],
+            where:{
+                organization: {
+                    id:organization
+                }
+            }
+        })
+        return findList;
+    }
+
     async createEventUser(createEventUserDto: CreateEventUserDto){
         try {
             await getConnection()

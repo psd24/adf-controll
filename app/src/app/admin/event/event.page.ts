@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../../services/event.service';
+import { EventnModel } from '../../models/event.model';
 
 @Component({
   selector: 'app-event',
@@ -9,7 +10,8 @@ import { EventService } from '../../services/event.service';
 })
 export class EventPage implements OnInit {
 
-  organizationId: number;  
+  organizationId: number;
+  events;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,10 +26,9 @@ export class EventPage implements OnInit {
   }
 
   ngOnInit() {
-    let filter = "filter: {relations: ['organization'],where:{organization: {id:1}}}";
     this.eventService.getEventsAdmin(this.organizationId).subscribe(
-      (events) => {
-        console.log(events);
+      (events: EventnModel) => {
+        this.events = events;
       },
       (error) => {
         console.log(error);

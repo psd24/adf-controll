@@ -3,10 +3,21 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Evento</ion-title>
+    <ion-title>Eventos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content color="gucat-orange">
+
+  <ion-card color="gucat-green" *ngFor="let event of events; index as i;">
+    <ion-card-header>
+      <ion-card-subtitle><h6>{{event.name}}</h6></ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+        <p>{{event.dateInit | date: 'dd/MM/yyyy hh:mm'}} - {{event.dateEnd |  date: 'dd/MM/yyyy hh:mm'}}</p>
+        <p>{{event.population}}</p>
+        <p>{{event.organization.name}}</p>
+    </ion-card-content>
+</ion-card>
 
 </ion-content>
