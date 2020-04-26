@@ -17,12 +17,13 @@ const routes: Routes = [
     loadChildren: () => import('./users/users.module').then( m => m.UsersPageModule)
   },
   {
-    path: 'service/:id',
-    loadChildren: () => import('./service/service.module').then( m => m.ServicePageModule)
-  },  {
     path: 'menu',
     loadChildren: () => import('./menu/menu.module').then( m => m.MenuPageModule)
+  },  {
+    path: 'event',
+    loadChildren: () => import('./event/event.module').then( m => m.EventPageModule)
   }
+
 
 ];
 

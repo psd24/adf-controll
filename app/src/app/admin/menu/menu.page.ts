@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -22,7 +22,16 @@ export class MenuPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.organizationId);
+    
+  }
+
+  eventId(organizationId) {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        organizationId: organizationId
+      }
+    };
+    this.router.navigate(['admin/event'], navigationExtras);
   }
 
 }

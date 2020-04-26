@@ -24,4 +24,15 @@ export class EventService {
     );
   }
 
+  getEventsAdmin(params): Observable<any> {
+    return this.http.get(this.backendUrl + 'events/list/query/' + params).pipe(
+      map(res => {
+        return res;
+      }),
+      catchError(error => {
+        return throwError(error.error)
+      })
+    );
+  }
+
 }

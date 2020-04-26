@@ -26,5 +26,10 @@ export class CreateEventsDto {
     @IsNotEmpty()
     @IsDateString()
     dateEnd: Date;
+
+    @ApiProperty({ required: true })
+    @IsNotEmpty()
+    @IsNumber()
+    organizationId: number;
     
 }
