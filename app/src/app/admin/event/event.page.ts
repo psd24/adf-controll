@@ -34,7 +34,6 @@ export class EventPage implements OnInit {
         console.log(error);
       }
     );
-    console.log('event ', this.organizationId)
   }
 
 }

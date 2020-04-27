@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, ManyToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, ManyToMany, BeforeInsert } from "typeorm";
 import { Organization } from './organization.entity';
 import { CameraType } from './camera-type.entity';
 
@@ -22,13 +22,20 @@ export class Camera {
     @Column()
     password: string;
 
+    @Column()
+    url: string;
+
     @ManyToOne(type => Organization, organization => organization.camera)
-    organization: Organization;
+    organization: Organization[];
 
     @ManyToOne(type => CameraType, cameraType => cameraType.camera)
     cameraType: CameraType[];
 
     constructor(name: string) {
         this.name = name;
+    }
+    @BeforeInsert()
+    preProcess() {
+        console.log(this.cameraType);
     }
 }
