@@ -1,4 +1,13 @@
-import { Controller, UseGuards, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import {
+  Controller,
+  UseGuards,
+  Get,
+  Post,
+  Body,
+  Param,
+  Put,
+  Delete,
+} from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
 import { Camera } from '../entities/camera.entity';
@@ -10,81 +19,81 @@ import { CameraTypeDto } from './dtos/camera-type.dto';
 @ApiTags('Authentication')
 @Controller('camera')
 export class CameraController {
+  constructor(private cameraService: CameraService) {}
 
-    constructor(private cameraService: CameraService) { }
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Get()
+  get() {
+    return this.cameraService.getCamera();
+  }
 
-    @ApiBearerAuth()
-    @UseGuards(JwtAuthGuard)
-    @Get()
-    get() {
-        return this.cameraService.getCamera();
-    }
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Get(':id')
+  getCameraId(@Param() params) {
+    return this.cameraService.getCameraId(params.id);
+  }
 
-    @ApiBearerAuth()
-    @UseGuards(JwtAuthGuard)
-    @Get(':id')
-    getCameraId(@Param() params) {
-        return this.cameraService.getCameraId(params.id);
-    }
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ type: Camera })
+  @Post()
+  async postCamera(@Body() cameraDto: CameraDto) {
+    let camera = await this.cameraService.generateURL(cameraDto);
+    return this.cameraService.createCamera(camera);
+  }
 
-    @ApiBearerAuth()
-    @UseGuards(JwtAuthGuard)
-    @ApiOkResponse({ type: Camera })
-    @Post()
-    postCamera(@Body() cameraDto: CameraDto) {
-        return this.cameraService.createCamera(cameraDto)
-    }
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Put()
+  async updateCamera(@Body() cameraDto: CameraDto) {
+    let camera = await this.cameraService.generateURL(cameraDto);
+    return this.cameraService.updateCamera(camera);
+  }
 
-    @ApiBearerAuth()
-    @UseGuards(JwtAuthGuard)
-    @Put()
-    updateCamera(@Body() camera: Camera) {
-        return this.cameraService.updateCamera(camera);
-    }
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  deleteCamera(@Param() params) {
+    return this.cameraService.deleteCamera(params.id);
+  }
 
-    @ApiBearerAuth()
-    @UseGuards(JwtAuthGuard)
-    @Delete(':id')
-    deleteCamera(@Param() params) {
-        return this.cameraService.deleteCamera(params.id);
-    }
+  // CAMERA TYPE
 
-    // CAMERA TYPE
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Get('type')
+  getCameraType() {
+    return this.cameraService.getCameraType();
+  }
 
-    @ApiBearerAuth()
-    @UseGuards(JwtAuthGuard)
-    @Get('type')
-    getCameraType() {
-        return this.cameraService.getCameraType();
-    }
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ type: Camera })
+  @Post('type')
+  postType(@Body() CameraTypeDto: CameraTypeDto) {
+    return this.cameraService.createCameraType(CameraTypeDto);
+  }
 
-    @ApiBearerAuth()
-    @UseGuards(JwtAuthGuard)
-    @ApiOkResponse({ type: Camera })
-    @Post('type')
-    postType(@Body() CameraTypeDto: CameraTypeDto) {
-        return this.cameraService.createCameraType(CameraTypeDto);
-    }
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Get('type/:id')
+  getCameraTypeId(@Param() params) {
+    return this.cameraService.getCameraTypeId(params.id);
+  }
 
-    @ApiBearerAuth()
-    @UseGuards(JwtAuthGuard)
-    @Get('type/:id')
-    getCameraTypeId(@Param() params) {
-        return this.cameraService.getCameraTypeId(params.id);
-    }
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Put('type')
+  updateCameraType(@Body() CameraType: CameraType) {
+    return this.cameraService.updateCameraType(CameraType);
+  }
 
-    @ApiBearerAuth()
-    @UseGuards(JwtAuthGuard)
-    @Put('type')
-    updateCameraType(@Body() CameraType: CameraType) {
-        return this.cameraService.updateCameraType(CameraType);
-    }
-
-    @ApiBearerAuth()
-    @UseGuards(JwtAuthGuard)
-    @Delete('type/:id')
-    deleteCameraType(@Param() params) {
-        return this.cameraService.deleteCameraType(params.id);
-    }
-
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Delete('type/:id')
+  deleteCameraType(@Param() params) {
+    return this.cameraService.deleteCameraType(params.id);
+  }
 }
