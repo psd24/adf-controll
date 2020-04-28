@@ -30,7 +30,7 @@ export class CameraController {
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Get(':id')
+  @Get()
   getCameraId(@Param() params) {
     return this.cameraService.getCameraId(params.id);
   }
