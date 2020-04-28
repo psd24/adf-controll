@@ -3,8 +3,8 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'home', loadChildren: () => import('./home/home.module').then( m => m.HomePageModule) },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', loadChildren: () => import('./home/home.module').then( m => m.HomePageModule), canActivate: [AuthGuard]},
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
@@ -30,8 +30,8 @@ const routes: Routes = [
     loadChildren: () => import('./organization/organization.module').then( m => m.OrganizationPageModule)
   },
   {
-    path:'**',pathMatch:'full', redirectTo:'login'
-  },
+    path:'**',pathMatch:'full', redirectTo:'home'
+  }
 
 
 ];
