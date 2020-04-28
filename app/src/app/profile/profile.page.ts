@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { UserModel } from '../models/user.model';
 import { UsersService } from '../services/users.service';
+import { OrganizationModel } from '../models/organization.model';
 
 @Component({
   selector: 'app-profile',
@@ -11,6 +12,7 @@ import { UsersService } from '../services/users.service';
 export class ProfilePage implements OnInit {
 
   public profile: UserModel = new UserModel();
+  public organization: OrganizationModel = new OrganizationModel();
 
   constructor(
     private auth: AuthService,
@@ -21,7 +23,11 @@ export class ProfilePage implements OnInit {
     this.usersService.getUser().subscribe(
       (profile: UserModel) => {
         this.profile = profile;
+        this.organization = profile['organization']; 
         console.log(this.profile);
+
+        console.log(profile['organization']['name']);
+        
       },
       (error) => {
         console.log(error);

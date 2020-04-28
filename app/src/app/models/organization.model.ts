@@ -1,7 +1,7 @@
 export class OrganizationModel{
 
     id:number;
-    code: string;
+    code?: string;
     name: string;
 
 }
