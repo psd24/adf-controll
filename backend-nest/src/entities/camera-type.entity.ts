@@ -12,8 +12,8 @@ export class CameraType {
     @Column()
     type: string;
 
-    @OneToMany(type => Camera, camera => camera.cameraType)
-    camera: Camera;
+    @OneToMany(() => Camera, camera => camera.cameraType)
+    camera: Camera[];
 
     constructor(name: string) {
         this.name = name;
