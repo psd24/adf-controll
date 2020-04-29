@@ -33,23 +33,14 @@ export class Camera {
   @Column()
   url: string;
 
-  @ManyToOne(
-    type => Organization,
-    organization => organization.camera,
-  )
-  organization: Organization[];
+  @ManyToOne(() => Organization, organization => organization.camera)
+  organization: Organization;
 
-  @ManyToOne(
-    type => CameraType,
-    cameraType => cameraType.camera,
-  )
-  cameraType: CameraType[];
+  @ManyToOne( () => CameraType, cameraType => cameraType.camera)
+  cameraType: CameraType;
 
-  constructor(name: string) {
-    this.name = name;
-  }
   @BeforeInsert()
   preProcess() {
-    console.log(this.cameraType);
+    //console.log(this.cameraType);
   }
 }

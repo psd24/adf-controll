@@ -14,6 +14,7 @@ import { Camera } from '../entities/camera.entity';
 import { CameraType } from '../entities/camera-type.entity';
 import { CameraService } from './camera.service';
 import { CameraDto } from './dtos/camera.dto';
+import { CameraCreateDto } from './dtos/cameraCreate.dto';
 import { CameraTypeDto } from './dtos/camera-type.dto';
 
 @ApiTags('Authentication')
@@ -39,17 +40,15 @@ export class CameraController {
   @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: Camera })
   @Post()
-  async postCamera(@Body() cameraDto: CameraDto) {
-    let camera = await this.cameraService.generateURL(cameraDto);
-    return this.cameraService.createCamera(camera);
+  async postCamera(@Body() cameraCreateDto: CameraCreateDto) {
+    return this.cameraService.createCamera(cameraCreateDto);
   }
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Put()
   async updateCamera(@Body() cameraDto: CameraDto) {
-    let camera = await this.cameraService.generateURL(cameraDto);
-    return this.cameraService.updateCamera(camera);
+    return this.cameraService.updateCamera(cameraDto);
   }
 
   @ApiBearerAuth()
