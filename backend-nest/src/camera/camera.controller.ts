@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import {
   Controller,
   UseGuards,
@@ -41,6 +42,7 @@ export class CameraController {
   @Post()
   async postCamera(@Body() cameraDto: CameraDto) {
     let camera = await this.cameraService.generateURL(cameraDto);
+    console.log('==========');
     return this.cameraService.createCamera(camera);
   }
 

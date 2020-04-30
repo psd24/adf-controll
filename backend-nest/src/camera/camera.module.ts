@@ -7,9 +7,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   providers: [CameraService],
-  imports: [
-    TypeOrmModule.forFeature([Camera, CameraType])
-  ],
-  controllers: [CameraController]
+  imports: [TypeOrmModule.forFeature([Camera, CameraType])],
+  controllers: [CameraController],
+  exports: [CameraService],
 })
 export class CameraModule {}

@@ -11,10 +11,20 @@ import { EventsModule } from './events/events.module';
 import { CameraModule } from './camera/camera.module';
 
 import * as ormconfig from './ormconfig';
+import { BotService } from './bot/bot.service';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(ormconfig), AuthModule, UsersModule, SeedModule, RolesModule, OrganizationsModule, EventsModule, CameraModule],
+  imports: [
+    TypeOrmModule.forRoot(ormconfig),
+    AuthModule,
+    UsersModule,
+    SeedModule,
+    RolesModule,
+    OrganizationsModule,
+    EventsModule,
+    CameraModule,
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [BotService],
 })
 export class AppModule {}
