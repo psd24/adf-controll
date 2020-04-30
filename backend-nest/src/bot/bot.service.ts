@@ -34,7 +34,7 @@ export class BotService implements OnModuleInit {
 
   async getBotMessage() {
     process.env.NTBA_FIX_319 = '1';
-    const token = '858707757:AAHHrs08-dsvpKA5lKv-dSTieBDPRFvM_yE';
+    const token = '8587077';
     const bot = new TelegramBot(token, { polling: true });
 
     bot.on('callback_query', async callbackQuery => {
