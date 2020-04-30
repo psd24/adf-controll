@@ -52,6 +52,8 @@ export class HomePage implements OnInit{
         console.log(error);
       }
     );
+
+      // this.imgReload(this.imageRemote);
   }
 
   logout(){

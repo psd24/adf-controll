@@ -25,9 +25,13 @@ export class AppComponent implements OnInit {
       url: '/organization',
     },
     {
+      title: 'Camera',
+      url: '/camera',
+    },
+    {
       title: 'Administrar',
       url: '/admin',
-    },
+    }
   ];
 
   constructor(
