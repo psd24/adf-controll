@@ -21,7 +21,7 @@ export class Organization {
     @OneToMany(type => Vehicle, vehicle => vehicle.organization)
     vehicle: Vehicle[];
 
-    @OneToMany(type => Camera, camera => camera.organization)
+    @OneToMany(() => Camera, camera => camera.organization)
     camera: Camera[];
 
     @OneToMany(type => UserEvent, events => events.organization)

@@ -1,11 +1,7 @@
 import { IsString, IsEmail, IsNotEmpty, IsNumber } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CameraDto {
-
-  @ApiProperty({ required: true })
-  @IsNumber()
-  id?: number;
+export class CameraCreateDto {
 
   @ApiProperty({ required: true })
   @IsString()
