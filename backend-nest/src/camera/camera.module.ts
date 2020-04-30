@@ -11,6 +11,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   imports: [
     TypeOrmModule.forFeature([Camera, CameraType, Organization])
   ],
-  controllers: [CameraController]
+  controllers: [CameraController],
+  exports:[CameraService]
 })
 export class CameraModule {}
