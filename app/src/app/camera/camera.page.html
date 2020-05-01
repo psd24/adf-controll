@@ -12,20 +12,26 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="gucat-orange">
 
-    <ion-card *ngFor="let camera of cameras">
+    <ion-card color="gucat-green">
         <!-- <img [src]="imageRemote" alt="bosque"> -->
         <div id="zoomIMG">
-            <img src="{{camera.url}}" alt="bosque">
+            <ion-img src="{{imageRemote}}&time={{timeStamp}}" alt="bosque"></ion-img>
         </div>
         <ion-card-header>
-            <ion-card-subtitle>Destination</ion-card-subtitle>
+            <ion-card-title>EXAMPLE</ion-card-title>
+        </ion-card-header>
+    </ion-card>
+
+    <ion-card color="gucat-green" *ngFor="let camera of cameras">
+        <!-- <img [src]="imageRemote" alt="bosque"> -->
+        <div id="zoomIMG">
+            <ion-img src="{{camera.url}}&time={{timeStamp}}" alt="bosque"></ion-img>
+        </div>
+        <ion-card-header>
             <ion-card-title>{{camera.name}}</ion-card-title>
         </ion-card-header>
-        <ion-card-content>
-            Founded in 1829 on an isthmus between Lake Monona and Lake Mendota, Madison was named the capital of the Wisconsin Territory in 1836.
-        </ion-card-content>
     </ion-card>
 
 </ion-content>

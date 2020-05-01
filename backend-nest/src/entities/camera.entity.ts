@@ -6,6 +6,7 @@ import {
   ManyToOne,
   ManyToMany,
   BeforeInsert,
+  JoinTable,
 } from 'typeorm';
 import { Organization } from './organization.entity';
 import { CameraType } from './camera-type.entity';
@@ -34,9 +35,11 @@ export class Camera {
   url: string;
 
   @ManyToOne(() => Organization, organization => organization.camera)
+  @JoinTable()
   organization: Organization;
 
   @ManyToOne( () => CameraType, cameraType => cameraType.camera)
+  @JoinTable()
   cameraType: CameraType;
 
   @BeforeInsert()
