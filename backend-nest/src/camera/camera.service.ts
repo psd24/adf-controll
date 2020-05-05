@@ -41,7 +41,7 @@ export class CameraService {
       newCamera.url = url;
     }
     if (cameraCreateDto.cameraTypeId === 2) {
-      url = `http://${cameraCreateDto.user}:${cameraCreateDto.password}@${cameraCreateDto.ip}:${cameraCreateDto.port}/cgi-bin/snapshot.cgi?chn=0&u=${cameraCreateDto.user}&p=${cameraCreateDto.password}`;
+      url = `http://${cameraCreateDto.ip}:${cameraCreateDto.port}/onvifsnapshot/media_service/snapshot`;
       // http://pvidiba:incendis19@185.73.168.32/cgi-bin/snapshot.cgi?chn=0&u=pvidiba&p=incendis19
       newCamera.url = url
     } else {
@@ -74,8 +74,7 @@ export class CameraService {
       newCamera.url = url;
     }
     if (cameraDto.cameraTypeId === 2) {
-      url = `http://${cameraDto.ip}:${cameraDto.port}/cgi-bin/snapshot.cgi?chn=0&u=${cameraDto.user}&p=${cameraDto.password}`;
-
+      url = `http://${cameraDto.ip}:${cameraDto.port}/onvifsnapshot/media_service/snapshot`;
       newCamera.url = url
     } else {
       cameraDto;

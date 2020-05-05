@@ -2,11 +2,11 @@ import { ConnectionOptions } from "typeorm";
 
 const config: ConnectionOptions = {
     type: "mysql",
-    host: "204.93.216.11",
+    host: "localhost",
     port: 3306,
-    username: "isaiasCo_remote",
-    password: "COVID-19",
-    database: "isaiasCo_adfdb",
+    username: "root",
+    password: "",
+    database: "adfcontroll",
     entities: [__dirname + '/**/*.entity{.ts,.js}'],
   
     // We are using migrations, synchronize should be set to false.

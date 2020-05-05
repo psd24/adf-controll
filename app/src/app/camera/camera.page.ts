@@ -3,7 +3,6 @@ import { CamerasService } from '../services/cameras.service';
 import { RoleModel } from '../models/role.model';
 import { interval, Observable, Observer } from 'rxjs';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-camera',
   templateUrl: './camera.page.html',
@@ -17,6 +16,7 @@ export class CameraPage implements OnInit {
   cameras : [] = [];
   timeStamp;
   refreshImage: number = 900000;
+  menuFilterState: boolean = false;
 
   constructor(private _cs: CamerasService, private router: Router) { }
 
@@ -45,5 +45,18 @@ export class CameraPage implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  editCamera(cameraId) {
+    console.log(cameraId)
+  }
+
+  menuFilter() {
+    if(this.menuFilterState == false) this.menuFilterState = true
+    else this.menuFilterState = false;
+  }
+
+  addCamera() {
+    this.router.navigate(['/camera/create']);
   }
 }

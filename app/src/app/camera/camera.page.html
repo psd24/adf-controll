@@ -5,24 +5,52 @@
         </ion-buttons>
         <ion-title>Cameras</ion-title>
         <ion-buttons slot="end">
-            <ion-button [routerLink]="['/profile']">
-                <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+            <ion-button (click)="menuFilter()">
+                <ion-icon name="funnel-outline"></ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
+<ion-header [class.hide]="!menuFilterState">
+    <ion-toolbar color="gucat-orange">
+        <ion-grid class="ion-margin-top">
+            <ion-row>
+                <ion-col>
+                    <ion-title color="gucat-white">Filtres</ion-title>
+                </ion-col>
+            </ion-row>
+            <ion-row class="ion-margin-top">
+                <ion-col>
+                    <ion-item>
+                        <ion-label>Organització</ion-label>
+                        <ion-select placeholder="Seleccioni">
+                          <ion-select-option value="f">Female</ion-select-option>
+                          <ion-select-option value="m">Male</ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item>
+                        <ion-label>Rol</ion-label>
+                        <ion-select placeholder="Seleccioni">
+                          <ion-select-option value="f">Female</ion-select-option>
+                          <ion-select-option value="m">Male</ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+</ion-header>
+
 <ion-content color="gucat-orange">
 
-    <ion-card color="gucat-green">
-        <!-- <img [src]="imageRemote" alt="bosque"> -->
-        <div id="zoomIMG">
-            <ion-img src="{{imageRemote}}&time={{timeStamp}}" alt="bosque"></ion-img>
-        </div>
-        <ion-card-header>
-            <ion-card-title>EXAMPLE</ion-card-title>
-        </ion-card-header>
-    </ion-card>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="addCamera()">
+        <ion-fab-button color="gucat-orange">
+            <ion-icon name="add" color="gucat-white"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
 
     <ion-card color="gucat-green" *ngFor="let camera of cameras">
         <!-- <img [src]="imageRemote" alt="bosque"> -->
@@ -30,7 +58,16 @@
             <ion-img src="{{camera.url}}&time={{timeStamp}}" alt="bosque"></ion-img>
         </div>
         <ion-card-header>
-            <ion-card-title>{{camera.name}}</ion-card-title>
+            <ion-grid>
+                <ion-row>
+                    <ion-col>
+                        <ion-card-title>{{camera.name}}</ion-card-title>
+                    </ion-col>
+                    <ion-col>
+                        <ion-icon name="pencil-outline" (click)="editCamera(camera.id)"></ion-icon>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
         </ion-card-header>
     </ion-card>
 

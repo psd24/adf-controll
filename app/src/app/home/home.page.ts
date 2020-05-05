@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RoleModel } from '../models/role.model';
 import { OrganizationService } from '../services/organization.service';
 import { UsersService } from '../services/users.service';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,8 @@ export class HomePage implements OnInit{
     private auth: AuthService,
     public activeRoute: ActivatedRoute,
     private organizationService: OrganizationService,
-    private usersService: UsersService 
+    private usersService: UsersService,
+    private menuCtrl: MenuController
     ) {
     // _us.getUser().subscribe( user => {
     //   this.usuario = user as UserModel;
@@ -30,6 +32,7 @@ export class HomePage implements OnInit{
   }
 
   ngOnInit() {
+    this.menuCtrl.enable(true)
     const getRole: string = localStorage.getItem('role');
     this.role = JSON.parse(getRole)
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { RoleModel } from './models/role.model';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 export class AppComponent implements OnInit {
 
   public selectedIndex = 0;
+  role: RoleModel;
   public appPages = [
     {
       title: 'Inicio',
@@ -50,6 +52,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.role = JSON.parse(localStorage.getItem('role'));
+    console.log(this.role)
     const path = window.location.pathname.split('/')[1];
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
