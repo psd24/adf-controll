@@ -3,6 +3,9 @@ import { CamerasService } from '../services/cameras.service';
 import { RoleModel } from '../models/role.model';
 import { interval, Observable, Observer } from 'rxjs';
 import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { ViewerModalComponent } from 'ngx-ionic-image-viewer';
+
 @Component({
   selector: 'app-camera',
   templateUrl: './camera.page.html',
@@ -17,7 +20,7 @@ export class CameraPage implements OnInit {
   refreshImage: number = 50*1000;
   menuFilterState: boolean = false;
 
-  constructor(private _cs: CamerasService, private router: Router) { }
+  constructor(private _cs: CamerasService, private router: Router, public modalController: ModalController) { }
 
   ngOnInit() {
     const getRole: string = localStorage.getItem('role');
@@ -58,4 +61,6 @@ export class CameraPage implements OnInit {
   addCamera() {
     this.router.navigate(['/camera/create']);
   }
+
+
 }

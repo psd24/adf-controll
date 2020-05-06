@@ -53,9 +53,8 @@
       </ion-fab>
 
     <ion-card color="gucat-green" *ngFor="let camera of cameras">
-        <!-- <img [src]="imageRemote" alt="bosque"> -->
-        <div id="zoomIMG">
-            <ion-img src="{{camera.url}}&time={{timeStamp}}" alt="bosque"></ion-img>
+        <div>
+            <ion-img src="{{camera.url}}&time={{timeStamp}}" ionImgViewer title="{{camera.name}}"></ion-img>
         </div>
         <ion-card-header>
             <ion-grid>
