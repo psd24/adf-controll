@@ -10,12 +10,11 @@ import { Router } from '@angular/router';
 })
 export class CameraPage implements OnInit {
 
-  public role: RoleModel;
-  imageRemote = "http://185.73.168.32:5557/cgi-bin/snapshot.cgi?chn=0&u=admin&p=papatango03";
+  role: RoleModel;
   subscriptionCamera;
   cameras : [] = [];
   timeStamp;
-  refreshImage: number = 900000;
+  refreshImage: number = 50*1000;
   menuFilterState: boolean = false;
 
   constructor(private _cs: CamerasService, private router: Router) { }
