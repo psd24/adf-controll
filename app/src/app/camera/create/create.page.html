@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="gucat-green">
     <ion-buttons slot="start">
       <ion-back-button text="Atras"></ion-back-button>
     </ion-buttons>
@@ -7,6 +7,37 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="gucat-orange">
+
+  <ion-grid>
+    <ion-row>
+      <form [formGroup]="formCreateCamera" (ngSubmit)="submitForm()" novalidate>
+        <ion-item lines="full">
+          <ion-input formControlName="name" type="text" placeholder="Nom" required></ion-input>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-input formControlName="ip" type="text" placeholder="Ip" required></ion-input>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-input formControlName="port" type="text" placeholder="Port" required></ion-input>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-input formControlName="user" type="text" placeholder="Usuari" required></ion-input>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-input formControlName="password" type="text" placeholder="Contrasenya" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Organitazacio</ion-label>
+          <ion-select placeholder="Seleccioni" formControlName="organizationId">
+            <ion-select-option *ngFor="let organization of organizations" value="{{organization.id}}">{{organization.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-col>
+          <ion-button type="submit" color="gucat-green" expand="block">Guardar</ion-button>
+        </ion-col>
+      </form>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

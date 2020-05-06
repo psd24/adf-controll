@@ -23,4 +23,26 @@ export class CamerasService {
     );
   }
 
+  create(params): Observable<any> {
+    return this.http.post(this.backendUrl + 'camera', params).pipe(
+        map(res => {
+            return res;
+        }),
+        catchError(error => {
+            return throwError(error.error)
+        })
+    );
+  }
+
+  delete(cameraId): Observable<any> {
+    return this.http.delete(this.backendUrl + 'camera/' + cameraId).pipe(
+        map(res => {
+            return res;
+        }),
+        catchError(error => {
+            return throwError(error.error)
+        })
+    );
+}
+
 }

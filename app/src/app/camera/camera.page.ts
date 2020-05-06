@@ -33,6 +33,10 @@ export class CameraPage implements OnInit {
     })
   }
 
+  ionViewWillEnter() {
+    this.getCameras();
+  }
+
   ngOnDestroy(){
     this.subscriptionCamera.unsubscribe();
   }
@@ -53,6 +57,17 @@ export class CameraPage implements OnInit {
     console.log(cameraId)
   }
 
+  removeCamera(cameraId) {
+    this._cs.delete(cameraId).subscribe(
+      res => {
+        console.log(res);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
   menuFilter() {
     if(this.menuFilterState == false) this.menuFilterState = true
     else this.menuFilterState = false;
@@ -61,6 +76,4 @@ export class CameraPage implements OnInit {
   addCamera() {
     this.router.navigate(['/camera/create']);
   }
-
-
 }
