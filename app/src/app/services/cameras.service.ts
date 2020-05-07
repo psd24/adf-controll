@@ -23,8 +23,30 @@ export class CamerasService {
     );
   }
 
+  view(cameraId): Observable<any> {
+    return this.http.get(this.backendUrl + 'camera/' + cameraId).pipe(
+        map(res => {
+            return res;
+        }),
+        catchError(error => {
+            return throwError(error.error)
+        })
+    );
+}
+
   create(params): Observable<any> {
     return this.http.post(this.backendUrl + 'camera', params).pipe(
+        map(res => {
+            return res;
+        }),
+        catchError(error => {
+            return throwError(error.error)
+        })
+    );
+  }
+
+  update(params): Observable<any> {
+    return this.http.put(this.backendUrl + 'camera/', params).pipe(
         map(res => {
             return res;
         }),
@@ -43,6 +65,6 @@ export class CamerasService {
             return throwError(error.error)
         })
     );
-}
+  }
 
 }

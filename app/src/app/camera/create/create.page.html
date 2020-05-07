@@ -33,6 +33,13 @@
                         <ion-select-option *ngFor="let organization of organizations" [value]="organization.id">{{organization.name}}</ion-select-option>
                     </ion-select>
                 </ion-item>
+                <ion-item>
+                    <ion-label>Marca camera</ion-label>
+                    <ion-select placeholder="Seleccioni" formControlName="cameraTypeId">
+                        <ion-select-option [value]="1">Foscam</ion-select-option>
+                        <ion-select-option [value]="2">Dahua</ion-select-option>
+                    </ion-select>
+                </ion-item>
                 <ion-col>
                     <ion-button type="submit" color="gucat-green" expand="block">Guardar</ion-button>
                 </ion-col>

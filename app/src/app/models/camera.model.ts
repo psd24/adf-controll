@@ -8,7 +8,7 @@ export class CameraModel{
     port: String;
     user: String;
     password: String;
-    organizationId: OrganizationModel;
+    organization: OrganizationModel;
     cameraTypeId: number;
 
 }

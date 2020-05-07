@@ -54,7 +54,7 @@ export class CameraPage implements OnInit {
   }
 
   editCamera(cameraId) {
-    console.log(cameraId)
+    this.router.navigate(['/camera/create/' + cameraId])
   }
 
   removeCamera(cameraId) {

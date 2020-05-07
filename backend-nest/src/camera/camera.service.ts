@@ -54,6 +54,7 @@ export class CameraService {
   async getCameraId(_id: number): Promise<Camera> {
     return await this.cameraRepository.findOne({
       where: [{ id: _id }],
+      relations: ["organization", "cameraType"]
     });
   }
 
