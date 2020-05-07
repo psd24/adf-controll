@@ -104,10 +104,11 @@ export class CameraService {
   }
 
   async updateCameraType(cameraType: CameraType): Promise<CameraType> {
-    return this.cameraRepository.save(cameraType);
+    return this.cameraTypeRepository.save(cameraType);
   }
 
   async deleteCameraType(cameraType: CameraType) {
-    return this.cameraRepository.delete(cameraType);
+    console.log(cameraType)
+    return this.cameraTypeRepository.delete(cameraType);
   }
 }

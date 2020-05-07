@@ -43,7 +43,6 @@ export class CreatePage implements OnInit {
       this.camerasService.view(this.cameraId).subscribe(
         (camera: CameraModel) => {
           this.camera = camera;
-          console.log(this.camera)
           this.formCreateCamera.controls['id'].setValue(this.camera.id);
           this.formCreateCamera.controls['name'].setValue(this.camera.name);
           this.formCreateCamera.controls['ip'].setValue(this.camera.ip);
@@ -54,8 +53,6 @@ export class CreatePage implements OnInit {
           //this.formCreateCamera.controls['cameraTypeId'].setValue(this.camera.cameraTypeId);
         }
       );
-      console.log(this.formCreateCamera.controls)
-      
     }
   }
 
@@ -63,7 +60,6 @@ export class CreatePage implements OnInit {
     if(this.cameraId) {
       this.camerasService.update(this.formCreateCamera.value).subscribe(
         (camera: CameraModel) => {
-          console.log(camera)
           this.router.navigate(['/camera'])
         },
         (error) => {
@@ -73,7 +69,6 @@ export class CreatePage implements OnInit {
     }else{
       this.camerasService.create(this.formCreateCamera.value).subscribe(
         (camera: CameraModel) => {
-          console.log(camera)
           this.router.navigate(['/camera'])
         },
         (error) => {

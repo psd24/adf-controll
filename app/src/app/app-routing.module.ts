@@ -34,8 +34,12 @@ const routes: Routes = [
     loadChildren: () => import('./organization/organization.module').then( m => m.OrganizationPageModule)
   },
   {
+    path: 'camera-type',
+    loadChildren: () => import('./camera-type/camera-type.module').then( m => m.CameraTypePageModule)
+  },
+  {
     path:'**',pathMatch:'full', redirectTo:'home'
-  }
+  },
 
 
 

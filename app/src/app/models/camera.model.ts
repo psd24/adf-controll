@@ -1,4 +1,5 @@
 import { OrganizationModel } from '../models/organization.model';
+import { CameraTypeModel } from '../models/camera-type.model';
 
 export class CameraModel{
 
@@ -9,6 +10,6 @@ export class CameraModel{
     user: String;
     password: String;
     organization: OrganizationModel;
-    cameraTypeId: number;
+    cameraType: CameraTypeModel;
 
 }

@@ -62,7 +62,7 @@ export class CameraController {
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Get('type')
+  @Get('type/index')
   getCameraType() {
     return this.cameraService.getCameraType();
   }

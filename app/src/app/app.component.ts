@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
   public selectedIndex = 0;
   role: RoleModel;
-  public appPages = [
+  /*public appPages = [
     {
       title: 'Inicio',
       url: '/home',
@@ -34,7 +34,30 @@ export class AppComponent implements OnInit {
       title: 'Administrar',
       url: '/admin',
     }
-  ];
+  ];*/
+
+  public appPages = [
+    {
+      title: 'Inicio',
+      url: '/home',
+    },
+    {
+      title: 'Role',
+      url: '/role',
+    },
+    {
+      title: 'Organización',
+      url: '/organization',
+    },
+    {
+      title: 'Camera',
+      url: '/camera',
+    },
+    {
+      title: 'Tipo de camara',
+      url: '/camera-type',
+    }
+  ]
 
   constructor(
     private platform: Platform,
