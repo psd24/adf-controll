@@ -5,6 +5,8 @@ import { CamerasService } from '../../services/cameras.service';
 import { CameraModel } from '../../models/camera.model';
 import { OrganizationService } from '../../services/organization.service';
 import { OrganizationModel } from '../../models/organization.model';
+import { CamerasTypeService } from '../../services/cameras-type.service';
+import { CameraTypeModel } from '../../models/camera-type.model';
 
 @Component({
   selector: 'app-create',
@@ -15,6 +17,7 @@ export class CreatePage implements OnInit {
 
   formCreateCamera: FormGroup;
   organizations: OrganizationModel;
+  cameraTypes: CameraTypeModel;
   cameraId: string;
   camera: CameraModel;
 
@@ -23,12 +26,14 @@ export class CreatePage implements OnInit {
     private router: Router,
     private camerasService: CamerasService,
     private organizationService: OrganizationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private camerasTypeService: CamerasTypeService
   ) { }
 
   ngOnInit() {
     this.cameraId = this.route.snapshot.paramMap.get('id');
     this.organizationService.index().subscribe((organization: OrganizationModel) => this.organizations = organization);
+    this.camerasTypeService.index().subscribe((cameraTypes: CameraTypeModel) => this.cameraTypes = cameraTypes);
     this.formCreateCamera = this.formBuilder.group({
       id: [''],
       name: ['', [Validators.required, Validators.minLength(2)]],
@@ -37,12 +42,13 @@ export class CreatePage implements OnInit {
       user: ['', [Validators.required, Validators.minLength(2)]],
       password: ['', [Validators.required, Validators.minLength(2)]],
       organizationId: [''],
-      cameraTypeId: [1],
+      cameraTypeId: [''],
     })
     if(this.cameraId) {
       this.camerasService.view(this.cameraId).subscribe(
         (camera: CameraModel) => {
           this.camera = camera;
+          console.log(this.camera)
           this.formCreateCamera.controls['id'].setValue(this.camera.id);
           this.formCreateCamera.controls['name'].setValue(this.camera.name);
           this.formCreateCamera.controls['ip'].setValue(this.camera.ip);
@@ -50,7 +56,7 @@ export class CreatePage implements OnInit {
           this.formCreateCamera.controls['user'].setValue(this.camera.user);
           this.formCreateCamera.controls['password'].setValue(this.camera.password);
           this.formCreateCamera.controls['organizationId'].setValue(this.camera.organization.id);
-          //this.formCreateCamera.controls['cameraTypeId'].setValue(this.camera.cameraTypeId);
+          this.formCreateCamera.controls['cameraTypeId'].setValue(this.camera.cameraType.id);
         }
       );
     }
@@ -76,6 +82,10 @@ export class CreatePage implements OnInit {
         }
       );
     }
+  }
+
+  backButton() {
+    this.router.navigate(['/camera']);
   }
 
 }

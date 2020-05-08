@@ -1,9 +1,28 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="gucat-green">
+    <ion-buttons slot="start" color="gucat-white" (click)="backButton()">
+      <ion-icon name="chevron-back-outline" style="font-size: 25px;"></ion-icon>Atras
+    </ion-buttons>
     <ion-title>create</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content  color="gucat-orange">
+
+  <ion-grid>
+    <ion-row>
+        <form [formGroup]="formCreateCameraType" (ngSubmit)="submitForm()" novalidate>
+            <ion-item lines="full">
+                <ion-input formControlName="name" type="text" placeholder="Nom" required></ion-input>
+            </ion-item>
+            <ion-item lines="full">
+                <ion-input formControlName="type" type="text" placeholder="Tipus" required></ion-input>
+            </ion-item>
+            <ion-col>
+                <ion-button type="submit" color="gucat-green" expand="block">Guardar</ion-button>
+            </ion-col>
+        </form>
+    </ion-row>
+</ion-grid>
 
 </ion-content>
