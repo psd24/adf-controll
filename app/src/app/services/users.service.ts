@@ -4,13 +4,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { AppConfig } from '../app.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
 
-  private backendUrl = 'http://localhost:3000/';
+  private backendUrl = AppConfig.urlBackend;
   
   constructor( private http: HttpClient ) { }
    

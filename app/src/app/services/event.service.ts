@@ -3,13 +3,14 @@ import { AuthService } from './auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { AppConfig } from '../app.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
 
-  private backendUrl = 'http://localhost:3000/';
+  private backendUrl = AppConfig.urlBackend;
 
   constructor(private auth: AuthService, private http: HttpClient ) { }
 

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { async } from '@angular/core/testing';
 import { ok } from 'assert';
+import { AppConfig } from '../app.config';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ import { ok } from 'assert';
 export class AuthService {
 
   usuario: UserModel = new UserModel();
-  private url = 'http://localhost:3000/';
+  private url = AppConfig.urlBackend;
 
   userToken: string;
 

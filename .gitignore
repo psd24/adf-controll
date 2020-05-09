@@ -1,1 +1,2 @@
 backend/ormconfig.json
+app/src/app/app.config.ts
