@@ -3,6 +3,7 @@ import { RoleModel } from './role.model';
 
 export class UserModel{
 
+    id: number;
     code:string;
     email: string;
     name: string;

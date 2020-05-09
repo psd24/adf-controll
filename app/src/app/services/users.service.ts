@@ -34,6 +34,61 @@ export class UsersService {
             return throwError(error.error)
         })
     );
+  }
+
+  getUsers(): Observable<any> {
+    return this.http.get(this.backendUrl + 'auth/user').pipe(
+      map(res => {
+        return res;
+      }),
+      catchError(error => {
+        return throwError(error.error)
+      })
+    );
+  }
+
+  view(userId): Observable<any> {
+    return this.http.get(this.backendUrl + 'auth/user/' + userId).pipe(
+        map(res => {
+            return res;
+        }),
+        catchError(error => {
+            return throwError(error.error)
+        })
+    );
+  }
+
+  create(params): Observable<any> {
+    return this.http.post(this.backendUrl + 'auth/register/', params).pipe(
+        map(res => {
+            return res;
+        }),
+        catchError(error => {
+            return throwError(error.error)
+        })
+    );
+  }
+
+  update(params): Observable<any> {
+    return this.http.put(this.backendUrl + 'auth/register/', params).pipe(
+        map(res => {
+            return res;
+        }),
+        catchError(error => {
+            return throwError(error.error)
+        })
+    );
+  }
+
+  delete(userId): Observable<any> {
+    return this.http.delete(this.backendUrl + 'auth/user/delete/' + userId).pipe(
+        map(res => {
+            return res;
+        }),
+        catchError(error => {
+            return throwError(error.error)
+        })
+    );
 }
   
 }

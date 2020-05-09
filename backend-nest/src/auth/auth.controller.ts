@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UnauthorizedException, UseGuards, Get, Request } from '@nestjs/common';
+import { Controller, Post, Body, UnauthorizedException, UseGuards, Get, Request, Param, Delete, Put } from '@nestjs/common';
 import { LoginDto } from 'src/users/dtos/login.dto';
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
@@ -38,8 +38,37 @@ export class AuthController {
 
     @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
+    @ApiOkResponse({ type: User })
+    @Put('register')
+    async update(@Body() user: User) {
+      return this.usersService.update(user);
+    }
+
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
     @Get('user/count')
     async userCount(): Promise<number> {
       return this.usersService.usersCount();
+    }
+
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    @Get('user')
+    async userGet() {
+      return this.usersService.getUsers();
+    }
+
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    @Get('user/:id')
+    async userIdGet(@Param() params) {
+      return this.usersService.getUser(params.id);
+    }
+
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    @Delete('user/delete/:id')
+    async userDelete(@Param() params) {
+      return this.usersService.delete(params.id);
     }
 }

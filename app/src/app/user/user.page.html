@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="gucat-green">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false" color="gucat-white"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Usuaris</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="gucat-orange">
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="addCamera()">
+    <ion-fab-button color="gucat-orange">
+        <ion-icon name="add" color="gucat-white"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-item lines="full" *ngFor="let user of users; index as i;" color="gucat-green">
+    <ion-label slot="start">{{user.name}}</ion-label>
+    <ion-label slot="end">
+      <ion-icon name="pencil-outline" (click)="editUser(user.id)"></ion-icon>
+    </ion-label>
+    <ion-label slot="end">
+      <ion-icon name="trash-outline" (click)="removeUser(i, user.id)"></ion-icon>
+    </ion-label>
+  </ion-item>
+
+</ion-content>

@@ -1,7 +1,7 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
-import { Repository } from 'typeorm';
+import { Repository, getConnection } from 'typeorm';
 import { RegisterUserDto } from './dtos/register-user.dto';
 import { Organization } from 'src/entities/organization.entity';
 import { Role } from 'src/entities/role.entity';
@@ -30,9 +30,9 @@ export class UsersService {
 
     async register(userDto: RegisterUserDto): Promise<User> {
         const user = await this.findByEmail(userDto.email);
-        if (user) {
+        /*if (user) {
             throw new BadRequestException('User already registered.');
-        }
+        }*/
 
         const newUser = new User();
         newUser.email = userDto.email;
@@ -52,6 +52,29 @@ export class UsersService {
             throw new BadRequestException('Invalid organization id.');
         }
         return this.usersRepository.save(newUser);
+    }
+
+    async update(user: User) {
+        
+        return await getConnection().createQueryBuilder().update(User).set(user).where("id = :id", { id: user.id }).execute();
+        //return this.rolesRepository.save(user)
+    }
+
+    async delete(user: User) {
+        return this.usersRepository.delete(user);
+    }
+
+    async getUsers() {
+        return this.usersRepository.find({ 
+            relations: ['role', 'organization'],
+        });
+    }
+
+    async getUser(_id: number) {
+        return this.usersRepository.findOne({
+            where: [{ "id": _id }],
+            relations: ['role', 'organization'],
+        });
     }
 
     async addRoles(roleNames: string[]): Promise<Role[]> {

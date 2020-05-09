@@ -56,6 +56,10 @@ export class AppComponent implements OnInit {
     {
       title: 'Tipo de camara',
       url: '/camera-type',
+    },
+    {
+      title: 'Usuaris',
+      url: '/user',
     }
   ]
 

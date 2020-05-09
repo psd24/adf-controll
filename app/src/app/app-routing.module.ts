@@ -38,6 +38,10 @@ const routes: Routes = [
     loadChildren: () => import('./camera-type/camera-type.module').then( m => m.CameraTypePageModule)
   },
   {
+    path: 'user',
+    loadChildren: () => import('./user/user.module').then( m => m.UserPageModule)
+  },
+  {
     path:'**',pathMatch:'full', redirectTo:'home'
   },
 

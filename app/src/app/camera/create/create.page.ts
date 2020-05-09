@@ -45,10 +45,10 @@ export class CreatePage implements OnInit {
       cameraTypeId: [''],
     })
     if(this.cameraId) {
+      console.log('ok')
       this.camerasService.view(this.cameraId).subscribe(
         (camera: CameraModel) => {
           this.camera = camera;
-          console.log(this.camera)
           this.formCreateCamera.controls['id'].setValue(this.camera.id);
           this.formCreateCamera.controls['name'].setValue(this.camera.name);
           this.formCreateCamera.controls['ip'].setValue(this.camera.ip);

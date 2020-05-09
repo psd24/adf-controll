@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="gucat-green">
+    <ion-buttons slot="start" color="gucat-white" (click)="backButton()">
+      <ion-icon name="chevron-back-outline" style="font-size: 25px;"></ion-icon>Atras
+    </ion-buttons>
+    <ion-title>create</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="gucat-orange">
+
+  <ion-grid>
+    <ion-row>
+        <form [formGroup]="formCreateUser" (ngSubmit)="submitForm()" novalidate>
+            <ion-item lines="full">
+                <ion-input formControlName="name" type="text" placeholder="Nom" required></ion-input>
+            </ion-item>
+            <ion-item lines="full">
+                <ion-input formControlName="code" type="text" placeholder="Code" required></ion-input>
+            </ion-item>
+            <ion-item lines="full">
+              <ion-input formControlName="email" type="text" placeholder="Email" required></ion-input>
+            </ion-item>
+            <ion-item lines="full">
+              <ion-input formControlName="password" type="password" placeholder="Password" required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Organitazacio</ion-label>
+              <ion-select placeholder="Seleccioni" formControlName="organization">
+                  <ion-select-option *ngFor="let organization of organizations" [value]="organization.id">{{organization.name}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label>Rol</ion-label>
+              <ion-select placeholder="Seleccioni" formControlName="role">
+                <ion-select-option *ngFor="let role of roles" [value]="role.id">{{role.name}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-col>
+                <ion-button type="submit" color="gucat-green" expand="block">Guardar</ion-button>
+            </ion-col>
+        </form>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
