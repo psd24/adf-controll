@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, ManyToOne, ManyToMany } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, ManyToOne, ManyToMany, BeforeUpdate } from "typeorm";
 
 import { Exclude } from 'class-transformer';
 import { hash } from "bcrypt";
@@ -36,6 +36,12 @@ export class User {
 
   @BeforeInsert()
   preProcess() {
+    return hash(this.password, 10).then(encrypted => this.password = encrypted);
+  }
+
+  @BeforeUpdate()
+  preProcessUpdate() {
+    console.log('ok')
     return hash(this.password, 10).then(encrypted => this.password = encrypted);
   }
 }

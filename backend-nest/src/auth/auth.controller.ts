@@ -6,6 +6,8 @@ import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { User } from 'src/entities/user.entity';
 import { RegisterUserDto } from 'src/users/dtos/register-user.dto';
+import { UpdateUserDto } from 'src/users/dtos/update-user.dto';
+import { ResetPasswordDto } from 'src/users/dtos/reset-password.dto';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -39,9 +41,17 @@ export class AuthController {
     @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
     @ApiOkResponse({ type: User })
-    @Put('register')
-    async update(@Body() user: User) {
-      return this.usersService.update(user);
+    @Put('register/update')
+    async update(@Body() updateUserDto: UpdateUserDto) {
+      return this.usersService.update(updateUserDto);
+    }
+
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    @ApiOkResponse({ type: User })
+    @Put('register/resetpassword')
+    async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+      return this.usersService.resetPassword(resetPasswordDto);
     }
 
     @ApiBearerAuth()

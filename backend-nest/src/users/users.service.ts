@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
 import { Repository, getConnection } from 'typeorm';
 import { RegisterUserDto } from './dtos/register-user.dto';
+import { UpdateUserDto } from './dtos/update-user.dto';
+import { ResetPasswordDto } from './dtos/reset-password.dto';
 import { Organization } from 'src/entities/organization.entity';
 import { Role } from 'src/entities/role.entity';
 
@@ -54,10 +56,37 @@ export class UsersService {
         return this.usersRepository.save(newUser);
     }
 
-    async update(user: User) {
-        
-        return await getConnection().createQueryBuilder().update(User).set(user).where("id = :id", { id: user.id }).execute();
-        //return this.rolesRepository.save(user)
+    async update(updateUserDto: UpdateUserDto) {
+        // return await getConnection().createQueryBuilder().update(User).set(user).where("id = :id", { id: user.id }).execute();
+        const newUserUpdate = new User();
+        newUserUpdate.id = updateUserDto.id;
+        newUserUpdate.email = updateUserDto.email;
+        newUserUpdate.name = updateUserDto.name;
+        newUserUpdate.code = updateUserDto.code;
+        newUserUpdate.password = updateUserDto.password;
+
+        newUserUpdate.role = await this.rolesRepository.findOne({ id: updateUserDto.role });
+        if (!newUserUpdate.role) {
+            throw new BadRequestException('Invalid role id.');
+        }
+
+        newUserUpdate.organization = await this.organizationsRepository.findOne({
+            id: updateUserDto.organization,
+        });
+        if (!newUserUpdate.organization) {
+            throw new BadRequestException('Invalid organization id.');
+        }
+        console.log(newUserUpdate);
+        return this.usersRepository.save(newUserUpdate)
+    }
+
+    async resetPassword(resetPasswordDto: ResetPasswordDto) {
+        // return await getConnection().createQueryBuilder().update(User).set(user).where("id = :id", { id: user.id }).execute();
+        const newUserUpdate = new User();
+        newUserUpdate.id = resetPasswordDto.id;
+        newUserUpdate.password = resetPasswordDto.password;
+
+        return this.usersRepository.save(newUserUpdate)
     }
 
     async delete(user: User) {

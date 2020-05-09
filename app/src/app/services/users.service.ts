@@ -71,7 +71,18 @@ export class UsersService {
   }
 
   update(params): Observable<any> {
-    return this.http.put(this.backendUrl + 'auth/register/', params).pipe(
+    return this.http.put(this.backendUrl + 'auth/register/update', params).pipe(
+        map(res => {
+            return res;
+        }),
+        catchError(error => {
+            return throwError(error.error)
+        })
+    );
+  }
+
+  resetPassword(params): Observable<any> {
+    return this.http.put(this.backendUrl + 'auth/register/resetpassword', params).pipe(
         map(res => {
             return res;
         }),
@@ -90,6 +101,6 @@ export class UsersService {
             return throwError(error.error)
         })
     );
-}
+  }
   
 }

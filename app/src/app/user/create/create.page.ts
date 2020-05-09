@@ -51,6 +51,7 @@ export class CreatePage implements OnInit {
           this.formCreateUser.controls['id'].setValue(this.user.id);
           this.formCreateUser.controls['name'].setValue(this.user.name);
           this.formCreateUser.controls['code'].setValue(this.user.code);
+          this.formCreateUser.controls['password'].setValue('');
           this.formCreateUser.controls['email'].setValue(this.user.email);
           this.formCreateUser.controls['organization'].setValue(this.user.organization.id);
           this.formCreateUser.controls['role'].setValue(this.user.role.id);
@@ -59,10 +60,14 @@ export class CreatePage implements OnInit {
     }
   }
 
+  ionViewWillEnter() {
+    this.formCreateUser.controls['password'].setValue('');
+  }
+
   submitForm() {
-    console.log(this.formCreateUser.value);
     if(this.userId) {
-      this.formCreateUser.controls['password'].setValue(this.user.password);
+      if(!this.formCreateUser.controls['password'].value) this.formCreateUser.controls['password'].setValue(this.user.password);
+      console.log(this.formCreateUser.value)
       this.usersService.update(this.formCreateUser.value).subscribe(
         (user: UserModel) => {
           this.router.navigate(['/user'])
