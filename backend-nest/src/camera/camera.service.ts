@@ -29,10 +29,7 @@ export class CameraService {
   }
 
   async getCameraWeb(filter: FilterDto) {
-    console.log(filter.query)
-    let query1:object = JSON.parse(filter.query);
-    console.log(query1)
-    return this.cameraRepository.find(query1);  
+    return this.cameraRepository.find(filter.query);  
   }
 
   async createCamera(cameraCreateDto: CameraCreateDto): Promise<Camera> {
