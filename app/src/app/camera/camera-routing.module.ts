@@ -15,7 +15,12 @@ const routes: Routes = [
   {
     path: 'create/:id',
     loadChildren: () => import('./create/create.module').then( m => m.CreatePageModule)
+  },
+  {
+    path: 'info/:id',
+    loadChildren: () => import('./info/info.module').then( m => m.InfoPageModule)
   }
+
 
 ];
 

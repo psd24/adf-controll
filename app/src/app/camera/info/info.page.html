@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar color="gucat-green">
+    <ion-buttons slot="start" color="gucat-white" (click)="backButton()">
+        <ion-icon name="chevron-back-outline" style="font-size: 25px;"></ion-icon>Atras
+    </ion-buttons>
+    <ion-title>Informació</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="gucat-orange">
+
+  <ion-card color="gucat-green">
+    <ion-card-header>
+      <ion-card-title>Humitat</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <ion-icon name="water-outline"></ion-icon>
+      <p *ngIf="weather"> {{weather.main.humidity}} %</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card color="gucat-green">
+    <ion-card-header>
+      <ion-card-title>Presio</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <ion-icon name="timer-outline"></ion-icon>
+      <p *ngIf="weather"> {{weather.main.pressure}} hPa</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card color="gucat-green">
+    <ion-card-header>
+      <ion-card-title>Temperatura</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <ion-icon name="thermometer-outline"></ion-icon>
+      <p *ngIf="weather"> {{weather.main.temp}} °C actual</p>
+      <p *ngIf="weather"> {{weather.main.temp_max}} °C max</p>
+      <p *ngIf="weather"> {{weather.main.temp_min}} °C min</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card color="gucat-green">
+    <ion-card-header>
+      <ion-card-title>Vient</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <ion-icon name="flag-outline"></ion-icon>
+      <p *ngIf="weather"> {{weather.wind.speed}} km/h</p>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

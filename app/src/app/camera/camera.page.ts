@@ -71,6 +71,10 @@ export class CameraPage implements OnInit {
     this.router.navigate(['/camera/create/' + cameraId])
   }
 
+  infoCamera(cameraId) {
+    this.router.navigate(['/camera/info/' + cameraId])
+  }
+
   removeCamera(cameraId) {
     this._cs.delete(cameraId).subscribe(
       res => {
