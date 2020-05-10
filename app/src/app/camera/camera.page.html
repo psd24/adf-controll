@@ -14,6 +14,7 @@
 
 <ion-header [class.hide]="!menuFilterState">
     <ion-toolbar color="gucat-orange">
+        <form [formGroup]="formSearchCamera" (ngSubmit)="getCameras()" novalidate>
         <ion-grid class="ion-margin-top">
             <ion-row>
                 <ion-col>
@@ -39,8 +40,21 @@
                         </ion-select>
                       </ion-item>
                 </ion-col>
+                <ion-col>
+                    <ion-item color="gucat-green">
+                        <ion-label>Estat</ion-label>
+                        <ion-select placeholder="Seleccioni" formControlName="state">
+                          <ion-select-option value="">Totes</ion-select-option>
+                          <ion-select-option value="0">Inactiu</ion-select-option>
+                          <ion-select-option value="1">Actiu</ion-select-option>
+                          <ion-select-option value="2">Penden</ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                </ion-col>
             </ion-row>
+            <ion-button type="submit" color="gucat-green" expand="full">Buscar</ion-button>
         </ion-grid>
+    </form>
     </ion-toolbar>
 </ion-header>
 
@@ -62,8 +76,8 @@
                     <ion-col>
                         <ion-card-title>{{camera.name}}</ion-card-title>
                     </ion-col>
-                    <ion-col>
-                        <ion-icon name="pencil-outline" (click)="editCamera(camera.id)"></ion-icon>
+                    <ion-col style="text-align: right;">
+                        <ion-icon name="pencil-outline" (click)="editCamera(camera.id)" class="ion-margin-end"></ion-icon>
                         <ion-icon name="trash-outline" (click)="removeCamera(camera.id)"></ion-icon>
                     </ion-col>
                 </ion-row>

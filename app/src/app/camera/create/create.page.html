@@ -27,6 +27,12 @@
                 <ion-item lines="full">
                     <ion-input formControlName="password" type="text" placeholder="Contrasenya" required></ion-input>
                 </ion-item>
+                <ion-item lines="full">
+                    <ion-input formControlName="lat" type="text" placeholder="Latitut" required></ion-input>
+                </ion-item>
+                <ion-item lines="full">
+                    <ion-input formControlName="lon" type="text" placeholder="Longitud" required></ion-input>
+                </ion-item>
                 <ion-item>
                     <ion-label>Organitazacio</ion-label>
                     <ion-select placeholder="Seleccioni" formControlName="organizationId">
@@ -36,9 +42,11 @@
                 <ion-item>
                     <ion-label>Marca camera</ion-label>
                     <ion-select placeholder="Seleccioni" formControlName="cameraTypeId">
-                        <ion-select-option [value]="1">Foscam</ion-select-option>
-                        <ion-select-option [value]="2">Dahua</ion-select-option>
+                        <ion-select-option *ngFor="let cameraType of cameraTypes" [value]="cameraType.id">{{cameraType.name}}</ion-select-option>
                     </ion-select>
+                </ion-item>
+                <ion-item *ngIf="cameraId">
+                    <span>Estat</span> <ion-toggle color="success" slot="end" formControlName="state"></ion-toggle>
                 </ion-item>
                 <ion-col>
                     <ion-button type="submit" color="gucat-green" expand="block">Guardar</ion-button>

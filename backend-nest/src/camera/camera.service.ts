@@ -7,6 +7,7 @@ import { Organization } from '../entities/organization.entity';
 import { CameraDto } from './dtos/camera.dto';
 import { CameraCreateDto } from './dtos/cameraCreate.dto';
 import { CameraTypeDto } from './dtos/camera-type.dto';
+import { FilterDto } from './dtos/filter.dto';
 
 @Injectable()
 export class CameraService {
@@ -20,9 +21,18 @@ export class CameraService {
   ) {}
 
   async getCamera() {
-    return this.cameraRepository.find(
-      { relations: ["organization", "cameraType"] }
+    return this.cameraRepository.find({
+       relations: ["organization", "cameraType"],
+       where: [{ state: 1 }],
+      },
     );
+  }
+
+  async getCameraWeb(filter: FilterDto) {
+    console.log(filter.query)
+    let query1:object = JSON.parse(filter.query);
+    console.log(query1)
+    return this.cameraRepository.find(query1);  
   }
 
   async createCamera(cameraCreateDto: CameraCreateDto): Promise<Camera> {
@@ -32,6 +42,9 @@ export class CameraService {
     newCamera.name = cameraCreateDto.name
     newCamera.port =cameraCreateDto.port;
     newCamera.user = cameraCreateDto.user;
+    newCamera.lat = cameraCreateDto.lat;
+    newCamera.lon = cameraCreateDto.lon;
+    newCamera.state = cameraCreateDto.state;
     newCamera.password = cameraCreateDto.password;
     newCamera.organization = await this.organizationRepository.findOne({ id: cameraCreateDto.organizationId });
     newCamera.cameraType = await this.cameraTypeRepository.findOne({ id: cameraCreateDto.cameraTypeId });
@@ -67,6 +80,9 @@ export class CameraService {
     newCamera.port =cameraDto.port;
     newCamera.user = cameraDto.user;
     newCamera.password = cameraDto.password;
+    newCamera.lat = cameraDto.lat;
+    newCamera.lon = cameraDto.lon;
+    newCamera.state = cameraDto.state;
     newCamera.organization = await this.organizationRepository.findOne({ id: cameraDto.organizationId });
     newCamera.cameraType = await this.cameraTypeRepository.findOne({ id: cameraDto.cameraTypeId });
     

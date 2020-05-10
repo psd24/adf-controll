@@ -29,6 +29,21 @@ export class CameraCreateDto {
   password: string;
 
   @ApiProperty({ required: true })
+  @IsString()
+  @IsNotEmpty()
+  lat: string;
+
+  @ApiProperty({ required: true })
+  @IsString()
+  @IsNotEmpty()
+  lon: string;
+
+  @ApiProperty({ required: true })
+  @IsNumber()
+  @IsNotEmpty()
+  state: number;
+
+  @ApiProperty({ required: true })
   @IsNumber()
   organizationId: number;
 

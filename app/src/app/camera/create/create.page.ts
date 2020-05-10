@@ -41,11 +41,13 @@ export class CreatePage implements OnInit {
       port: ['', [Validators.required, Validators.minLength(2)]],
       user: ['', [Validators.required, Validators.minLength(2)]],
       password: ['', [Validators.required, Validators.minLength(2)]],
-      organizationId: [''],
-      cameraTypeId: [''],
+      lat: ['', [Validators.required, Validators.minLength(2)]],
+      lon: ['', [Validators.required, Validators.minLength(2)]],
+      state: [''],
+      organizationId: ['', [Validators.required, Validators.minLength(2)]],
+      cameraTypeId: ['', [Validators.required, Validators.minLength(2)]],
     })
     if(this.cameraId) {
-      console.log('ok')
       this.camerasService.view(this.cameraId).subscribe(
         (camera: CameraModel) => {
           this.camera = camera;
@@ -55,6 +57,9 @@ export class CreatePage implements OnInit {
           this.formCreateCamera.controls['port'].setValue(this.camera.port);
           this.formCreateCamera.controls['user'].setValue(this.camera.user);
           this.formCreateCamera.controls['password'].setValue(this.camera.password);
+          this.formCreateCamera.controls['lat'].setValue(this.camera.lat);
+          this.formCreateCamera.controls['lon'].setValue(this.camera.lon);
+          this.formCreateCamera.controls['state'].setValue(this.camera.state);
           this.formCreateCamera.controls['organizationId'].setValue(this.camera.organization.id);
           this.formCreateCamera.controls['cameraTypeId'].setValue(this.camera.cameraType.id);
         }
@@ -64,8 +69,14 @@ export class CreatePage implements OnInit {
 
   submitForm() {
     if(this.cameraId) {
+      if (this.formCreateCamera.controls['state'].value === true) {
+        this.formCreateCamera.controls['state'].setValue(1)
+      }else{
+        this.formCreateCamera.controls['state'].setValue(0)
+      }
       this.camerasService.update(this.formCreateCamera.value).subscribe(
         (camera: CameraModel) => {
+          console.log(this.formCreateCamera.value)
           this.router.navigate(['/camera'])
         },
         (error) => {
@@ -73,6 +84,7 @@ export class CreatePage implements OnInit {
         }
       );
     }else{
+      this.formCreateCamera.controls['state'].setValue(2);
       this.camerasService.create(this.formCreateCamera.value).subscribe(
         (camera: CameraModel) => {
           this.router.navigate(['/camera'])

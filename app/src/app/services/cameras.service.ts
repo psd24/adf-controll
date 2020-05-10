@@ -13,8 +13,8 @@ export class CamerasService {
 
   constructor(private http: HttpClient) { }
 
-  index(): Observable<any> {
-    return this.http.get(this.backendUrl + 'camera').pipe(
+  index(params): Observable<any> {
+    return this.http.get(this.backendUrl + 'camera/web', params).pipe(
         map(res => {
             return res;
         }),

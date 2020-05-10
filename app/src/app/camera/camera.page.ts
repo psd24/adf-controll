@@ -5,6 +5,7 @@ import { interval, Observable, Observer } from 'rxjs';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ViewerModalComponent } from 'ngx-ionic-image-viewer';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-camera',
@@ -19,12 +20,16 @@ export class CameraPage implements OnInit {
   timeStamp;
   refreshImage: number = 50*1000;
   menuFilterState: boolean = false;
+  formSearchCamera: FormGroup;
 
-  constructor(private _cs: CamerasService, private router: Router, public modalController: ModalController) { }
+  constructor(private _cs: CamerasService, private router: Router, public modalController: ModalController, private formBuilder: FormBuilder,) { }
 
   ngOnInit() {
     const getRole: string = localStorage.getItem('role');
     this.role = JSON.parse(getRole)
+    this.formSearchCamera = this.formBuilder.group({
+      state: [''],
+    })
     this.getCameras();
     this.timeStamp = (new Date()).getTime();
     this.subscriptionCamera = interval(this.refreshImage).subscribe(va =>{
@@ -42,7 +47,7 @@ export class CameraPage implements OnInit {
   }
 
   getCameras(){
-    this._cs.index().subscribe(
+    this._cs.index(this.formSearchCamera.value).subscribe(
       (cameras) => {
         this.cameras = cameras;
         console.log(this.cameras)

@@ -9,6 +9,9 @@ export class CameraModel{
     port: String;
     user: String;
     password: String;
+    lat: String;
+    lon: String;
+    state: number;
     organization: OrganizationModel;
     cameraType: CameraTypeModel;
 

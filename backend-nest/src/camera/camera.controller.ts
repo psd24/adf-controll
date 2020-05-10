@@ -16,6 +16,7 @@ import { CameraService } from './camera.service';
 import { CameraDto } from './dtos/camera.dto';
 import { CameraCreateDto } from './dtos/cameraCreate.dto';
 import { CameraTypeDto } from './dtos/camera-type.dto';
+import { FilterDto } from './dtos/filter.dto';
 
 @ApiTags('Authentication')
 @Controller('camera')
@@ -27,6 +28,13 @@ export class CameraController {
   @Get()
   get() {
     return this.cameraService.getCamera();
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Get('web')
+  async getCameraWeb(@Body() filter: FilterDto) {
+    return this.cameraService.getCameraWeb(filter);
   }
 
   @ApiBearerAuth()

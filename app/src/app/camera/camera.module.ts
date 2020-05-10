@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxIonicImageViewerModule } from 'ngx-ionic-image-viewer';
 
 import { IonicModule } from '@ionic/angular';
@@ -13,6 +13,7 @@ import { CameraPage } from './camera.page';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule,
     CameraPageRoutingModule,
     NgxIonicImageViewerModule

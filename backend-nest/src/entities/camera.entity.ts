@@ -34,6 +34,15 @@ export class Camera {
   @Column()
   url: string;
 
+  @Column()
+  lat: string;
+
+  @Column()
+  lon: string;
+
+  @Column()
+  state: number;
+
   @ManyToOne(() => Organization, organization => organization.camera)
   @JoinTable()
   organization: Organization;
