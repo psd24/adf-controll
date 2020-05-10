@@ -32,7 +32,7 @@ export class CameraController {
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Get('web')
+  @Post('web')
   async getCameraWeb(@Body() filter: FilterDto) {
     return this.cameraService.getCameraWeb(filter);
   }

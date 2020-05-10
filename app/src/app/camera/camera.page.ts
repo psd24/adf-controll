@@ -21,6 +21,7 @@ export class CameraPage implements OnInit {
   refreshImage: number = 50*1000;
   menuFilterState: boolean = false;
   formSearchCamera: FormGroup;
+  query:object
 
   constructor(private _cs: CamerasService, private router: Router, public modalController: ModalController, private formBuilder: FormBuilder,) { }
 
@@ -47,7 +48,15 @@ export class CameraPage implements OnInit {
   }
 
   getCameras(){
-    this._cs.index(this.formSearchCamera.value).subscribe(
+    this.menuFilterState = false
+    if(this.formSearchCamera.controls['state'].value){
+      this.query  = {"relations": ["organization", "cameraType"], "where": [{ "state": this.formSearchCamera.controls['state'].value }]};
+    } 
+    else{
+      this.query  = {"relations": ["organization", "cameraType"]};
+    }
+
+    this._cs.index(this.query).subscribe(
       (cameras) => {
         this.cameras = cameras;
         console.log(this.cameras)
