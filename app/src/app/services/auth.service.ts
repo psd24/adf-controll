@@ -39,7 +39,7 @@ export class AuthService {
 
    login( user:UserModel ){
 
-    this.http.post('http://localhost:3000/auth/login', user).subscribe( resp => {
+    this.http.post(AppConfig.urlBackend + 'auth/login', user).subscribe( resp => {
       if (resp['accessToken'] === null) {
         return;
       }
