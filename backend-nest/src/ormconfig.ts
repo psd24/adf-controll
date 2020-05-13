@@ -1,12 +1,13 @@
 import { ConnectionOptions } from "typeorm";
+import { AppConfig } from './app.config';
 
 const config: ConnectionOptions = {
     type: "mysql",
     host: "localhost",
     port: 3306,
-    username: "root",
-    password: "",
-    database: "adfcontroll",
+    username: AppConfig.dbUser,
+    password: AppConfig.dbPassword,
+    database: AppConfig.dbName,
     entities: [__dirname + '/**/*.entity{.ts,.js}'],
   
     // We are using migrations, synchronize should be set to false.

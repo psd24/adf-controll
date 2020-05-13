@@ -5,6 +5,8 @@ import { CameraService } from 'src/camera/camera.service';
 import { Camera } from 'src/entities/camera.entity';
 import request = require('request');
 import fs = require('fs');
+import { AppConfig } from '../app.config'
+
 @Injectable()
 export class BotService implements OnModuleInit {
   constructor(private cameraService: CameraService) {}
@@ -34,7 +36,7 @@ export class BotService implements OnModuleInit {
 
   async getBotMessage() {
     process.env.NTBA_FIX_319 = '1';
-    const token = '1256671122:AAGsnSGwWRFz3lIA1gh9totgSwHuLgpnmkE';
+    const token = AppConfig.telegramToken;
     const bot = new TelegramBot(token, { polling: true });
 
     bot.on('callback_query', async callbackQuery => {
