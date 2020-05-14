@@ -1,12 +1,38 @@
 <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm"*ngFor="let camera of cameras">
-        <div class="card mb-3">
-          <img class="card-img-top" src="{{camera.url}}&time={{timeStamp}}" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title text-center">{{camera.name}}</h5>
-          </div>
+  <div class="row mr-4 mb-4 float-sm-right">
+    <button type="button" class="btn btn-outline-primary ml-4">Afegir camara</button>
+  </div>
+  <div class="mb-4">
+    <ul class="nav justify-content-center">
+      <li class="nav-item mr-4">
+        <select class="form-control no-radius" id="exampleFormControlSelect1">
+          <option>Estat</option>
+          <option>Actiu</option>
+          <option>Inactiu</option>
+          <option>Pendent</option>
+        </select>
+      </li>
+      <li class="nav-item">
+        <select class="form-control no-radius" id="exampleFormControlSelect1">
+          <option>Organizacio</option>
+          <option>Nom 1</option>
+          <option>Nom 2</option>
+          <option>Nom 3</option>
+        </select>
+      </li>
+      <li>
+        <button type="button" class="btn btn-primary ml-4">Buscar</button>
+      </li>
+    </ul>
+  </div>
+  <div class="row">
+    <div class="col-sm" *ngFor="let camera of cameras">
+      <div class="card mb-3">
+        <img class="card-img-top" src="{{camera.url}}&time={{timeStamp}}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title text-center">{{camera.name}}</h5>
         </div>
       </div>
     </div>
+  </div>
 </div>
