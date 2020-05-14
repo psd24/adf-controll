@@ -7,9 +7,14 @@ import { AuthGuard } from './helpers/auth.guard';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  {
+    path: `camera`, loadChildren: () =>
+      import('./modules/camera/camera.module').then(m => m.CameraModule),
+      
+  },
 
   // otherwise redirect to home
   { path: '**', redirectTo: 'home' }

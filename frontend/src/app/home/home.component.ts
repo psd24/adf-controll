@@ -13,7 +13,7 @@ import { UserService } from '../services/user.service';
 export class HomeComponent implements OnInit {
 
   loading = false;
-  users: User[];
+  users;
 
   constructor(private userService: UserService) { }
 

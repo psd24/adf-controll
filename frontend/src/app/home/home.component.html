@@ -5,6 +5,7 @@
         <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
         <ul *ngIf="users">
             <li>{{users.name}}</li>
+            <button type="button" [routerLink]="['/camera']" class="btn btn-primary">Primary</button>
         </ul>
     </div>
 </div>
