@@ -30,3 +30,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ng g m modules/camera --routing
 
 ng generate component componentname
+
+npm run build

@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './helpers/auth.guard';
+import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 
 
 const routes: Routes = [
@@ -11,7 +12,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   {
-    path: `camera`, loadChildren: () =>
+    path: `camera`, component: MainLayoutComponent, loadChildren: () =>
       import('./modules/camera/camera.module').then(m => m.CameraModule),
       
   },

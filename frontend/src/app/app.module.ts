@@ -11,12 +11,18 @@ import { ErrorInterceptor } from "./helpers/error.interceptor";
 
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
+import { HeaderComponent } from './layout/header/header.component';
+import { FooterComponent } from './layout/footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    MainLayoutComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
