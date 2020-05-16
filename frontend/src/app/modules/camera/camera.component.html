@@ -28,6 +28,9 @@
     </form>
   </div>
   <div class="row">
+    <div class="alert alert-primary w-100 text-center" role="alert" *ngIf="cameras?.length === 0">
+      <span class=""> No hi ha càmeres per mostrar</span>
+    </div>
     <div class="col-sm-3" *ngFor="let camera of cameras">
       <div class="card mb-3">
         <img class="card-img-top" src="{{camera.url}}&time={{timeStamp}}" alt="Card image cap">
