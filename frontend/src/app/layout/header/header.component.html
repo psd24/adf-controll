@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-    <a class="navbar-brand"  [routerLink]="['/home']">
+    <a class="navbar-brand" [routerLink]="['/home']">
         <img src="assets/img/camera-logo.png" width="35" height="35" class="d-inline-block align-top" alt="">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
@@ -15,8 +15,16 @@
                 <a class="nav-link" [routerLink]="['/camera']">Camaras</a>
             </li>
         </ul>
-        <span class="navbar-text mr-4">
-            Perfil
-        </span>
+        <ul class="pl-0 mr-sm-5" *ngIf="user">
+            <li class="navbar-nav dropdown mr-sm-4">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    {{user.name}}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" (click)="logout()">Salir</a>
+                </div>
+            </li>
+        </ul>
     </div>
 </nav>
