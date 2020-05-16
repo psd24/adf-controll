@@ -14,7 +14,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class CameraComponent implements OnInit {
 
-  cameras: CameraModel;
+  cameras: CameraModel[];
   organizations: OrganizationModel;
   timeStamp;
   subscriptionCamera;
@@ -53,7 +53,7 @@ export class CameraComponent implements OnInit {
       this.query = { "relations": ["organization", "cameraType"] };
     }
     this.camerasService.index(this.query).subscribe(
-      (cameras: CameraModel) => {
+      (cameras: CameraModel[]) => {
         this.cameras = cameras;
       },
       (error) => {
