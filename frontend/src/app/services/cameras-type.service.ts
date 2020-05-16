@@ -14,7 +14,7 @@ export class CamerasTypeService {
     constructor(private http: HttpClient) { }
 
     index(): Observable<any> {
-        return this.http.get(this.backendUrl + 'camera/type/index').pipe(
+        return this.http.get(this.backendUrl + '/camera/type/index').pipe(
             map(res => {
                 return res;
             }),

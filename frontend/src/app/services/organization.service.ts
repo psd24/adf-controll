@@ -14,7 +14,7 @@ export class OrganizationService {
     constructor(private http: HttpClient) { }
 
     index(): Observable<any> {
-        return this.http.get(this.backendUrl + 'organizations').pipe(
+        return this.http.get(this.backendUrl + '/organizations').pipe(
             map(res => {
                 return res;
             }),

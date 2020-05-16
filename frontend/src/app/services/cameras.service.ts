@@ -28,7 +28,7 @@ export class CamerasService {
     }
 
     view(cameraId): Observable<any> {
-        return this.http.get(this.backendUrl + 'camera/' + cameraId).pipe(
+        return this.http.get(this.backendUrl + '/camera/' + cameraId).pipe(
             map(res => {
                 return res;
             }),
@@ -39,7 +39,7 @@ export class CamerasService {
     }
 
     create(params): Observable<any> {
-        return this.http.post(this.backendUrl + 'camera', params).pipe(
+        return this.http.post(this.backendUrl + '/camera', params).pipe(
             map(res => {
                 return res;
             }),
@@ -50,7 +50,7 @@ export class CamerasService {
     }
 
     update(params): Observable<any> {
-        return this.http.put(this.backendUrl + 'camera/', params).pipe(
+        return this.http.put(this.backendUrl + '/camera/', params).pipe(
             map(res => {
                 return res;
             }),
@@ -61,7 +61,7 @@ export class CamerasService {
     }
 
     delete(cameraId): Observable<any> {
-        return this.http.delete(this.backendUrl + 'camera/' + cameraId).pipe(
+        return this.http.delete(this.backendUrl + '/camera/' + cameraId).pipe(
             map(res => {
                 return res;
             }),

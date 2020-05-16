@@ -1,0 +1,84 @@
+<div class="container">
+    <form [formGroup]="formCreateCamera" (ngSubmit)="submitForm()">
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Nom</label>
+                <input formControlName="name" type="text" class="form-control" id="exampleFormControlInput1">
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Ip</label>
+                <input formControlName="ip" type="text" class="form-control" id="exampleFormControlInput1">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Port</label>
+                    <input formControlName="port" type="text" class="form-control" id="exampleFormControlInput1">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Usuari</label>
+                    <input formControlName="user" type="text" class="form-control" id="exampleFormControlInput1">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Contrasenya</label>
+                    <input formControlName="password" type="text" class="form-control" id="exampleFormControlInput1">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Latitud</label>
+                    <input formControlName="lat" type="text" class="form-control" id="exampleFormControlInput1">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Longitud</label>
+                    <input formControlName="lon" type="text" class="form-control" id="exampleFormControlInput1">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Organitazacio</label>
+                    <select formControlName="organizationId" class="form-control" id="exampleFormControlSelect1">
+                        <option *ngFor="let organization of organizations" [ngValue]="organization.id">{{organization.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Marca camera</label>
+                    <select formControlName="cameraTypeId" class="form-control" id="exampleFormControlSelect1">
+                        <option *ngFor="let cameraType of cameraTypes" [ngValue]="cameraType.id">{{cameraType.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col" *ngIf="cameraId">
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Estat</label>
+                    <select formControlName="state" class="form-control" id="exampleFormControlSelect1">
+                        <option value="0">Inactiu</option>
+                        <option value="1">Actiu</option>
+                        <option value="2">Pendent</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Guardar</button>
+    </form>
+</div>
