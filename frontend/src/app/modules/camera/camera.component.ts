@@ -43,7 +43,6 @@ export class CameraComponent implements OnInit {
 
   updateCamera(cameraId) {
     this.router.navigate(['/camera/create', cameraId]);
-    console.log(cameraId)
   }
 
 }

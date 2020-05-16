@@ -51,6 +51,7 @@ export class CreateComponent implements OnInit {
       this.camerasService.view(this.cameraId).subscribe(
         (camera: CameraModel) => {
           this.camera = camera;
+          console.log(this.camera)
           this.formCreateCamera.controls['id'].setValue(this.camera.id);
           this.formCreateCamera.controls['name'].setValue(this.camera.name);
           this.formCreateCamera.controls['ip'].setValue(this.camera.ip);
@@ -69,11 +70,6 @@ export class CreateComponent implements OnInit {
 
   submitForm() {
     if (this.cameraId) {
-      if (this.formCreateCamera.controls['state'].value === true) {
-        this.formCreateCamera.controls['state'].setValue(1)
-      } else {
-        this.formCreateCamera.controls['state'].setValue(0)
-      }
       this.camerasService.update(this.formCreateCamera.value).subscribe(
         (camera: CameraModel) => {
           console.log(this.formCreateCamera.value)

@@ -72,9 +72,9 @@
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Estat</label>
                     <select formControlName="state" class="form-control" id="exampleFormControlSelect1">
-                        <option value="0">Inactiu</option>
-                        <option value="1">Actiu</option>
-                        <option value="2">Pendent</option>
+                        <option [ngValue]="0">Inactiu</option>
+                        <option [ngValue]="1">Actiu</option>
+                        <option [ngValue]="2">Pendent</option>
                     </select>
                 </div>
             </div>
