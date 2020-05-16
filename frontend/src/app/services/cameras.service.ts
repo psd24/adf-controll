@@ -16,7 +16,6 @@ export class CamerasService {
 
     index(filter): Observable<any> {
         this.params = new HttpParams().set('query', filter);
-        console.log(this.params)
         return this.http.post(this.backendUrl + '/camera/web', { 'query': filter }).pipe(
             map(res => {
                 return res;

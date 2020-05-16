@@ -3,27 +3,29 @@
     <button type="button" class="btn btn-outline-primary ml-4" [routerLink]="['/camera/create']">Afegir camara</button>
   </div>
   <div class="mb-4">
-    <ul class="nav justify-content-center">
-      <li class="nav-item mr-4">
-        <select class="form-control no-radius" id="exampleFormControlSelect1">
-          <option>Estat</option>
-          <option>Actiu</option>
-          <option>Inactiu</option>
-          <option>Pendent</option>
-        </select>
-      </li>
-      <li class="nav-item">
-        <select class="form-control no-radius" id="exampleFormControlSelect1">
-          <option>Organizacio</option>
-          <option>Nom 1</option>
-          <option>Nom 2</option>
-          <option>Nom 3</option>
-        </select>
-      </li>
-      <li class="mt-4 mr-5 mr-sm-0 mt-sm-0">
-        <button type="button" class="btn btn-primary ml-4">Buscar</button>
-      </li>
-    </ul>
+    <form [formGroup]="formSearchCamera" (ngSubmit)="getCameras()" novalidate>
+      <ul class="nav justify-content-center">
+        <li class="nav-item mr-4">
+          <select class="form-control no-radius" id="exampleFormControlSelect1" formControlName="state">
+            <option ngValue="3" selected>Totes</option>
+            <option ngValue="1">Actiu</option>
+            <option ngValue="0">Inactiu</option>
+            <option ngValue="2">Pendent</option>
+          </select>
+        </li>
+        <li class="nav-item">
+          <select class="form-control no-radius" id="exampleFormControlSelect1"
+            *ngFor="let organization of organizations">
+            <option>Organizacio</option>
+            <option>{{organization.name}}</option>
+          </select>
+        </li>
+        <li class="mt-4 mr-5 mr-sm-0 mt-sm-0">
+          <button type="submit" class="btn btn-primary ml-4">Buscar</button>
+        </li>
+
+      </ul>
+    </form>
   </div>
   <div class="row">
     <div class="col-sm-3" *ngFor="let camera of cameras">
@@ -35,7 +37,8 @@
               <h5 class="card-title">{{camera.name}}</h5>
             </div>
             <div class="col">
-              <span class="float-sm-right"><i class="fas fa-edit fa-lg" aria-hidden="true" (click)="updateCamera(camera.id)"></i></span>
+              <span class="float-sm-right"><i class="fas fa-edit fa-lg" aria-hidden="true"
+                  (click)="updateCamera(camera.id)"></i></span>
             </div>
           </div>
         </div>
