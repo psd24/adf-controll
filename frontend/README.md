@@ -32,3 +32,12 @@ ng g m modules/camera --routing
 ng generate component componentname
 
 npm run build
+
+https://codigofacilito.com/articulos/deploy-angular-firebase
+
+https://medium.com/@mugan86/crear-una-pwa-sencilla-con-angular-8-884eacded0ce
+
+Upload production angular.
+
+ng build
+firebase deploy
