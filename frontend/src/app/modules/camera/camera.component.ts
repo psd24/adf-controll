@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CamerasService } from '../../services/cameras.service';
 import { CameraModel } from '../../models/camera.model';
 import { OrganizationModel } from '../../models/organization.model';
@@ -6,6 +6,8 @@ import { OrganizationService } from '../../services/organization.service';
 import { interval } from 'rxjs';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { NgxGalleryComponent, NgxGalleryImage, INgxGalleryOptions } from '@kolkov/ngx-gallery';
+
 
 @Component({
   selector: 'app-camera',
@@ -14,6 +16,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class CameraComponent implements OnInit {
 
+  @ViewChild('gallery', {static: true}) gallery: NgxGalleryComponent;
+
   cameras: CameraModel[];
   organizations: OrganizationModel;
   timeStamp;
@@ -21,6 +25,18 @@ export class CameraComponent implements OnInit {
   refreshImage: number = 50 * 1000;
   formSearchCamera: FormGroup;
   query: object;
+
+  public galleryOptions: INgxGalleryOptions[] = [
+    { image: false,
+      thumbnails: false,
+      previewCloseOnClick: true,
+      previewCloseOnEsc: true,
+      previewZoom: true,
+      previewArrows: false
+    }
+  ];
+  public galleryImages: NgxGalleryImage[]; // yo creo que que no accepta el tipo de imagen
+
 
   constructor(
     private camerasService: CamerasService,
@@ -39,7 +55,11 @@ export class CameraComponent implements OnInit {
     this.subscriptionCamera = interval(this.refreshImage).subscribe(va => {
       this.timeStamp = (new Date()).getTime();
       this.getCameras();
-    })
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscriptionCamera.unsubscribe();
   }
 
   getCameras() {
@@ -66,4 +86,22 @@ export class CameraComponent implements OnInit {
     this.router.navigate(['/camera/create', cameraId]);
   }
 
+  // Create a gallery images when click in cv button
+  openGallery(image: string) {
+    console.log(image)
+    this.galleryImages = [
+      {
+        small: image,
+        medium: image,
+        big: image
+      }
+    ]
+  }
+
+  openPreview() {
+    setTimeout(() => {
+      console.log(this.gallery)
+      this.gallery.openPreview(0)
+    }, 0);
+  }
 }

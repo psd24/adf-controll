@@ -33,13 +33,13 @@
     </div>
     <div class="col-sm-3" *ngFor="let camera of cameras">
       <div class="card mb-3">
-        <img class="card-img-top" src="{{camera.url}}&time={{timeStamp}}" alt="Card image cap">
+        <img class="card-img-top" src="{{camera.url}}&time={{timeStamp}}" (click)="openGallery(camera.url)" alt="Card image cap">
         <div class="card-body">
           <div class="row">
             <div class="col ">
               <h5 class="card-title">{{camera.name}}</h5>
             </div>
-            <div class="col">
+            <div class="col text-right">
               <span class="float-sm-right"><i class="fas fa-edit fa-lg" aria-hidden="true"
                   (click)="updateCamera(camera.id)"></i></span>
             </div>
@@ -49,3 +49,5 @@
     </div>
   </div>
 </div>
+
+<ngx-gallery #gallery [options]="galleryOptions" [images]="galleryImages" (imagesReady)="openPreview()"></ngx-gallery>
