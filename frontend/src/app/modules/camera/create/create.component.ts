@@ -93,4 +93,15 @@ export class CreateComponent implements OnInit {
     }
   }
 
+  deleteCamera(cameraId) {
+    this.camerasService.delete(cameraId).subscribe(
+      res => {
+        this.router.navigate(['/camera']);
+      },
+      error => {
+        console.log(error)
+      }
+    );
+  }
+
 }

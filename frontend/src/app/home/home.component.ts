@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
-
-import { User } from '../models/user';
-import { AuthenticationService } from '../services/authentication.service';
 import { UserService } from '../services/user.service';
+import { OrganizationService } from '../services/organization.service';
 
 @Component({
   selector: 'app-home',
@@ -13,17 +11,33 @@ import { UserService } from '../services/user.service';
 export class HomeComponent implements OnInit {
 
   loading = false;
-  users;
+  public organizationCount: number;
+  public userCount: number;
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private organizationService: OrganizationService,
+    private usersService: UserService,
+  ) { }
 
   ngOnInit() {
     this.loading = true;
-    this.userService.getAll().pipe(first()).subscribe(users => {
-        this.loading = false;
-        this.users = users;
-        console.log(this.users)
-    });
+    this.organizationService.count().subscribe(
+      (organizationCount) => {
+        this.organizationCount = organizationCount;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    this.usersService.count().subscribe(
+      (userCount) => {
+        this.userCount = userCount;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
 }

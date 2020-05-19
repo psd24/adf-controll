@@ -69,7 +69,7 @@ export class OrganizationService {
     }
 
     count(): Observable<any> {
-        return this.http.get(this.backendUrl + 'organizations/count').pipe(
+        return this.http.get(this.backendUrl + '/organizations/count').pipe(
             map(res => {
                 return res;
             }),

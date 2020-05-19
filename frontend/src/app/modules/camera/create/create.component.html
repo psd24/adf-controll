@@ -1,18 +1,18 @@
 <div class="container">
     <form [formGroup]="formCreateCamera" (ngSubmit)="submitForm()">
         <div class="row">
-          <div class="col">
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Nom</label>
-                <input formControlName="name" type="text" class="form-control" id="exampleFormControlInput1">
+            <div class="col">
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Nom</label>
+                    <input formControlName="name" type="text" class="form-control" id="exampleFormControlInput1">
+                </div>
             </div>
-          </div>
-          <div class="col">
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Ip</label>
-                <input formControlName="ip" type="text" class="form-control" id="exampleFormControlInput1">
+            <div class="col">
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Ip</label>
+                    <input formControlName="ip" type="text" class="form-control" id="exampleFormControlInput1">
+                </div>
             </div>
-          </div>
         </div>
         <div class="row">
             <div class="col">
@@ -53,7 +53,8 @@
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Organitazacio</label>
                     <select formControlName="organizationId" class="form-control" id="exampleFormControlSelect1">
-                        <option *ngFor="let organization of organizations" [ngValue]="organization.id">{{organization.name}}
+                        <option *ngFor="let organization of organizations" [ngValue]="organization.id">
+                            {{organization.name}}
                         </option>
                     </select>
                 </div>
@@ -64,7 +65,8 @@
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Marca camera</label>
                     <select formControlName="cameraTypeId" class="form-control" id="exampleFormControlSelect1">
-                        <option *ngFor="let cameraType of cameraTypes" [ngValue]="cameraType.id">{{cameraType.name}}</option>
+                        <option *ngFor="let cameraType of cameraTypes" [ngValue]="cameraType.id">{{cameraType.name}}
+                        </option>
                     </select>
                 </div>
             </div>
@@ -81,4 +83,5 @@
         </div>
         <button type="submit" class="btn btn-success">Guardar</button>
     </form>
+    <button *ngIf="camera.id" class="btn btn-danger mt-4" (click)="deleteCamera(camera.id)">Eliminar</button>
 </div>

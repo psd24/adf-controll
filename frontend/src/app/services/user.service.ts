@@ -29,7 +29,7 @@ export class UserService {
       }
     
       count(): Observable<any> {
-        return this.http.get(this.backendUrl + 'auth/user/count').pipe(
+        return this.http.get(this.backendUrl + '/auth/user/count').pipe(
             map(res => {
                 return res;
             }),

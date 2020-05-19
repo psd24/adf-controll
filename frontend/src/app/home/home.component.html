@@ -1,11 +1,15 @@
-<div class="card mt-4">
-    <h4 class="card-header">You're logged in with Angular 9 & JWT!!</h4>
+<div class="card m-4">
     <div class="card-body">
-        <h6>Users from secure api end point</h6>
-        <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
-        <ul *ngIf="users">
-            <li>{{users.name}}</li>
-            <button type="button" [routerLink]="['/camera']" class="btn btn-primary">Primary</button>
-        </ul>
+      <h5 class="card-title">Organizacions</h5>
+      <p class="card-text text-center h1">{{organizationCount}}</p>
     </div>
 </div>
+
+<div class="card m-4">
+    <div class="card-body">
+      <h5 class="card-title">Usuaris</h5>
+      <p class="card-text text-center h1">{{userCount}}</p>
+    </div>
+</div>
+
+  <button type="button" [routerLink]="['/camera']" class="btn btn-success btn-lg btn-block">Cameras</button>
