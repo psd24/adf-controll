@@ -83,5 +83,5 @@
         </div>
         <button type="submit" class="btn btn-success">Guardar</button>
     </form>
-    <button *ngIf="camera.id" class="btn btn-danger mt-4" (click)="deleteCamera(camera.id)">Eliminar</button>
+    <button *ngIf="camera && camera.id" class="btn btn-danger mt-4" (click)="deleteCamera(camera.id)">Eliminar</button>
 </div>
