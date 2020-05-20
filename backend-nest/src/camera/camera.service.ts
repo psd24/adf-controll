@@ -121,7 +121,19 @@ export class CameraService {
   }
 
   async deleteCameraType(cameraType: CameraType) {
-    console.log(cameraType)
     return this.cameraTypeRepository.delete(cameraType);
+  }
+
+  async countStateCamera() {
+    const inactive = await this.cameraRepository.count({
+      where: [{ state: 0 }], 
+    });
+    const active = await this.cameraRepository.count({
+      where: [{ state: 1 }], 
+    });
+    const pending = await this.cameraRepository.count({
+      where: [{ state: 2 }], 
+    });
+    return {'inactive': inactive, 'active': active, 'pending': pending}
   }
 }

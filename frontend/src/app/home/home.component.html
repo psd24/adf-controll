@@ -12,4 +12,26 @@
     </div>
 </div>
 
+<div class="card m-4">
+  <div class="card-body">
+    <h5 class="card-title text-center h1">Cameras</h5>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm text-center">
+          <p class="h3">Actiu</p>
+          <p class="h3" *ngIf="cameraStateCount">{{cameraStateCount.active}}</p>
+        </div>
+        <div class="col-sm text-center">
+          <p class="h3">Inactiu</p>
+          <p class="h3" *ngIf="cameraStateCount">{{cameraStateCount.inactive}}</p>
+        </div>
+        <div class="col-sm text-center">
+          <p class="h3">Pendent</p>
+          <p class="h3" *ngIf="cameraStateCount">{{cameraStateCount.pending}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
   <button type="button" [routerLink]="['/camera']" class="btn btn-success btn-lg btn-block">Cameras</button>

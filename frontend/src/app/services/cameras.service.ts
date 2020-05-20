@@ -37,6 +37,17 @@ export class CamerasService {
         );
     }
 
+    countEstate(): Observable<any> {
+        return this.http.get(this.backendUrl + '/camera/state/count').pipe(
+            map(res => {
+                return res;
+            }),
+            catchError(error => {
+                return throwError(error.error)
+            })
+        );
+    }
+
     create(params): Observable<any> {
         return this.http.post(this.backendUrl + '/camera', params).pipe(
             map(res => {

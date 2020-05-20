@@ -39,6 +39,13 @@ export class CameraController {
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @Get('state/count')
+  async countStateCamera() {
+    return this.cameraService.countStateCamera();
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   getCameraId(@Param() params) {
     return this.cameraService.getCameraId(params.id);
