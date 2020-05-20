@@ -14,10 +14,9 @@
           </select>
         </li>
         <li class="nav-item">
-          <select class="form-control no-radius" id="exampleFormControlSelect1"
-            *ngFor="let organization of organizations">
+          <select class="form-control no-radius" id="exampleFormControlSelect1">
             <option>Organizacio</option>
-            <option>{{organization.name}}</option>
+            <option *ngFor="let organization of organizations">{{organization.name}}</option>
           </select>
         </li>
         <li class="mt-4 mr-5 mr-sm-0 mt-sm-0">
@@ -33,7 +32,8 @@
     </div>
     <div class="col-sm-3" *ngFor="let camera of cameras">
       <div class="card mb-3">
-        <img class="card-img-top" src="{{camera.url}}&time={{timeStamp}}" (click)="openGallery(camera.url)" alt="Card image cap">
+        <img class="card-img-top" src="{{camera.url}}&time={{timeStamp}}" (click)="openGallery(camera.url)"
+          alt="Card image cap">
         <div class="card-body">
           <div class="row">
             <div class="col ">

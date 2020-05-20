@@ -83,5 +83,6 @@
         </div>
         <button type="submit" class="btn btn-success">Guardar</button>
     </form>
-    <button *ngIf="camera && camera.id" class="btn btn-danger mt-4" (click)="deleteCamera(camera.id)">Eliminar</button>
+    <button class="btn btn-primary mt-4" [routerLink] = "['/camera']">Enrera</button>
+    <button *ngIf="camera && camera.id" class="btn btn-danger mt-4 ml-4" (click)="deleteCamera(camera.id)">Eliminar camera</button>
 </div>
