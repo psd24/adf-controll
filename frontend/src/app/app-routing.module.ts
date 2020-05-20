@@ -16,6 +16,11 @@ const routes: Routes = [
       import('./modules/camera/camera.module').then(m => m.CameraModule),
       
   },
+  {
+    path: `map`, component: MainLayoutComponent, loadChildren: () =>
+      import('./modules/map/map.module').then(m => m.MapModule),
+      
+  },
 
   // otherwise redirect to home
   { path: '**', redirectTo: 'home' }
