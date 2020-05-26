@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, ManyToOne, ManyToMany, BeforeUpdate } from "typeorm";
 
 import { Exclude } from 'class-transformer';
-import { hash } from "bcrypt";
+import { hash } from "bcryptjs";
 import { Role } from "./role.entity";
 import { Organization } from "./organization.entity";
 import { UserEvent } from "./user-event.entity";

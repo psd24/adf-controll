@@ -30,7 +30,7 @@
     "@nestjs/swagger": "^4.5.1",
     "@nestjs/typeorm": "^7.0.0",
     "@types/node-telegram-bot-api": "^0.40.3",
-    "bcrypt": "^4.0.1",
+    "bcryptjs": "^2.4.3",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.11.1",
     "mysql": "^2.18.1",
