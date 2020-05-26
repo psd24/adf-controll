@@ -6,6 +6,7 @@ npm run start
 
 npm run typeorm migration:generate -- -n AddEvent
 
+# command
 nest g module users
 nest g service users
 nest g controller users
