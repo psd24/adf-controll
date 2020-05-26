@@ -13,4 +13,4 @@ deploy:
  username: ${{ secrets.SERVER_USERNAME }}
  password: ${{ secrets.SERVER_PASSWORD }}
  script: cd ${{ secrets.PROJECT_PATH }} && git
-pull && npm run build && pm2 reload all
+ pull && npm i && npm run typeorm:migrate && npm run typeorm:run && npm run build && pm2 reload all

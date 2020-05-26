@@ -11,17 +11,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const class_transformer_1 = require("class-transformer");
-const bcrypt_1 = require("bcrypt");
+const bcryptjs_1 = require("bcryptjs");
 const role_entity_1 = require("./role.entity");
 const organization_entity_1 = require("./organization.entity");
 const user_event_entity_1 = require("./user-event.entity");
 let User = class User {
     preProcess() {
-        return bcrypt_1.hash(this.password, 10).then(encrypted => this.password = encrypted);
+        return bcryptjs_1.hash(this.password, 10).then(encrypted => this.password = encrypted);
     }
     preProcessUpdate() {
         console.log('ok');
-        return bcrypt_1.hash(this.password, 10).then(encrypted => this.password = encrypted);
+        return bcryptjs_1.hash(this.password, 10).then(encrypted => this.password = encrypted);
     }
 };
 __decorate([

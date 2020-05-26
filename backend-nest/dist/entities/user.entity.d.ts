@@ -10,6 +10,6 @@ export declare class User {
     role: Role;
     events: UserEvent[];
     password: string;
-    preProcess(): Promise<string>;
-    preProcessUpdate(): Promise<string>;
+    preProcess(): any;
+    preProcessUpdate(): any;
 }

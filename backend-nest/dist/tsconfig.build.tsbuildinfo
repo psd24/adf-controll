@@ -2169,10 +2169,6 @@
         "version": "097d4bf3331df1e138ffdcf92e1117f6841bc8337170d927fd955d5ee8a1674b",
         "signature": "097d4bf3331df1e138ffdcf92e1117f6841bc8337170d927fd955d5ee8a1674b"
       },
-      "../node_modules/@types/bcrypt/index.d.ts": {
-        "version": "18b9a9702d2fc7d3766b0c8124133c761ad25a9d767925005777eb2c2cd8aeba",
-        "signature": "18b9a9702d2fc7d3766b0c8124133c761ad25a9d767925005777eb2c2cd8aeba"
-      },
       "../src/entities/role.entity.ts": {
         "version": "8cecf1be4563d99e6bd16d1030a97465275d918a032998f813e052922804cfb4",
         "signature": "1e01c14b1ce415809a8eed287ab5d957497c6e1bf7d03160d349b6d6a5987942"
@@ -2186,8 +2182,8 @@
         "signature": "f6e81c1a0db60e658dff857457309477e4d18bc02602c2e16db48bc4c4a3ec45"
       },
       "../src/entities/user.entity.ts": {
-        "version": "07c2fcbddf5e3e7f26da1c930f1d4e0bb055c32a41c09624cc59b8bc707b068a",
-        "signature": "877e7f974f4a863d2049c31b6b9475f45082e3a4401f0592ebf0d537001bb8f5"
+        "version": "fee3a7f159f389d380c2fcd95649836ca6befb497abcc5a3be947502aee6b1e9",
+        "signature": "4e2799e25b6f2c3c860bac77e412f42f12a11688e11ae2b3892e95e75452ac10"
       },
       "../src/entities/organization.entity.ts": {
         "version": "efcfaccb9c8fd629603ae6bfa214242ed1a20556a794a534688147bd53c9b99b",
@@ -2490,7 +2486,7 @@
         "signature": "8f1241f5d9f0d3d72117768b3c974e462840fbd85026fb66685078945404cf2f"
       },
       "../src/auth/auth.service.ts": {
-        "version": "ff85dfaa8b47d99ea556bf5cb184bb5cd7f1b04e62e0dd89965d4a04b165793f",
+        "version": "d0cc2a357de2777e73c090aac296e5385d1a61728d8f9ce99ded514baf223e23",
         "signature": "78a70d2cbe83e9c5fa343c0ce9df999e938d9d63b69f2850614a47daaa48f6d4"
       },
       "../node_modules/@types/range-parser/index.d.ts": {
@@ -2908,6 +2904,10 @@
       "../node_modules/@types/babel__core/index.d.ts": {
         "version": "af523cd24a11e1feadface05a9ac4f692a99bcb65c020b96061c63ac593824ad",
         "signature": "af523cd24a11e1feadface05a9ac4f692a99bcb65c020b96061c63ac593824ad"
+      },
+      "../node_modules/@types/bcrypt/index.d.ts": {
+        "version": "18b9a9702d2fc7d3766b0c8124133c761ad25a9d767925005777eb2c2cd8aeba",
+        "signature": "18b9a9702d2fc7d3766b0c8124133c761ad25a9d767925005777eb2c2cd8aeba"
       },
       "../node_modules/@types/color-name/index.d.ts": {
         "version": "f0cb4b3ab88193e3e51e9e2622e4c375955003f1f81239d72c5b7a95415dad3e",
@@ -7599,12 +7599,6 @@
         "../node_modules/@types/node/util.d.ts",
         "../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../node_modules/@types/bcrypt/index.d.ts": [
-        "../node_modules/@types/node/fs.d.ts",
-        "../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../node_modules/@types/node/util.d.ts",
-        "../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
       "../src/entities/role.entity.ts": [
         "../node_modules/typeorm/index.d.ts",
         "../src/entities/user.entity.ts",
@@ -7635,7 +7629,6 @@
       "../src/entities/user.entity.ts": [
         "../node_modules/typeorm/index.d.ts",
         "../node_modules/class-transformer/index.d.ts",
-        "../node_modules/@types/bcrypt/index.d.ts",
         "../src/entities/role.entity.ts",
         "../src/entities/organization.entity.ts",
         "../src/entities/user-event.entity.ts",
@@ -8252,7 +8245,6 @@
       ],
       "../src/auth/auth.service.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
-        "../node_modules/@types/bcrypt/index.d.ts",
         "../src/users/users.service.ts",
         "../node_modules/@nestjs/jwt/index.d.ts",
         "../src/entities/user.entity.ts",
@@ -9187,6 +9179,12 @@
         "../node_modules/@types/babel__template/index.d.ts",
         "../node_modules/@babel/types/lib/index.d.ts",
         "../node_modules/@babel/parser/typings/babel-parser.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@types/bcrypt/index.d.ts": [
         "../node_modules/@types/node/fs.d.ts",
         "../node_modules/@types/node/ts3.2/fs.d.ts",
         "../node_modules/@types/node/util.d.ts",
@@ -14025,6 +14023,12 @@
         "../node_modules/@types/node/util.d.ts",
         "../node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "../node_modules/@types/bcrypt/index.d.ts": [
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "../node_modules/@types/babel__core/index.d.ts": [
         "../node_modules/@types/babel__generator/index.d.ts",
         "../node_modules/@types/babel__traverse/index.d.ts",
@@ -14423,12 +14427,6 @@
         "../node_modules/@types/node/ts3.2/util.d.ts"
       ],
       "../node_modules/class-validator/validation/ValidationError.d.ts": [
-        "../node_modules/@types/node/fs.d.ts",
-        "../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../node_modules/@types/node/util.d.ts",
-        "../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../node_modules/@types/bcrypt/index.d.ts": [
         "../node_modules/@types/node/fs.d.ts",
         "../node_modules/@types/node/ts3.2/fs.d.ts",
         "../node_modules/@types/node/util.d.ts",
