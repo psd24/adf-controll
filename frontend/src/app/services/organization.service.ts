@@ -25,7 +25,7 @@ export class OrganizationService {
     }
 
     create(params): Observable<any> {
-        return this.http.post(this.backendUrl + 'organizations/', params).pipe(
+        return this.http.post(this.backendUrl + '/organizations/', params).pipe(
             map(res => {
                 return res;
             }),
@@ -36,7 +36,7 @@ export class OrganizationService {
     }
 
     delete(organizationId): Observable<any> {
-        return this.http.delete(this.backendUrl + 'organizations/' + organizationId).pipe(
+        return this.http.delete(this.backendUrl + '/organizations/' + organizationId).pipe(
             map(res => {
                 return res;
             }),
@@ -47,7 +47,7 @@ export class OrganizationService {
     }
 
     view(organizationId): Observable<any> {
-        return this.http.get(this.backendUrl + 'organizations/' + organizationId).pipe(
+        return this.http.get(this.backendUrl + '/organizations/' + organizationId).pipe(
             map(res => {
                 return res;
             }),
@@ -58,7 +58,7 @@ export class OrganizationService {
     }
 
     update(params): Observable<any> {
-        return this.http.put(this.backendUrl + 'organizations/', params).pipe(
+        return this.http.put(this.backendUrl + '/organizations/', params).pipe(
             map(res => {
                 return res;
             }),

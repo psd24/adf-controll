@@ -1,0 +1,12 @@
+<div class="container">
+    <form [formGroup]="formCreateOrganization" (ngSubmit)="submitForm()">
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Nom</label>
+            <input formControlName="name" type="text" class="form-control" id="exampleFormControlInput1">
+        </div>
+        <button type="submit" class="btn btn-success">Guardar</button>
+    </form>
+    <button class="btn btn-primary mt-4" [routerLink]="['/organization']">Enrera</button>
+    <button *ngIf="organization && organization.id" class="btn btn-danger mt-4 ml-4" (click)="deleteOrganization(organization.id)">Eliminar
+        rol</button>
+</div>

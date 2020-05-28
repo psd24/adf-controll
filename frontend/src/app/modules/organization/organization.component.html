@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="row mr-4 mb-4 float-sm-right">
+        <button type="button" class="btn btn-outline-primary ml-4" [routerLink]="['/organization/create']">Afegir organització</button>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let organization of organizations">
+                    <td>{{organization.name}}</td>
+                    <td><i class="fas fa-edit" (click)="updateOrganization(organization.id)"></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

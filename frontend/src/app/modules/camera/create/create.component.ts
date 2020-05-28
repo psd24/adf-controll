@@ -71,6 +71,7 @@ export class CreateComponent implements OnInit {
     if (this.cameraId) {
       this.camerasService.update(this.formCreateCamera.value).subscribe(
         (camera: CameraModel) => {
+          this.router.navigate(['/camera']);
         },
         (error) => {
           console.log(error)
@@ -81,6 +82,7 @@ export class CreateComponent implements OnInit {
       this.formCreateCamera.controls['state'].setValue(2);
       this.camerasService.create(this.formCreateCamera.value).subscribe(
         (camera: CameraModel) => {
+          this.router.navigate(['/camera']);
         },
         (error) => {
           console.log(error)
