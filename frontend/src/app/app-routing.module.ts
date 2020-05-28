@@ -26,6 +26,11 @@ const routes: Routes = [
     path: `user`, component: MainLayoutComponent, loadChildren: () =>
       import('./modules/user/user.module').then(m => m.UserModule),  
   },
+  {
+    path: `role`, component: MainLayoutComponent, loadChildren: () =>
+      import('./modules/role/role.module').then(m => m.RoleModule),  
+  },
+
 
   // otherwise redirect to home
   { path: '**', redirectTo: 'home' }

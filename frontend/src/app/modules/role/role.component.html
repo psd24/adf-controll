@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="row mr-4 mb-4 float-sm-right">
+        <button type="button" class="btn btn-outline-primary ml-4" [routerLink]="['/role/create']">Afegir rol</button>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let role of roles">
+                    <td>{{role.name}}</td>
+                    <td><i class="fas fa-edit" (click)="updateRole(role.id)"></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

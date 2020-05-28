@@ -14,7 +14,7 @@ export class RoleService {
     constructor(private http: HttpClient) { }
 
     index(): Observable<any> {
-        return this.http.get(this.backendUrl + 'roles').pipe(
+        return this.http.get(this.backendUrl + '/roles').pipe(
             map(res => {
                 return res;
             }),
@@ -25,7 +25,7 @@ export class RoleService {
     }
 
     view(roleId): Observable<any> {
-        return this.http.get(this.backendUrl + 'roles/' + roleId).pipe(
+        return this.http.get(this.backendUrl + '/roles/' + roleId).pipe(
             map(res => {
                 return res;
             }),
@@ -36,7 +36,7 @@ export class RoleService {
     }
 
     delete(roleId): Observable<any> {
-        return this.http.delete(this.backendUrl + 'roles/' + roleId).pipe(
+        return this.http.delete(this.backendUrl + '/roles/' + roleId).pipe(
             map(res => {
                 return res;
             }),
@@ -47,7 +47,7 @@ export class RoleService {
     }
 
     create(params): Observable<any> {
-        return this.http.post(this.backendUrl + 'roles/', params).pipe(
+        return this.http.post(this.backendUrl + '/roles/', params).pipe(
             map(res => {
                 return res;
             }),
@@ -58,7 +58,7 @@ export class RoleService {
     }
 
     update(params): Observable<any> {
-        return this.http.put(this.backendUrl + 'roles/', params).pipe(
+        return this.http.put(this.backendUrl + '/roles/', params).pipe(
             map(res => {
                 return res;
             }),
