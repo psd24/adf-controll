@@ -10,7 +10,6 @@ import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ErrorInterceptor } from "./helpers/error.interceptor";
 
 import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
@@ -21,7 +20,6 @@ import { environment } from '../environments/environment';
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent,
     MainLayoutComponent,
     HeaderComponent,
     FooterComponent

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
-import { UserService } from '../services/user.service';
-import { OrganizationService } from '../services/organization.service';
-import { CamerasService } from '../services/cameras.service';
+import { UserService } from '../../services/user.service';
+import { OrganizationService } from '../../services/organization.service';
+import { CamerasService } from '../../services/cameras.service';
 
 @Component({
   selector: 'app-home',
