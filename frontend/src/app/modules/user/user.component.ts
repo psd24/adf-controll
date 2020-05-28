@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { UserModel } from "../../models/user.model";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -13,6 +14,7 @@ export class UserComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -27,7 +29,7 @@ export class UserComponent implements OnInit {
   }
 
   updateUser(userId) {
-    console.log(userId)
+    this.router.navigate(['/user/create', userId]);
   }
 
 }
