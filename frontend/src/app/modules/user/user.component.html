@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="row mr-4 mb-4 float-sm-right">
+        <button type="button" class="btn btn-outline-primary ml-4" [routerLink]="['/user/create']">Afegir usuari</button>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Codi</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Organitazacio</th>
+                    <th scope="col">Rol</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users">
+                    <td>{{user.code}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.organization.name}}</td>
+                    <td>{{user.role.name}}</td>
+                    <td><i class="fas fa-edit" (click)="updateUser(user.id)"></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

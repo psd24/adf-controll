@@ -40,7 +40,7 @@ export class UserService {
       }
     
       getUsers(): Observable<any> {
-        return this.http.get(this.backendUrl + 'auth/user').pipe(
+        return this.http.get(this.backendUrl + '/auth/user').pipe(
           map(res => {
             return res;
           }),

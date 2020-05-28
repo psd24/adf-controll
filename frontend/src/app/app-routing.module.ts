@@ -20,8 +20,11 @@ const routes: Routes = [
   },
   {
     path: `home`, component: MainLayoutComponent, loadChildren: () =>
-      import('./modules/home/home.module').then(m => m.HomeModule),
-      
+      import('./modules/home/home.module').then(m => m.HomeModule),  
+  },
+  {
+    path: `user`, component: MainLayoutComponent, loadChildren: () =>
+      import('./modules/user/user.module').then(m => m.UserModule),  
   },
 
   // otherwise redirect to home

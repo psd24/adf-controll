@@ -45,7 +45,6 @@ export class HomeComponent implements OnInit {
     this.camerasService.countEstate().subscribe(
       (cameraStateCount) => {
         this.cameraStateCount = cameraStateCount;
-        console.log(this.cameraStateCount)
       },
       (error) => {
         console.log(error);
