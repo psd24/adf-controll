@@ -10,7 +10,7 @@
                     <th scope="col">Nom</th>
                     <th scope="col">Organitazacio</th>
                     <th scope="col">Rol</th>
-                    <th scope="col"></th>
+                    <th scope="col" *ngIf="currentUser && currentUser.role.name === 'superadmin'"></th>
                 </tr>
             </thead>
             <tbody>
@@ -19,7 +19,7 @@
                     <td>{{user.name}}</td>
                     <td>{{user.organization.name}}</td>
                     <td>{{user.role.name}}</td>
-                    <td><i class="fas fa-edit" (click)="updateUser(user.id)"></i></td>
+                    <td *ngIf="currentUser && currentUser.role.name === 'superadmin'"><i class="fas fa-edit" (click)="updateUser(user.id)"></i></td>
                 </tr>
             </tbody>
         </table>

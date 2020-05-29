@@ -20,10 +20,10 @@
             <li class="nav-item">
                 <a class="nav-link" [routerLink]="['/user']">Usuaris</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="user && user.role.name === 'superadmin'">
                 <a class="nav-link" [routerLink]="['/role']">Rols</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="user && user.organization.name === 'superadmin'">
                 <a class="nav-link" [routerLink]="['/organization']">Organització</a>
             </li>
         </ul>
