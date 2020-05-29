@@ -58,12 +58,13 @@ export class UsersService {
 
     async update(updateUserDto: UpdateUserDto) {
         // return await getConnection().createQueryBuilder().update(User).set(user).where("id = :id", { id: user.id }).execute();
+        const user = await this.findByEmail(updateUserDto.email);
         const newUserUpdate = new User();
         newUserUpdate.id = updateUserDto.id;
         newUserUpdate.email = updateUserDto.email;
         newUserUpdate.name = updateUserDto.name;
         newUserUpdate.code = updateUserDto.code;
-        newUserUpdate.password = updateUserDto.password;
+        newUserUpdate.password = (!updateUserDto.password) ? user.password : updateUserDto.password;
 
         newUserUpdate.role = await this.rolesRepository.findOne({ id: updateUserDto.role });
         if (!newUserUpdate.role) {
@@ -76,7 +77,6 @@ export class UsersService {
         if (!newUserUpdate.organization) {
             throw new BadRequestException('Invalid organization id.');
         }
-        console.log(newUserUpdate);
         return this.usersRepository.save(newUserUpdate)
     }
 
