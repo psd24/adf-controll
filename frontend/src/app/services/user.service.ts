@@ -18,7 +18,7 @@ export class UserService {
     }
 
     getUser(): Observable<any> {
-        return this.http.get(this.backendUrl + 'auth/profile').pipe(
+        return this.http.get(this.backendUrl + '/auth/profile').pipe(
           map(res => {
             return res;
           }),
@@ -51,7 +51,7 @@ export class UserService {
       }
     
       view(userId): Observable<any> {
-        return this.http.get(this.backendUrl + 'auth/user/' + userId).pipe(
+        return this.http.get(this.backendUrl + '/auth/user/' + userId).pipe(
             map(res => {
                 return res;
             }),
@@ -62,7 +62,7 @@ export class UserService {
       }
     
       create(params): Observable<any> {
-        return this.http.post(this.backendUrl + 'auth/register/', params).pipe(
+        return this.http.post(this.backendUrl + '/auth/register/', params).pipe(
             map(res => {
                 return res;
             }),
@@ -73,7 +73,7 @@ export class UserService {
       }
     
       update(params): Observable<any> {
-        return this.http.put(this.backendUrl + 'auth/register/update', params).pipe(
+        return this.http.put(this.backendUrl + '/auth/register/update', params).pipe(
             map(res => {
                 return res;
             }),
@@ -84,7 +84,7 @@ export class UserService {
       }
     
       resetPassword(params): Observable<any> {
-        return this.http.put(this.backendUrl + 'auth/register/resetpassword', params).pipe(
+        return this.http.put(this.backendUrl + '/auth/register/resetpassword', params).pipe(
             map(res => {
                 return res;
             }),
@@ -95,7 +95,7 @@ export class UserService {
       }
     
       delete(userId): Observable<any> {
-        return this.http.delete(this.backendUrl + 'auth/user/delete/' + userId).pipe(
+        return this.http.delete(this.backendUrl + '/auth/user/delete/' + userId).pipe(
             map(res => {
                 return res;
             }),
