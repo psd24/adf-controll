@@ -82,9 +82,9 @@ export class CamerasService {
     }
 
     weather(lat, lon) {
-        console.log(lat);
-        console.log(lon);
-        return this.http.get('https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/' + 'weather?lat=' + lat + '&lon=' + lon + '&units=metric&appid=1e21fb83e9ed74c9331768638405d612').pipe(
+        return this.http.get('https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&units=metric&appid=1e21fb83e9ed74c9331768638405d612').pipe(
+            //&exclude=hourly,daily
+            //https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/' + 'weather?lat=' + lat + '&lon=' + lon + '&units=metric&appid=1e21fb83e9ed74c9331768638405d612'
             map(res => {
                 return res;
             }),
