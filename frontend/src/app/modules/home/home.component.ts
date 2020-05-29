@@ -3,6 +3,7 @@ import { first } from 'rxjs/operators';
 import { UserService } from '../../services/user.service';
 import { OrganizationService } from '../../services/organization.service';
 import { CamerasService } from '../../services/cameras.service';
+import { UserModel } from "../../models/user.model";
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,7 @@ export class HomeComponent implements OnInit {
   public organizationCount: number;
   public userCount: number;
   public cameraStateCount;
+  public currentUser: UserModel;
 
   constructor(
     private organizationService: OrganizationService,
@@ -23,6 +25,7 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.loading = true;
     this.organizationService.count().subscribe(
       (organizationCount) => {
