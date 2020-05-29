@@ -6,12 +6,14 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th scope="col">Codi</th>
                     <th scope="col">Nom</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let organization of organizations">
+                    <td>{{organization.code}}</td>
                     <td>{{organization.name}}</td>
                     <td><i class="fas fa-edit" (click)="updateOrganization(organization.id)"></i></td>
                 </tr>

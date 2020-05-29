@@ -37,6 +37,7 @@ export class CreateComponent implements OnInit {
           console.log(this.organization)
           this.formCreateOrganization.controls['id'].setValue(this.organization.id);
           this.formCreateOrganization.controls['name'].setValue(this.organization.name);
+          this.formCreateOrganization.controls['code'].setValue(this.organization.code);
         }
       );
     }
