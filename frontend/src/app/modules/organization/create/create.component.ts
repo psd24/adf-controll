@@ -28,6 +28,7 @@ export class CreateComponent implements OnInit {
     this.formCreateOrganization = this.formBuilder.group({
       id: [''],
       name: ['', [Validators.required, Validators.minLength(2)]],
+      code: ['', [Validators.required, Validators.minLength(1)]],
     })
     if (this.organizationId) {
       this.organizationService.view(this.organizationId).subscribe(
