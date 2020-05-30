@@ -12,7 +12,7 @@
                 <tr>
                     <th scope="col">Temperatura</th>
                     <th scope="col">Humitat</th>
-                    <th scope="col">Presion</th>
+                    <th scope="col">Presio</th>
                     <th scope="col">Vel. vent</th>
                     <th scope="col">Direccio del vent</th>
                 </tr>
@@ -22,7 +22,7 @@
                     <td *ngIf="weather">{{weather.current.temp}} °C</td>
                     <td *ngIf="weather">{{weather.current.humidity}} %</td>
                     <td *ngIf="weather">{{weather.current.pressure}}</td>
-                    <td *ngIf="weather">{{weather.current.wind_speed}}</td>
+                    <td *ngIf="weather">{{weather.current.wind_speed}} km/h</td>
                     <td *ngIf="weather">{{weather.current.wind_deg}}</td>
                 </tr>
             </tbody>
