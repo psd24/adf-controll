@@ -34,6 +34,11 @@ const routes: Routes = [
     path: `organization`, component: MainLayoutComponent, loadChildren: () =>
       import('./modules/organization/organization.module').then(m => m.OrganizationModule),  
   },
+  {
+    path: `profile`, component: MainLayoutComponent, loadChildren: () =>
+      import('./modules/profile/profile.module').then(m => m.ProfileModule),  
+  },
+
 
 
   // otherwise redirect to home

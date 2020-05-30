@@ -34,6 +34,7 @@
                     {{user.name | titlecase}}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" [routerLink]="['/profile']">Perfil</a>
                     <a class="dropdown-item" (click)="logout()">Salir</a>
                 </div>
             </li>
