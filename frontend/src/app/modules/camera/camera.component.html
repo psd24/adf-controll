@@ -40,7 +40,8 @@
               <h5 class="card-title">{{camera.name}}</h5>
             </div>
             <div class="col text-right">
-              <span class="float-sm-right"><a [routerLink]="['/camera/info',camera.id]"><i class="fas fa-info-circle fa-lg ml-3 "></i></a></span>
+              <span *ngIf="camera.lat && camera.lon" class="float-sm-right"><a
+                  [routerLink]="['/camera/info',camera.id]"><i class="fas fa-info-circle fa-lg ml-3 "></i></a></span>
               <span class="float-sm-right"><i class="fas fa-edit fa-lg" aria-hidden="true"
                   (click)="updateCamera(camera.id)"></i></span>
             </div>

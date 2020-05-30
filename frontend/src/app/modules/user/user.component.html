@@ -8,6 +8,7 @@
                 <tr>
                     <th scope="col">Codi</th>
                     <th scope="col">Nom</th>
+                    <th scope="col">Correu</th>
                     <th scope="col">Organitazacio</th>
                     <th scope="col">Rol</th>
                     <th scope="col" *ngIf="currentUser && currentUser.role.name === 'superadmin'"></th>
@@ -17,6 +18,7 @@
                 <tr *ngFor="let user of users">
                     <td>{{user.code}}</td>
                     <td>{{user.name}}</td>
+                    <td>{{user.email}}</td>
                     <td>{{user.organization.name}}</td>
                     <td>{{user.role.name}}</td>
                     <td *ngIf="currentUser && currentUser.role.name === 'superadmin'"><i class="fas fa-edit" (click)="updateUser(user.id)"></i></td>

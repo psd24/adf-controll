@@ -1,4 +1,10 @@
 <div class="container">
+    <div *ngIf="toastUpdate === true" class="alert alert-success" role="alert">
+        Camara actualizada correctament
+    </div>
+    <div *ngIf="toastCreate === true" class="alert alert-success" role="alert">
+        Camara creada correctament
+    </div>
     <form [formGroup]="formCreateCamera" (ngSubmit)="submitForm()">
         <div class="row">
             <div class="col">

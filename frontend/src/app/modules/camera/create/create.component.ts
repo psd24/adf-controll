@@ -20,6 +20,8 @@ export class CreateComponent implements OnInit {
   cameraTypes: CameraTypeModel;
   cameraId: string;
   camera: CameraModel;
+  toastUpdate: boolean = false;
+  toastCreate: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -71,7 +73,7 @@ export class CreateComponent implements OnInit {
     if (this.cameraId) {
       this.camerasService.update(this.formCreateCamera.value).subscribe(
         (camera: CameraModel) => {
-          this.router.navigate(['/camera']);
+          this.toastUpdate = true;
         },
         (error) => {
           console.log(error)
@@ -82,7 +84,7 @@ export class CreateComponent implements OnInit {
       this.formCreateCamera.controls['state'].setValue(2);
       this.camerasService.create(this.formCreateCamera.value).subscribe(
         (camera: CameraModel) => {
-          this.router.navigate(['/camera']);
+          this.toastCreate = true;
         },
         (error) => {
           console.log(error)
