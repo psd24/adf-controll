@@ -58,13 +58,11 @@ export class CreateComponent implements OnInit {
         }
       );
     }
-    this.formCreateUser.controls['password'].setValue('');
   }
 
   submitForm() {
     if(this.userId) {
-      //if(!this.formCreateUser.controls['password'].value) this.formCreateUser.controls['password'].setValue(this.user.password);
-      console.log(this.formCreateUser.value)
+      if(!this.formCreateUser.controls['password'].value) this.formCreateUser.controls['password'].setValue('');
       this.usersService.update(this.formCreateUser.value).subscribe(
         (user: UserModel) => {
           this.router.navigate(['/user'])

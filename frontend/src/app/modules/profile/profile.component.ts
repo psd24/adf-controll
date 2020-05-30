@@ -44,32 +44,34 @@ export class ProfileComponent implements OnInit {
       organization: ['', [Validators.required, Validators.minLength(2)]],
       role: ['', [Validators.required, Validators.minLength(2)]],
     });
-    this.userService.getUser().subscribe(
-      (user: UserModel) => {
-        this.user = user;
-        console.log(this.user.email)
-        this.formCreateUser.controls['id'].setValue(this.user.id);
-        this.formCreateUser.controls['name'].setValue(this.user.name);
-        this.formCreateUser.controls['code'].setValue(this.user.code);
-        this.formCreateUser.controls['password'].setValue('');
-        this.formCreateUser.controls['email'].setValue(this.user.email);
-        this.formCreateUser.controls['organization'].setValue(this.user.organization.id);
-        this.formCreateUser.controls['role'].setValue(this.user.role.id);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    this.formCreateUser.controls['name'].disable();
-    this.formCreateUser.controls['code'].disable()
-    this.formCreateUser.controls['password'].disable();
-    this.formCreateUser.controls['email'].disable()
-    this.formCreateUser.controls['organization'].disable()
-    this.formCreateUser.controls['role'].disable()
+    this.userService.getUser().subscribe((user:UserModel) => {
+      this.userId = user.id;
+      this.userService.view(this.userId).subscribe(
+        (user: UserModel) => {
+          this.user = user;
+          console.log(this.user)
+          this.formCreateUser.controls['id'].setValue(this.user.id);
+          this.formCreateUser.controls['name'].setValue(this.user.name);
+          this.formCreateUser.controls['code'].setValue(this.user.code);
+          this.formCreateUser.controls['password'].setValue('');
+          this.formCreateUser.controls['email'].setValue(this.user.email);
+          this.formCreateUser.controls['organization'].setValue(this.user.organization.id);
+          this.formCreateUser.controls['role'].setValue(this.user.role.id);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+      this.formCreateUser.controls['name'].disable();
+      this.formCreateUser.controls['code'].disable()
+      this.formCreateUser.controls['password'].disable();
+      this.formCreateUser.controls['email'].disable()
+      this.formCreateUser.controls['organization'].disable()
+      this.formCreateUser.controls['role'].disable()
+    })
   }
 
   submitForm() {
-    console.log(this.formCreateUser.value)
     this.userService.update(this.formCreateUser.value).subscribe(
       (user: UserModel) => {
         this.router.navigate(['/home'])

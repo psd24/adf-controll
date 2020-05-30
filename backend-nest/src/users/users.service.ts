@@ -64,8 +64,9 @@ export class UsersService {
         newUserUpdate.email = updateUserDto.email;
         newUserUpdate.name = updateUserDto.name;
         newUserUpdate.code = updateUserDto.code;
-        newUserUpdate.password = (!updateUserDto.password) ? user.password : updateUserDto.password;
-
+        if(updateUserDto.password) {
+            newUserUpdate.password = (!updateUserDto.password) ? user.password : updateUserDto.password;
+        }
         newUserUpdate.role = await this.rolesRepository.findOne({ id: updateUserDto.role });
         if (!newUserUpdate.role) {
             throw new BadRequestException('Invalid role id.');

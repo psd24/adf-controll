@@ -41,7 +41,8 @@ export class User {
 
   @BeforeUpdate()
   preProcessUpdate() {
-    console.log('ok')
-    return hash(this.password, 10).then(encrypted => this.password = encrypted);
+    if(this.password) {
+      return hash(this.password, 10).then(encrypted => this.password = encrypted);
+    }
   }
 }
