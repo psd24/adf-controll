@@ -30,12 +30,10 @@ export class CameraCreateDto {
 
   @ApiProperty({ required: true })
   @IsString()
-  @IsNotEmpty()
   lat: string;
 
   @ApiProperty({ required: true })
   @IsString()
-  @IsNotEmpty()
   lon: string;
 
   @ApiProperty({ required: true })

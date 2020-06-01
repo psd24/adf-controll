@@ -7,6 +7,7 @@ import { CreateComponent } from './create/create.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { InfoComponent } from './info/info.component';
+import { NgFallimgModule } from 'ng-fallimg';
 
 
 @NgModule({
@@ -16,7 +17,9 @@ import { InfoComponent } from './info/info.component';
     CameraRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxGalleryModule
+    NgxGalleryModule,
+    NgFallimgModule
+
   ]
 })
 export class CameraModule { }
