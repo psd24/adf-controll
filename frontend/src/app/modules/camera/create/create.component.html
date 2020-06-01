@@ -9,13 +9,13 @@
         <div class="row">
             <div class="col">
                 <div class="form-group">
-                    <label for="exampleFormControlInput1">Nom</label>
+                    <label for="exampleFormControlInput1">Nom<span class="text-danger">*</span></label>
                     <input formControlName="name" type="text" class="form-control" id="exampleFormControlInput1">
                 </div>
             </div>
             <div class="col">
                 <div class="form-group">
-                    <label for="exampleFormControlInput1">Ip</label>
+                    <label for="exampleFormControlInput1">Ip<span class="text-danger">*</span></label>
                     <input formControlName="ip" type="text" class="form-control" id="exampleFormControlInput1">
                 </div>
             </div>
@@ -23,13 +23,13 @@
         <div class="row">
             <div class="col">
                 <div class="form-group">
-                    <label for="exampleFormControlInput1">Port</label>
+                    <label for="exampleFormControlInput1">Port<span class="text-danger">*</span></label>
                     <input formControlName="port" type="text" class="form-control" id="exampleFormControlInput1">
                 </div>
             </div>
             <div class="col">
                 <div class="form-group">
-                    <label for="exampleFormControlInput1">Usuari</label>
+                    <label for="exampleFormControlInput1">Usuari<span class="text-danger">*</span></label>
                     <input formControlName="user" type="text" class="form-control" id="exampleFormControlInput1">
                 </div>
             </div>
@@ -37,7 +37,7 @@
         <div class="row">
             <div class="col">
                 <div class="form-group">
-                    <label for="exampleFormControlInput1">Contrasenya</label>
+                    <label for="exampleFormControlInput1">Contrasenya<span class="text-danger">*</span></label>
                     <input formControlName="password" type="text" class="form-control" id="exampleFormControlInput1">
                 </div>
             </div>
@@ -57,7 +57,7 @@
             </div>
             <div class="col">
                 <div class="form-group">
-                    <label for="exampleFormControlSelect1">Organitazacio</label>
+                    <label for="exampleFormControlSelect1">Organitazacio<span class="text-danger">*</span></label>
                     <select formControlName="organizationId" class="form-control" id="exampleFormControlSelect1">
                         <option *ngFor="let organization of organizations" [ngValue]="organization.id">
                             {{organization.name}}
@@ -69,7 +69,7 @@
         <div class="row">
             <div class="col">
                 <div class="form-group">
-                    <label for="exampleFormControlSelect1">Marca camera</label>
+                    <label for="exampleFormControlSelect1">Marca camera<span class="text-danger">*</span></label>
                     <select formControlName="cameraTypeId" class="form-control" id="exampleFormControlSelect1">
                         <option *ngFor="let cameraType of cameraTypes" [ngValue]="cameraType.id">{{cameraType.name}}
                         </option>
@@ -78,7 +78,7 @@
             </div>
             <div class="col" *ngIf="cameraId">
                 <div class="form-group">
-                    <label for="exampleFormControlSelect1">Estat</label>
+                    <label for="exampleFormControlSelect1">Estat<span class="text-danger">*</span></label>
                     <select formControlName="state" class="form-control" id="exampleFormControlSelect1">
                         <option [ngValue]="0">Inactiu</option>
                         <option [ngValue]="1">Actiu</option>

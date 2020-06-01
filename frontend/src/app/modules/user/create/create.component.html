@@ -1,30 +1,30 @@
 <div class="container">
     <form [formGroup]="formCreateUser" (ngSubmit)="submitForm()">
         <div class="form-group">
-            <label for="exampleFormControlInput1">Nom</label>
+            <label for="exampleFormControlInput1">Nom<span class="text-danger">*</span></label>
             <input formControlName="name" type="text" class="form-control" id="exampleFormControlInput1">
         </div>
         <div class="form-group">
-            <label for="exampleFormControlInput1">Codi</label>
+            <label for="exampleFormControlInput1">Codi<span class="text-danger">*</span></label>
             <input formControlName="code" type="text" class="form-control" id="exampleFormControlInput1">
         </div>
         <div class="form-group">
-            <label for="exampleFormControlInput1">Correu</label>
+            <label for="exampleFormControlInput1">Correu<span class="text-danger">*</span></label>
             <input formControlName="email" type="text" class="form-control" id="exampleFormControlInput1">
         </div>
         <div class="form-group">
-            <label for="exampleFormControlInput1">Contrasenya</label>
+            <label for="exampleFormControlInput1">Contrasenya<span class="text-danger">*</span></label>
             <input formControlName="password" type="text" class="form-control" id="exampleFormControlInput1">
         </div>
         <div class="form-group">
-            <label for="exampleFormControlSelect1">Rol</label>
+            <label for="exampleFormControlSelect1">Rol<span class="text-danger">*</span></label>
             <select formControlName="role" class="form-control" id="exampleFormControlSelect1">
                 <option *ngFor="let role of roles" [ngValue]="role.id">{{role.name}}
                 </option>
             </select>
         </div>
         <div class="form-group">
-            <label for="exampleFormControlSelect1">Organització</label>
+            <label for="exampleFormControlSelect1">Organització<span class="text-danger">*</span></label>
             <select formControlName="organization" class="form-control" id="exampleFormControlSelect1">
                 <option *ngFor="let organization of organizations" [ngValue]="organization.id">{{organization.name}}
                 </option>

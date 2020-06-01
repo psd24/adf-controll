@@ -1,11 +1,11 @@
 <div class="container">
     <form [formGroup]="formCreateOrganization" (ngSubmit)="submitForm()">
         <div class="form-group">
-            <label for="exampleFormControlInput1">Nom</label>
+            <label for="exampleFormControlInput1">Nom<span class="text-danger">*</span></label>
             <input formControlName="name" type="text" class="form-control" id="exampleFormControlInput1">
         </div>
         <div class="form-group">
-            <label for="exampleFormControlInput1">Codi</label>
+            <label for="exampleFormControlInput1">Codi<span class="text-danger">*</span></label>
             <input formControlName="code" type="text" class="form-control" id="exampleFormControlInput1">
         </div>
         <button type="submit" class="btn btn-success">Guardar</button>
