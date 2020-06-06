@@ -1,0 +1,16 @@
+
+.img-login {
+    background: url('/assets/img/login.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.card { 
+    background-color: rgba(245, 245, 245, 0.6);
+}
+
+.btn-guaitacat {
+    background-color: #F6D41C;
+}
