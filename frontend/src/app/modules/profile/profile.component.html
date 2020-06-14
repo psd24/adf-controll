@@ -23,6 +23,7 @@
         <div class="form-group">
             <label for="exampleFormControlSelect1">Rol</label>
             <select formControlName="role" class="form-control" id="exampleFormControlSelect1">
+                <option ngValue="" selected disabled>Rol</option>
                 <option *ngFor="let role of roles" [ngValue]="role.id">{{role.name}}
                 </option>
             </select>
@@ -30,6 +31,7 @@
         <div class="form-group">
             <label for="exampleFormControlSelect1">Organització</label>
             <select formControlName="organization" class="form-control" id="exampleFormControlSelect1">
+                <option ngValue="" selected disabled>Organització</option>
                 <option *ngFor="let organization of organizations" [ngValue]="organization.id">{{organization.name}}
                 </option>
             </select>

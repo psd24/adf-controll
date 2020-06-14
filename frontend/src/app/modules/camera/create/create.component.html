@@ -57,8 +57,9 @@
             </div>
             <div class="col">
                 <div class="form-group">
-                    <label for="exampleFormControlSelect1">Organitazacio<span class="text-danger">*</span></label>
+                    <label for="exampleFormControlSelect1">Organització<span class="text-danger">*</span></label>
                     <select formControlName="organizationId" class="form-control" id="exampleFormControlSelect1">
+                        <option ngValue="" selected disabled>Organització</option>
                         <option *ngFor="let organization of organizations" [ngValue]="organization.id">
                             {{organization.name}}
                         </option>
@@ -71,6 +72,7 @@
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Marca camera<span class="text-danger">*</span></label>
                     <select formControlName="cameraTypeId" class="form-control" id="exampleFormControlSelect1">
+                        <option ngValue="" selected disabled>Marca camera</option>
                         <option *ngFor="let cameraType of cameraTypes" [ngValue]="cameraType.id">{{cameraType.name}}
                         </option>
                     </select>
@@ -89,6 +91,7 @@
         </div>
         <button type="submit" class="btn btn-success">Guardar</button>
     </form>
-    <button class="btn btn-primary mt-4" [routerLink] = "['/camera']">Enrera</button>
-    <button *ngIf="camera && camera.id" class="btn btn-danger mt-4 ml-4" (click)="deleteCamera(camera.id)">Eliminar camera</button>
+    <button class="btn btn-primary mt-4" [routerLink]="['/camera']">Enrera</button>
+    <button *ngIf="camera && camera.id" class="btn btn-danger mt-4 ml-4" (click)="deleteCamera(camera.id)">Eliminar
+        camera</button>
 </div>
