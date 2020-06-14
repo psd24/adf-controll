@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { UserService } from '../../services/user.service';
 import { OrganizationService } from '../../services/organization.service';
 import { CamerasService } from '../../services/cameras.service';
 import { UserModel } from "../../models/user.model";
 import { CameraModel } from 'src/app/models/camera.model';
+import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,9 @@ import { CameraModel } from 'src/app/models/camera.model';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+
+  @ViewChild(GoogleMap, { static: false }) map: GoogleMap
+  @ViewChild(MapInfoWindow, { static: false }) info: MapInfoWindow
 
   loading = false;
   public organizationCount: number;
@@ -22,6 +26,7 @@ export class HomeComponent implements OnInit {
   zoom = 8;
   markers = []
   public cameras;
+  infoContent = '';
 
   constructor(
     private organizationService: OrganizationService,
@@ -72,18 +77,19 @@ export class HomeComponent implements OnInit {
     this.camerasService.index({ "relations": ["organization", "cameraType"] }).subscribe(
       (camera: CameraModel) => {
         this.cameras = camera;
-        this.cameras.forEach((value) => {
-          if (value.lat && value.lon) {
+        this.cameras.forEach((camera) => {
+          if (camera.lat && camera.lon) {
             this.markers.push({
               position: {
-                lat: Number(value.lat),
-                lng: Number(value.lon)
+                lat: Number(camera.lat),
+                lng: Number(camera.lon)
               },
               label: {
                 color: 'white',
-                text: value.name,
+                text: camera.name,
               },
-              title: 'Marker title ' + (value.name),
+              title: 'Marker title ' + (camera.name),
+              info: camera.name,
               options: { animation: google.maps.Animation.BOUNCE },
             });
           }
@@ -93,6 +99,12 @@ export class HomeComponent implements OnInit {
         console.log(error)
       }
     );
+  }
+
+  openInfo(marker: MapMarker, content) {
+    console.log(content)
+    this.infoContent = content
+    this.info.open(marker)
   }
 
 }

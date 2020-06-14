@@ -6,7 +6,7 @@
           <h5 class="card-title">Organizacions</h5>
           <p class="card-text text-center h1">{{organizationCount}}</p>
         </div>
-    </div>
+      </div>
     </div>
     <div class="col-sm">
       <div class="card m-4">
@@ -14,7 +14,7 @@
           <h5 class="card-title">Usuaris</h5>
           <p class="card-text text-center h1">{{userCount}}</p>
         </div>
-    </div>
+      </div>
     </div>
   </div>
   <div class="card m-4">
@@ -39,20 +39,11 @@
     </div>
   </div>
   <div class="mb-5 ml-4 mr-4">
-    <google-map 
-    width="100%"
-    [center]="center"
-    [zoom]="zoom"
-    >
-    <map-marker
-    *ngFor="let marker of markers"
-    [position]="marker.position"
-    [label]="marker.label"
-    [title]="marker.title"
-    [options]="marker.options"
-  >
-  </map-marker>
+    <google-map width="100%" [center]="center" [zoom]="zoom">
+      <map-marker #markerElem *ngFor="let marker of markers" [position]="marker.position" [label]="marker.label"
+        [title]="marker.title" [options]="marker.options" (mapClick)="openInfo(markerElem, marker.info)">
+      </map-marker>
+      <map-info-window>{{ infoContent }}</map-info-window>
     </google-map>
   </div>
-  
 </div>
