@@ -4,6 +4,7 @@ import { UserService } from '../../services/user.service';
 import { OrganizationService } from '../../services/organization.service';
 import { CamerasService } from '../../services/cameras.service';
 import { UserModel } from "../../models/user.model";
+import { CameraModel } from 'src/app/models/camera.model';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,10 @@ export class HomeComponent implements OnInit {
   public userCount: number;
   public cameraStateCount;
   public currentUser: UserModel;
+  center: google.maps.LatLngLiteral;
+  zoom = 8;
+  markers = []
+  public cameras;
 
   constructor(
     private organizationService: OrganizationService,
@@ -51,6 +56,41 @@ export class HomeComponent implements OnInit {
       },
       (error) => {
         console.log(error);
+      }
+    );
+
+    navigator.geolocation.getCurrentPosition(position => {
+      this.center = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      }
+    })
+    this.addMarker();
+  }
+
+  addMarker() {
+    this.camerasService.index({ "relations": ["organization", "cameraType"] }).subscribe(
+      (camera: CameraModel) => {
+        this.cameras = camera;
+        this.cameras.forEach((value) => {
+          if (value.lat && value.lon) {
+            this.markers.push({
+              position: {
+                lat: Number(value.lat),
+                lng: Number(value.lon)
+              },
+              label: {
+                color: 'white',
+                text: value.name,
+              },
+              title: 'Marker title ' + (value.name),
+              options: { animation: google.maps.Animation.BOUNCE },
+            });
+          }
+        });
+      },
+      (error) => {
+        console.log(error)
       }
     );
   }
