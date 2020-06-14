@@ -11,6 +11,7 @@ import { first } from 'rxjs/operators';
 export class MainLayoutComponent implements OnInit {
 
   user;
+  toggled = false;
 
   constructor(
     private userService: UserService,
@@ -28,5 +29,8 @@ export class MainLayoutComponent implements OnInit {
     this.authenticationService.logout();
   }
 
+  onToggle(){
+    this.toggled = !this.toggled;
+  }
 
 }
