@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { InfoComponent } from './info/info.component';
 import { NgFallimgModule } from 'ng-fallimg';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 @NgModule({
@@ -18,8 +19,8 @@ import { NgFallimgModule } from 'ng-fallimg';
     FormsModule,
     ReactiveFormsModule,
     NgxGalleryModule,
-    NgFallimgModule
-
+    NgFallimgModule,
+    ModalModule.forRoot()
   ]
 })
 export class CameraModule { }

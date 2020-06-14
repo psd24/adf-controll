@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { CamerasService } from '../../services/cameras.service';
 import { CameraModel } from '../../models/camera.model';
 import { OrganizationModel } from '../../models/organization.model';
@@ -7,6 +7,7 @@ import { interval } from 'rxjs';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NgxGalleryComponent, NgxGalleryImage, INgxGalleryOptions } from '@kolkov/ngx-gallery';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 
 @Component({
@@ -17,6 +18,7 @@ import { NgxGalleryComponent, NgxGalleryImage, INgxGalleryOptions } from '@kolko
 export class CameraComponent implements OnInit {
 
   @ViewChild('gallery', {static: true}) gallery: NgxGalleryComponent;
+  modalRef: BsModalRef;
 
   cameras: CameraModel[];
   organizations: OrganizationModel;
@@ -25,6 +27,8 @@ export class CameraComponent implements OnInit {
   refreshImage: number = 50 * 1000;
   formSearchCamera: FormGroup;
   query: object;
+  imageModel;
+  nameImageModal: string;
 
   public galleryOptions: INgxGalleryOptions[] = [
     { image: false,
@@ -42,7 +46,8 @@ export class CameraComponent implements OnInit {
     private camerasService: CamerasService,
     private router: Router,
     private organizationService: OrganizationService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private modalService: BsModalService
   ) { }
 
   ngOnInit(): void {
@@ -86,8 +91,14 @@ export class CameraComponent implements OnInit {
     this.router.navigate(['/camera/create', cameraId]);
   }
 
+  openGallery(template: TemplateRef<any>, image, name) {
+    this.modalRef = this.modalService.show(template, {class: 'modal-xl modal-dialog-centered'});
+    this.imageModel = image;
+    this.nameImageModal = name;
+  }
+
   // Create a gallery images when click in cv button
-  openGallery(image: string) {
+  /*openGallery(image: string) {
     console.log(image)
     this.galleryImages = [
       {
@@ -96,7 +107,7 @@ export class CameraComponent implements OnInit {
         big: image
       }
     ]
-  }
+  }*/
 
   openPreview() {
     setTimeout(() => {
