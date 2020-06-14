@@ -64,12 +64,11 @@ export class HomeComponent implements OnInit {
       }
     );
 
-    navigator.geolocation.getCurrentPosition(position => {
-      this.center = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      }
-    })
+    this.center = {
+      lat: 41.837841,
+      lng: 1.540083,
+    }
+
     this.addMarker();
   }
 
