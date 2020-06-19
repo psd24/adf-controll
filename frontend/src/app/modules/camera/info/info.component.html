@@ -1,32 +1,93 @@
 <div class="container-fluid">
-    <div class="table-responsive">
-        <button type="button" class="btn btn-outline-primary mr-5 float-right"
-            (click)="updateWeather()">Actualizar</button>
-        <h2>Temps actual: <span *ngIf="weather">{{weather.current.dt * 1000 | date: 'dd/MM/yyyy'}}</span>
-            <div *ngIf="!weather" class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
+    <h2>Temps actual: <span *ngIf="weather">{{weather.current.dt * 1000 | date: 'dd/MM/yyyy'}}</span>
+        <div *ngIf="!weather" class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </h2>
+
+    <div class="row mt-4">
+        <div class="col-12 col-sm-3">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-3 p-4 pl-0 border-right text-center">
+                            <i class="fas fa-thermometer-three-quarters fa-4x ml-2" style="color:#F6B400"></i>
+                        </div>
+                        <div class="col-9 p-4 pl-0 text-center">
+                            <p *ngIf="weather && weather.current" class="display-4 font-weight-bold"
+                                style="color: #F6B400">{{weather.current.temp}} °C</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Temperatura</th>
-                    <th scope="col">Humitat</th>
-                    <th scope="col">Presio</th>
-                    <th scope="col">Vel. vent</th>
-                    <th scope="col">Direccio del vent</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td *ngIf="weather">{{weather.current.temp}} °C</td>
-                    <td *ngIf="weather">{{weather.current.humidity}} %</td>
-                    <td *ngIf="weather">{{weather.current.pressure}}</td>
-                    <td *ngIf="weather">{{weather.current.wind_speed}} km/h</td>
-                    <td *ngIf="weather">{{weather.current.wind_deg}}</td>
-                </tr>
-            </tbody>
-        </table>
+        </div>
+
+        <div class="col-12 col-sm-3">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-3 p-4 pl-0 border-right text-center">
+                            <i class="fas fa-tint fa-4x ml-2" style="color:#F6B400"></i>
+                        </div>
+                        <div class="col-9 p-4 pl-0 text-center">
+                            <p *ngIf="weather && weather.current" class="display-4 font-weight-bold"
+                                style="color: #F6B400">{{weather.current.humidity}} %
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-3">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-3 p-4 pl-0 border-right text-center">
+                            <i class="fas fa-clock fa-4x ml-2" style="color:#F6B400"></i>
+                        </div>
+                        <div class="col-9 p-4 pl-0 text-center">
+                            <p *ngIf="weather && weather.current" class="display-4 font-weight-bold"
+                                style="color: #F6B400">{{weather.current.pressure}} hPa
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-3">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-3 p-4 pl-0 border-right text-center">
+                            <i class="fas fa-wind fa-4x ml-2" style="color:#F6B400"></i>
+                        </div>
+                        <div class="col-9 p-4 pl-0 text-center">
+                            <p *ngIf="weather && weather.current" class="display-4 font-weight-bold"
+                                style="color: #F6B400; font-size:3rem">
+                                {{weather.current.wind_speed}} km/h</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="col-12 col-sm-3 mt-4">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-3 p-4 pl-0 border-right text-center">
+                            <i class="fas fa-compass fa-4x ml-2" style="color:#F6B400"></i>
+                        </div>
+                        <div class="col-9 p-4 pl-0 text-center">
+                            <p *ngIf="weather && weather.current" class="display-4 font-weight-bold" style="color: #F6B400">{{weather.current.wind_deg}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
     </div>
-    <button type="button" class="btn btn-outline-primary ml-4" [routerLink]="['/camera']">Tornar</button>
+    <button type="button" class="btn btn-outline-primary mt-4" [routerLink]="['/camera']">Tornar</button>
 </div>
