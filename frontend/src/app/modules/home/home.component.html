@@ -43,7 +43,10 @@
       <map-marker #markerElem *ngFor="let marker of markers" [position]="marker.position" [label]="marker.label"
         [title]="marker.title" [options]="marker.options" (mapClick)="openInfo(markerElem, marker.info)">
       </map-marker>
-      <map-info-window><img src="{{ infoContent }}" width="500px" height="300px"></map-info-window>
+      <map-info-window>
+        <img class="d-none d-sm-block" src="{{ infoContent }}" width="500px" height="300px">
+        <img class="d-block d-sm-none" src="{{ infoContent }}" width="400px" height="200px">
+      </map-info-window>
     </google-map>
   </div>
 </div>
