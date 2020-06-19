@@ -23,6 +23,9 @@ export class HomeComponent implements OnInit {
   public cameraStateCount;
   public currentUser: UserModel;
   center: google.maps.LatLngLiteral;
+  options: google.maps.MapOptions = {
+    mapTypeId: 'terrain',
+  }
   zoom = 8;
   markers = []
   public cameras;
@@ -88,7 +91,7 @@ export class HomeComponent implements OnInit {
                 text: camera.name,
               },
               title: 'Marker title ' + (camera.name),
-              info: camera.name,
+              info: camera.url,
               options: { animation: google.maps.Animation.BOUNCE },
             });
           }

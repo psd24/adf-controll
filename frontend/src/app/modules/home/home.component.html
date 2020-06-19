@@ -39,11 +39,11 @@
     </div>
   </div>
   <div class="mb-5 ml-4 mr-4">
-    <google-map width="100%" [center]="center" [zoom]="zoom">
+    <google-map width="100%" [center]="center" [zoom]="zoom" [options]="options">
       <map-marker #markerElem *ngFor="let marker of markers" [position]="marker.position" [label]="marker.label"
         [title]="marker.title" [options]="marker.options" (mapClick)="openInfo(markerElem, marker.info)">
       </map-marker>
-      <map-info-window>{{ infoContent }}</map-info-window>
+      <map-info-window><img src="{{ infoContent }}" width="500px" height="300px"></map-info-window>
     </google-map>
   </div>
 </div>
