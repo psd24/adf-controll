@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="currentUser && currentUser.role.name === 'superadmin' || currentUser.role.name === 'admin'">
   <div class="row">
     <div class="col-sm">
       <div class="card m-4" *ngIf="currentUser && currentUser.role.name === 'superadmin'">
@@ -39,6 +39,20 @@
     </div>
   </div>
   <div class="mb-5 ml-4 mr-4">
+    <google-map width="100%" [center]="center" [zoom]="zoom" [options]="options">
+      <map-marker #markerElem *ngFor="let marker of markers" [position]="marker.position" [label]="marker.label"
+        [title]="marker.title" [options]="marker.options" (mapClick)="openInfo(markerElem, marker.info)">
+      </map-marker>
+      <map-info-window>
+        <img class="d-none d-sm-block" src="{{ infoContent }}" width="500px" height="300px">
+        <img class="d-block d-sm-none" src="{{ infoContent }}" width="400px" height="200px">
+      </map-info-window>
+    </google-map>
+  </div>
+</div>
+
+<div class="container-fluid" *ngIf="currentUser && currentUser.role.name === 'capOperatiu'">
+  <div class="ml-4 mr-4">
     <google-map width="100%" [center]="center" [zoom]="zoom" [options]="options">
       <map-marker #markerElem *ngFor="let marker of markers" [position]="marker.position" [label]="marker.label"
         [title]="marker.title" [options]="marker.options" (mapClick)="openInfo(markerElem, marker.info)">

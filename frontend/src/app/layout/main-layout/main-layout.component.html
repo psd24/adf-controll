@@ -13,7 +13,7 @@
           <a href="#" class="list-group-item list-group-item-action bg-light" [routerLink]="['/home']">Home</a>
           <a href="#" class="list-group-item list-group-item-action bg-light" [routerLink]="['/camera']">Camaras</a>
           <a href="#" class="list-group-item list-group-item-action bg-light" [routerLink]="['/map']">Mapas</a>
-          <a href="#" class="list-group-item list-group-item-action bg-light" [routerLink]="['/user']">Usuaris</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light" *ngIf="user && user.role.name === 'superadmin' || user && user.role.name === 'admin'" [routerLink]="['/user']">Usuaris</a>
           <a href="#" class="list-group-item list-group-item-action bg-light" *ngIf="user && user.role.name === 'superadmin'" [routerLink]="['/role']">Rols</a>
           <a href="#" class="list-group-item list-group-item-action bg-light" *ngIf="user && user.role.name === 'superadmin'" [routerLink]="['/organization']">Organització</a>
         </div>

@@ -17,7 +17,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class CameraComponent implements OnInit {
 
-  @ViewChild('gallery', {static: true}) gallery: NgxGalleryComponent;
+  @ViewChild('gallery', { static: true }) gallery: NgxGalleryComponent;
   modalRef: BsModalRef;
 
   cameras: CameraModel[];
@@ -29,9 +29,11 @@ export class CameraComponent implements OnInit {
   query: object;
   imageModel;
   nameImageModal: string;
+  user = JSON.parse(localStorage.getItem('currentUser'));;
 
   public galleryOptions: INgxGalleryOptions[] = [
-    { image: false,
+    {
+      image: false,
       thumbnails: false,
       previewCloseOnClick: true,
       previewCloseOnEsc: true,
