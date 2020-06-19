@@ -32,7 +32,7 @@
     </div>
     <div class="col-sm-3" *ngFor="let camera of cameras">
       <div class="card mb-3">
-        <img class="card-img-top img-fluid" src="{{camera.url}}&time={{timeStamp}}" (click)="openGallery(template,camera.url, camera.name)"
+        <img class="card-img-top img-fluid" src="{{camera.url}}&time={{timeStamp}}" (click)="openGallery(camera.url)"
           alt="{{camera.name}}" fallimg>
         <div class="card-body">
           <div class="row">

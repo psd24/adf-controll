@@ -91,14 +91,14 @@ export class CameraComponent implements OnInit {
     this.router.navigate(['/camera/create', cameraId]);
   }
 
-  openGallery(template: TemplateRef<any>, image, name) {
+  /*openGallery(template: TemplateRef<any>, image, name) {
     this.modalRef = this.modalService.show(template, {class: 'modal-xl modal-dialog-centered'});
     this.imageModel = image;
     this.nameImageModal = name;
-  }
+  }*/
 
   // Create a gallery images when click in cv button
-  /*openGallery(image: string) {
+  openGallery(image: string) {
     console.log(image)
     this.galleryImages = [
       {
@@ -107,7 +107,7 @@ export class CameraComponent implements OnInit {
         big: image
       }
     ]
-  }*/
+  }
 
   openPreview() {
     setTimeout(() => {
