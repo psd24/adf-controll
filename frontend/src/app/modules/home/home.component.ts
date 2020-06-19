@@ -92,7 +92,10 @@ export class HomeComponent implements OnInit {
               },
               title: 'Marker title ' + (camera.name),
               info: camera.url,
-              options: { animation: google.maps.Animation.BOUNCE },
+              options: { 
+                animation: google.maps.Animation.DROP, 
+                icon: '/assets/img/icon-maker.png' 
+              },
             });
           }
         });
