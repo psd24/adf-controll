@@ -20,7 +20,7 @@
             <label for="exampleFormControlInput1">Contrasenya</label>
             <input formControlName="password" type="text" class="form-control" id="exampleFormControlInput1">
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="exampleFormControlSelect1">Rol</label>
             <select formControlName="role" class="form-control" id="exampleFormControlSelect1">
                 <option ngValue="" selected disabled>Rol</option>
@@ -35,7 +35,7 @@
                 <option *ngFor="let organization of organizations" [ngValue]="organization.id">{{organization.name}}
                 </option>
             </select>
-        </div>
+        </div>-->
         <button type="submit" class="btn btn-success" [disabled]="clickSave === false">Guardar</button>
     </form>
     <button class="btn btn-primary mt-4" [routerLink]="['/home']">Enrera</button>

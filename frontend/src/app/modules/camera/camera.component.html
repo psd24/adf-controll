@@ -2,7 +2,7 @@
   <div class="row mr-4 mb-4 float-sm-right">
     <button type="button" class="btn btn-outline-primary ml-4" [routerLink]="['/camera/create']">Afegir camara</button>
   </div>
-  <div class="mb-4">
+  <div class="mb-4" *ngIf="user && user.role.name === 'superadmin' || user && user.role.name === 'admin'">
     <form [formGroup]="formSearchCamera" (ngSubmit)="getCameras()" novalidate>
       <ul class="nav justify-content-center">
         <li class="nav-item mr-4">

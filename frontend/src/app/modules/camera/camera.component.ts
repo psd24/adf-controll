@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NgxGalleryComponent, NgxGalleryImage, INgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { copyFileSync } from 'fs';
 
 
 @Component({
@@ -70,14 +71,20 @@ export class CameraComponent implements OnInit {
   }
 
   getCameras() {
-    if (this.formSearchCamera.controls['state'].value === "3") {
-      this.query = { "relations": ["organization", "cameraType"] };
-    }
-    else if (this.formSearchCamera.controls['state'].value) {
-      this.query = { "relations": ["organization", "cameraType"], "where": [{ "state": this.formSearchCamera.controls['state'].value }] };
+    console.log(this.user.role.name)
+    if(this.user.role.name != 'superadmin' && this.user.role.name != 'admin') {
+      this.query = { "relations": ["organization", "cameraType"], "where": [{ "state": 1 }] };
     }
     else {
-      this.query = { "relations": ["organization", "cameraType"] };
+      if (this.formSearchCamera.controls['state'].value === "3") {
+        this.query = { "relations": ["organization", "cameraType"] };
+      }
+      else if (this.formSearchCamera.controls['state'].value) {
+        this.query = { "relations": ["organization", "cameraType"], "where": [{ "state": this.formSearchCamera.controls['state'].value }] };
+      }
+      else {
+        this.query = { "relations": ["organization", "cameraType"] };
+      }
     }
     this.camerasService.index(this.query).subscribe(
       (cameras: CameraModel[]) => {
