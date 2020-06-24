@@ -41,8 +41,7 @@ export class CameraComponent implements OnInit {
       previewArrows: false
     }
   ];
-  public galleryImages: NgxGalleryImage[]; // yo creo que que no accepta el tipo de imagen
-
+  public galleryImages: NgxGalleryImage[];
 
   constructor(
     private camerasService: CamerasService,

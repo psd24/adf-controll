@@ -51,7 +51,7 @@
   </div>
 </div>
 
-<div class="container-fluid" *ngIf="currentUser && currentUser.role.name === 'capOperatiu'">
+<div class="container-fluid" *ngIf="currentUser && currentUser.role.name != 'superadmin' && currentUser.role.name != 'admin'">
   <div class="ml-4 mr-4">
     <google-map class="d-none d-sm-block" width="100%" height="800px" [center]="center" [zoom]="zoom" [options]="options">
       <map-marker #markerElem *ngFor="let marker of markers" [position]="marker.position" [label]="marker.label"

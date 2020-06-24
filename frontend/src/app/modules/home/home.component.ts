@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit {
   markers = []
   public cameras;
   infoContent = '';
+  query: any;
 
   constructor(
     private organizationService: OrganizationService,
@@ -76,7 +77,12 @@ export class HomeComponent implements OnInit {
   }
 
   addMarker() {
-    this.camerasService.index({ "relations": ["organization", "cameraType"] }).subscribe(
+    if(this.currentUser.role.name === 'superadmin' || (this.currentUser.role.name === 'admin')) {
+      this.query = { "relations": ["organization", "cameraType"] };
+    }else {
+      this.query = { "relations": ["organization", "cameraType"], "where": [{ "state": 1 }] }
+    }
+    this.camerasService.index(this.query).subscribe(
       (camera: CameraModel) => {
         this.cameras = camera;
         this.cameras.forEach((camera) => {
