@@ -9,6 +9,8 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { InfoComponent } from './info/info.component';
 import { NgFallimgModule } from 'ng-fallimg';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     ReactiveFormsModule,
     NgxGalleryModule,
     NgFallimgModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    TooltipModule.forRoot(),
+    ChartsModule
   ]
 })
 export class CameraModule { }

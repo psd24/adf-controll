@@ -89,5 +89,26 @@
             </div>
         </div> -->
     </div>
+    <div *ngIf="weather" class="mt-5" style="display: block;">
+        <h2>Temperatura diaria</h2>
+        <canvas baseChart width="400" height="80"
+          [datasets]="lineChartDataDaily"
+          [labels]="lineChartLabelsDaily"
+          [options]="lineChartOptions"
+          [colors]="lineChartColorsDaily"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType">
+        </canvas>
+
+        <h2 class="mt-4">Temperatura hora</h2>
+        <canvas baseChart width="400" height="80"
+          [datasets]="lineChartDataHourly"
+          [labels]="lineChartLabelsHourly"
+          [options]="lineChartOptions"
+          [colors]="lineChartColorsHourly"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType">
+        </canvas>
+    </div>      
     <button type="button" class="btn btn-outline-primary mt-4" [routerLink]="['/camera']">Tornar</button>
 </div>
