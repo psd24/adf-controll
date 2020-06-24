@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NgxGalleryComponent, NgxGalleryImage, INgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { copyFileSync } from 'fs';
 
 
 @Component({
