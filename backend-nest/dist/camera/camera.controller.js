@@ -83,7 +83,7 @@ __decorate([
 __decorate([
     swagger_1.ApiBearerAuth(),
     common_1.UseGuards(jwt_auth_guard_1.JwtAuthGuard),
-    common_1.Get('state/count'),
+    common_1.Get('state/counts'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)

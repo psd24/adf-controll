@@ -17,11 +17,7 @@ const organization_entity_1 = require("./organization.entity");
 const user_event_entity_1 = require("./user-event.entity");
 let User = class User {
     preProcess() {
-        return bcryptjs_1.hash(this.password, 10).then(encrypted => this.password = encrypted);
-    }
-    preProcessUpdate() {
-        console.log('ok');
-        return bcryptjs_1.hash(this.password, 10).then(encrypted => this.password = encrypted);
+        return bcryptjs_1.hash(this.password, 10).then(encrypted => (this.password = encrypted));
     }
 };
 __decorate([
@@ -58,17 +54,19 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], User.prototype, "authorizeConnection", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", Number)
+], User.prototype, "chatId", void 0);
+__decorate([
     typeorm_1.BeforeInsert(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], User.prototype, "preProcess", null);
-__decorate([
-    typeorm_1.BeforeUpdate(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], User.prototype, "preProcessUpdate", null);
 User = __decorate([
     typeorm_1.Entity({ name: 'user' })
 ], User);

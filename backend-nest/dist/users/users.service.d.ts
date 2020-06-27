@@ -14,6 +14,7 @@ export declare class UsersService {
     findByEmail(email: string): Promise<User | undefined>;
     register(userDto: RegisterUserDto): Promise<User>;
     update(updateUserDto: UpdateUserDto): Promise<User>;
+    saveTelegramUser(user: User): Promise<User>;
     resetPassword(resetPasswordDto: ResetPasswordDto): Promise<User>;
     delete(user: User): Promise<import("typeorm").DeleteResult>;
     getUsers(): Promise<User[]>;

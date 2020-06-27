@@ -33,7 +33,6 @@ __decorate([
 ], UpdateUserDto.prototype, "email", void 0);
 __decorate([
     swagger_1.ApiProperty({ required: true }),
-    class_validator_1.IsNotEmpty(),
     class_validator_1.IsString(),
     __metadata("design:type", String)
 ], UpdateUserDto.prototype, "password", void 0);

@@ -15,10 +15,16 @@ const camera_service_1 = require("../camera/camera.service");
 const camera_entity_1 = require("../entities/camera.entity");
 const request = require("request");
 const fs = require("fs");
-const app_config_1 = require("../app.config");
+const app_config_template_1 = require("../app.config.template");
+const auth_service_1 = require("../auth/auth.service");
+const users_service_1 = require("../users/users.service");
+const user_entity_1 = require("../entities/user.entity");
+const statusType_1 = require("../const/statusType");
 let BotService = class BotService {
-    constructor(cameraService) {
+    constructor(cameraService, authService, userService) {
         this.cameraService = cameraService;
+        this.authService = authService;
+        this.userService = userService;
         this.chunkArrayInGroups = async (arr, size) => {
             const myArray = [];
             for (let i = 0; i < arr.length; i += size) {
@@ -26,6 +32,27 @@ let BotService = class BotService {
             }
             return myArray;
         };
+        this.checkLogin = async (chatid) => {
+            console.log(this.username.get(chatid));
+            console.log(this.password.get(chatid));
+            const user = await this.authService.validateUser(this.username.get(chatid), this.password.get(chatid));
+            console.log(`=======${user}`);
+            if (!user) {
+                return 'Your email or password does not exist';
+            }
+            const responseToken = await this.authService.login(user);
+            const loginUser = await this.userService.findByEmail(this.username.get(chatid));
+            console.log(`before save.....`, loginUser);
+            loginUser.authorizeConnection = statusType_1.botAuthorizingStatus.WAITING.toString();
+            loginUser.chatId = chatid;
+            const test = await this.userService.saveTelegramUser(loginUser);
+            console.log(`before save.....`, test);
+            return 'Waiting for authorization so you can use me';
+        };
+        this.userSteps = new Map();
+        this.username = new Map();
+        this.password = new Map();
+        this.userToken = new Map();
     }
     onModuleInit() {
         this.getBotMessage();
@@ -41,7 +68,7 @@ let BotService = class BotService {
     }
     async getBotMessage() {
         process.env.NTBA_FIX_319 = '1';
-        const token = app_config_1.AppConfig.telegramToken;
+        const token = app_config_template_1.AppConfig.telegramToken;
         const bot = new TelegramBot(token, { polling: true });
         bot.on('callback_query', async (callbackQuery) => {
             const message = callbackQuery.message;
@@ -63,24 +90,59 @@ let BotService = class BotService {
                 });
             }));
         });
-        bot.onText(/\/cameralist/, async (msg) => {
-            const urlList = await this.chunkArrayInGroups(await this.getCamera(), 3);
-            bot
-                .sendMessage(msg.chat.id, 'Camera List', {
-                reply_markup: {
-                    inline_keyboard: urlList,
-                    one_time_keyboard: true,
-                    remove_keyboard: true,
-                    force_reply: true,
-                },
-            })
-                .catch(err => console.log('err====', err));
+        bot.onText(/\/*/, async (msg) => {
+            if (msg.text === '/start') {
+                this.userSteps.set(msg.chat.id, 'username');
+                const txt = '<b>Please enter username</b> :';
+                bot.sendMessage(msg.chat.id, txt, {
+                    parse_mode: 'HTML',
+                });
+                return false;
+            }
+            else if (msg.text === '/cameralist') {
+                const urlList = await this.chunkArrayInGroups(await this.getCamera(), 3);
+                bot
+                    .sendMessage(msg.chat.id, 'Camera List', {
+                    reply_markup: {
+                        inline_keyboard: urlList,
+                        one_time_keyboard: true,
+                        remove_keyboard: true,
+                        force_reply: true,
+                    },
+                })
+                    .catch(err => console.log('err====', err));
+            }
+            else {
+                const chatId = msg.chat.id;
+                const previosStep = this.userSteps.get(chatId);
+                switch (previosStep) {
+                    case 'username':
+                        this.username.set(chatId, msg.text);
+                        this.userSteps.set(chatId, 'password');
+                        const txt = '<b>Please enter Password</b> :';
+                        bot.sendMessage(msg.chat.id, txt, {
+                            parse_mode: 'HTML',
+                        });
+                        break;
+                    case 'password':
+                        this.password.set(chatId, msg.text);
+                        this.userSteps.set(chatId, 'password');
+                        const loginValidateMsg = await this.checkLogin(chatId);
+                        bot.sendMessage(msg.chat.id, loginValidateMsg, {
+                            parse_mode: 'HTML',
+                        });
+                        this.userSteps.delete(chatId);
+                        break;
+                }
+            }
         });
     }
 };
 BotService = __decorate([
     common_1.Injectable(),
-    __metadata("design:paramtypes", [camera_service_1.CameraService])
+    __metadata("design:paramtypes", [camera_service_1.CameraService,
+        auth_service_1.AuthService,
+        users_service_1.UsersService])
 ], BotService);
 exports.BotService = BotService;
 //# sourceMappingURL=bot.service.js.map

@@ -46,13 +46,11 @@ __decorate([
 __decorate([
     swagger_1.ApiProperty({ required: true }),
     class_validator_1.IsString(),
-    class_validator_1.IsNotEmpty(),
     __metadata("design:type", String)
 ], CameraCreateDto.prototype, "lat", void 0);
 __decorate([
     swagger_1.ApiProperty({ required: true }),
     class_validator_1.IsString(),
-    class_validator_1.IsNotEmpty(),
     __metadata("design:type", String)
 ], CameraCreateDto.prototype, "lon", void 0);
 __decorate([

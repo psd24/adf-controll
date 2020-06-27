@@ -52,13 +52,20 @@ let UsersService = class UsersService {
         return this.usersRepository.save(newUser);
     }
     async update(updateUserDto) {
+        const user = await this.findByEmail(updateUserDto.email);
         const newUserUpdate = new user_entity_1.User();
         newUserUpdate.id = updateUserDto.id;
         newUserUpdate.email = updateUserDto.email;
         newUserUpdate.name = updateUserDto.name;
         newUserUpdate.code = updateUserDto.code;
-        newUserUpdate.password = updateUserDto.password;
-        newUserUpdate.role = await this.rolesRepository.findOne({ id: updateUserDto.role });
+        if (updateUserDto.password) {
+            newUserUpdate.password = !updateUserDto.password
+                ? user.password
+                : updateUserDto.password;
+        }
+        newUserUpdate.role = await this.rolesRepository.findOne({
+            id: updateUserDto.role,
+        });
         if (!newUserUpdate.role) {
             throw new common_1.BadRequestException('Invalid role id.');
         }
@@ -68,8 +75,10 @@ let UsersService = class UsersService {
         if (!newUserUpdate.organization) {
             throw new common_1.BadRequestException('Invalid organization id.');
         }
-        console.log(newUserUpdate);
         return this.usersRepository.save(newUserUpdate);
+    }
+    async saveTelegramUser(user) {
+        return this.usersRepository.save(user);
     }
     async resetPassword(resetPasswordDto) {
         const newUserUpdate = new user_entity_1.User();
@@ -87,7 +96,7 @@ let UsersService = class UsersService {
     }
     async getUser(_id) {
         return this.usersRepository.findOne({
-            where: [{ "id": _id }],
+            where: [{ id: _id }],
             relations: ['role', 'organization'],
         });
     }

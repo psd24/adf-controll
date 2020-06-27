@@ -1,3 +1,3 @@
-import { ConnectionOptions } from "typeorm";
+import { ConnectionOptions } from 'typeorm';
 declare const config: ConnectionOptions;
 export = config;

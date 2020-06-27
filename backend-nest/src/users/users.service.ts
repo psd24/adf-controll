@@ -64,21 +64,31 @@ export class UsersService {
         newUserUpdate.email = updateUserDto.email;
         newUserUpdate.name = updateUserDto.name;
         newUserUpdate.code = updateUserDto.code;
-        if(updateUserDto.password) {
-            newUserUpdate.password = (!updateUserDto.password) ? user.password : updateUserDto.password;
+        if (updateUserDto.password) {
+            newUserUpdate.password = !updateUserDto.password
+                ? user.password
+                : updateUserDto.password;
         }
-        newUserUpdate.role = await this.rolesRepository.findOne({ id: updateUserDto.role });
+        newUserUpdate.role = await this.rolesRepository.findOne({
+            id: updateUserDto.role,
+        });
         if (!newUserUpdate.role) {
             throw new BadRequestException('Invalid role id.');
         }
 
-        newUserUpdate.organization = await this.organizationsRepository.findOne({
-            id: updateUserDto.organization,
-        });
+        newUserUpdate.organization = await this.organizationsRepository.findOne(
+            {
+                id: updateUserDto.organization,
+            },
+        );
         if (!newUserUpdate.organization) {
             throw new BadRequestException('Invalid organization id.');
         }
-        return this.usersRepository.save(newUserUpdate)
+        return this.usersRepository.save(newUserUpdate);
+    }
+
+    async saveTelegramUser(user: User) {
+        return this.usersRepository.save(user);
     }
 
     async resetPassword(resetPasswordDto: ResetPasswordDto) {
@@ -87,7 +97,7 @@ export class UsersService {
         newUserUpdate.id = resetPasswordDto.id;
         newUserUpdate.password = resetPasswordDto.password;
 
-        return this.usersRepository.save(newUserUpdate)
+        return this.usersRepository.save(newUserUpdate);
     }
 
     async delete(user: User) {
@@ -95,14 +105,14 @@ export class UsersService {
     }
 
     async getUsers() {
-        return this.usersRepository.find({ 
+        return this.usersRepository.find({
             relations: ['role', 'organization'],
         });
     }
 
     async getUser(_id: number) {
         return this.usersRepository.findOne({
-            where: [{ "id": _id }],
+            where: [{ id: _id }],
             relations: ['role', 'organization'],
         });
     }
