@@ -21,4 +21,5 @@ export declare class BotService implements OnModuleInit {
     chunkArrayInGroups: (arr: any, size: any) => Promise<any[]>;
     getBotMessage(): Promise<void>;
     checkLogin: (chatid: number) => Promise<"Your email or password does not exist" | "Waiting for authorization so you can use me">;
+    isActiveUser: (chatId: number) => Promise<boolean>;
 }

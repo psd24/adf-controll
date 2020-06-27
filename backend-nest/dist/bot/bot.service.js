@@ -36,18 +36,22 @@ let BotService = class BotService {
             console.log(this.username.get(chatid));
             console.log(this.password.get(chatid));
             const user = await this.authService.validateUser(this.username.get(chatid), this.password.get(chatid));
-            console.log(`=======${user}`);
             if (!user) {
                 return 'Your email or password does not exist';
             }
-            const responseToken = await this.authService.login(user);
+            await this.authService.login(user);
             const loginUser = await this.userService.findByEmail(this.username.get(chatid));
-            console.log(`before save.....`, loginUser);
             loginUser.authorizeConnection = statusType_1.botAuthorizingStatus.WAITING.toString();
             loginUser.chatId = chatid;
             const test = await this.userService.saveTelegramUser(loginUser);
-            console.log(`before save.....`, test);
             return 'Waiting for authorization so you can use me';
+        };
+        this.isActiveUser = async (chatId) => {
+            const isActiveUser = await this.userService.findByChatId(chatId);
+            return isActiveUser
+                ? isActiveUser.authorizeConnection ===
+                    statusType_1.botAuthorizingStatus.APPROVED.toString()
+                : false;
         };
         this.userSteps = new Map();
         this.username = new Map();
@@ -100,17 +104,25 @@ let BotService = class BotService {
                 return false;
             }
             else if (msg.text === '/cameralist') {
-                const urlList = await this.chunkArrayInGroups(await this.getCamera(), 3);
-                bot
-                    .sendMessage(msg.chat.id, 'Camera List', {
-                    reply_markup: {
-                        inline_keyboard: urlList,
-                        one_time_keyboard: true,
-                        remove_keyboard: true,
-                        force_reply: true,
-                    },
-                })
-                    .catch(err => console.log('err====', err));
+                const isActive = await this.isActiveUser(msg.chat.id);
+                if (isActive) {
+                    const urlList = await this.chunkArrayInGroups(await this.getCamera(), 3);
+                    bot
+                        .sendMessage(msg.chat.id, 'Camera List', {
+                        reply_markup: {
+                            inline_keyboard: urlList,
+                            one_time_keyboard: true,
+                            remove_keyboard: true,
+                            force_reply: true,
+                        },
+                    })
+                        .catch(err => console.log('err====', err));
+                }
+                else {
+                    bot.sendMessage(msg.chat.id, '<b>Hello, you were not authorized to use me.</b>', {
+                        parse_mode: 'HTML',
+                    });
+                }
             }
             else {
                 const chatId = msg.chat.id;

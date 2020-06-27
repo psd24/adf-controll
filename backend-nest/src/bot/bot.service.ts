@@ -102,23 +102,33 @@ export class BotService implements OnModuleInit {
         });
         return false;
       } else if (msg.text === '/cameralist') {
-        const urlList = await this.chunkArrayInGroups(
-          await this.getCamera(),
-          3,
-        );
-
-        bot
-          .sendMessage(msg.chat.id, 'Camera List', {
-            // eslint-disable-next-line @typescript-eslint/camelcase
-            reply_markup: {
+        const isActive = await this.isActiveUser(msg.chat.id);
+        if (isActive) {
+          const urlList = await this.chunkArrayInGroups(
+            await this.getCamera(),
+            3,
+          );
+          bot
+            .sendMessage(msg.chat.id, 'Camera List', {
               // eslint-disable-next-line @typescript-eslint/camelcase
-              inline_keyboard: urlList,
-              one_time_keyboard: true,
-              remove_keyboard: true,
-              force_reply: true,
+              reply_markup: {
+                // eslint-disable-next-line @typescript-eslint/camelcase
+                inline_keyboard: urlList,
+                one_time_keyboard: true,
+                remove_keyboard: true,
+                force_reply: true,
+              },
+            })
+            .catch(err => console.log('err====', err));
+        } else {
+          bot.sendMessage(
+            msg.chat.id,
+            '<b>Hello, you were not authorized to use me.</b>',
+            {
+              parse_mode: 'HTML',
             },
-          })
-          .catch(err => console.log('err====', err));
+          );
+        }
       } else {
         const chatId = msg.chat.id;
         const previosStep = this.userSteps.get(chatId);
@@ -156,25 +166,29 @@ export class BotService implements OnModuleInit {
       this.password.get(chatid),
     );
 
-    console.log(`=======${user}`);
     if (!user) {
       return 'Your email or password does not exist';
     }
 
-    const responseToken = await this.authService.login(user);
+    await this.authService.login(user);
     const loginUser: User = await this.userService.findByEmail(
       this.username.get(chatid),
     );
-
-    console.log(`before save.....`, loginUser);
 
     loginUser.authorizeConnection = botAuthorizingStatus.WAITING.toString();
     loginUser.chatId = chatid;
 
     const test = await this.userService.saveTelegramUser(loginUser);
 
-    console.log(`before save.....`, test);
-
     return 'Waiting for authorization so you can use me';
+  };
+
+  isActiveUser = async (chatId: number) => {
+    const isActiveUser = await this.userService.findByChatId(chatId);
+
+    return isActiveUser
+      ? isActiveUser.authorizeConnection ===
+          botAuthorizingStatus.APPROVED.toString()
+      : false;
   };
 }

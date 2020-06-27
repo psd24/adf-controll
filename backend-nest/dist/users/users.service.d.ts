@@ -15,6 +15,7 @@ export declare class UsersService {
     register(userDto: RegisterUserDto): Promise<User>;
     update(updateUserDto: UpdateUserDto): Promise<User>;
     saveTelegramUser(user: User): Promise<User>;
+    findByChatId(chatId: number): Promise<User>;
     resetPassword(resetPasswordDto: ResetPasswordDto): Promise<User>;
     delete(user: User): Promise<import("typeorm").DeleteResult>;
     getUsers(): Promise<User[]>;

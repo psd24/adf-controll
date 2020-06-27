@@ -91,6 +91,12 @@ export class UsersService {
         return this.usersRepository.save(user);
     }
 
+    async findByChatId(chatId: number) {
+        return this.usersRepository.findOne({
+            where: [{ chatId: chatId }],
+        });
+    }
+
     async resetPassword(resetPasswordDto: ResetPasswordDto) {
         // return await getConnection().createQueryBuilder().update(User).set(user).where("id = :id", { id: user.id }).execute();
         const newUserUpdate = new User();

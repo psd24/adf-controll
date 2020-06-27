@@ -80,6 +80,11 @@ let UsersService = class UsersService {
     async saveTelegramUser(user) {
         return this.usersRepository.save(user);
     }
+    async findByChatId(chatId) {
+        return this.usersRepository.findOne({
+            where: [{ chatId: chatId }],
+        });
+    }
     async resetPassword(resetPasswordDto) {
         const newUserUpdate = new user_entity_1.User();
         newUserUpdate.id = resetPasswordDto.id;
