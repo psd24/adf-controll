@@ -34,23 +34,15 @@ export class User {
   @Exclude()
   password: string;
 
-  @Column()
-  authorizeConnection: string;
-
-  @Column()
-  chatId: number;
-
   @BeforeInsert()
   preProcess() {
     return hash(this.password, 10).then(encrypted => this.password = encrypted);
   }
 
-  // @BeforeUpdate()
-  // preProcessUpdate() {
-  //   if (this.password) {
-  //     return hash(this.password, 10).then(
-  //       encrypted => (this.password = encrypted),
-  //     );
-  //   }
-  // }
+  @BeforeUpdate()
+  preProcessUpdate() {
+    if(this.password) {
+      return hash(this.password, 10).then(encrypted => this.password = encrypted);
+    }
+  }
 }

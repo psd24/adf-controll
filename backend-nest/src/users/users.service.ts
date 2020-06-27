@@ -78,17 +78,7 @@ export class UsersService {
         if (!newUserUpdate.organization) {
             throw new BadRequestException('Invalid organization id.');
         }
-        return this.usersRepository.save(newUserUpdate);
-    }
-
-    async saveTelegramUser(user: User) {
-        return this.usersRepository.save(user);
-    }
-
-    async findByChatId(chatId: number) {
-        return this.usersRepository.findOne({
-            where: [{ chatId: chatId }],
-        });
+        return this.usersRepository.save(newUserUpdate)
     }
 
     async resetPassword(resetPasswordDto: ResetPasswordDto) {
