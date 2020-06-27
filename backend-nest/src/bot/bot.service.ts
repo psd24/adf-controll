@@ -178,7 +178,7 @@ export class BotService implements OnModuleInit {
     loginUser.authorizeConnection = botAuthorizingStatus.WAITING.toString();
     loginUser.chatId = chatid;
 
-    const test = await this.userService.saveTelegramUser(loginUser);
+    await this.userService.saveTelegramUser(loginUser);
 
     return 'Waiting for authorization so you can use me';
   };
