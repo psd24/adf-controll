@@ -20,6 +20,9 @@ export class User {
   
   @Column()
   code: string;
+
+  @Column()
+  refresh_camera: number;
   
   @ManyToOne(() => Organization, organization => organization.users)
   organization: Organization;

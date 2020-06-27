@@ -29,6 +29,10 @@ export class UpdateUserDto {
 
     @ApiProperty({ required: true })
     @IsNumber()
+    refresh_camera: number;
+
+    @ApiProperty({ required: true })
+    @IsNumber()
     role: number;
 
     @ApiProperty({ required: true })

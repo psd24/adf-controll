@@ -8,6 +8,7 @@ export class UserModel{
     email: string;
     name: string;
     password: string;
+    refresh_camera: number;
     organization: OrganizationModel;
     role: RoleModel;
 

@@ -24,6 +24,7 @@ export class SeedService {
                 code: 'simple code',
                 organization: organizations[0].id,
                 password: defaultPassword,
+                refresh_camera: 50
             });
     
         }

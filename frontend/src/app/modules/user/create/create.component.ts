@@ -41,6 +41,7 @@ export class CreateComponent implements OnInit {
       code: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.minLength(2)]],
       password: ['', [Validators.required, Validators.minLength(2)]],
+      refresh_camera: [''],
       organization: ['', [Validators.required, Validators.minLength(2)]],
       role: ['', [Validators.required, Validators.minLength(2)]],
     });
@@ -55,6 +56,7 @@ export class CreateComponent implements OnInit {
           this.formCreateUser.controls['email'].setValue(this.user.email);
           this.formCreateUser.controls['organization'].setValue(this.user.organization.id);
           this.formCreateUser.controls['role'].setValue(this.user.role.id);
+          this.formCreateUser.controls['refresh_camera'].setValue(this.user.refresh_camera);
         }
       );
     }

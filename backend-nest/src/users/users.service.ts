@@ -40,6 +40,7 @@ export class UsersService {
         newUser.email = userDto.email;
         newUser.name = userDto.name;
         newUser.code = userDto.code;
+        newUser.refresh_camera =  userDto.refresh_camera;
         newUser.password = userDto.password;
 
         newUser.role = await this.rolesRepository.findOne({ id: userDto.role });
@@ -64,6 +65,7 @@ export class UsersService {
         newUserUpdate.email = updateUserDto.email;
         newUserUpdate.name = updateUserDto.name;
         newUserUpdate.code = updateUserDto.code;
+        newUserUpdate.refresh_camera = updateUserDto.refresh_camera;
         if(updateUserDto.password) {
             newUserUpdate.password = (!updateUserDto.password) ? user.password : updateUserDto.password;
         }

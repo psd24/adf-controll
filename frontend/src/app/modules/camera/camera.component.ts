@@ -24,7 +24,7 @@ export class CameraComponent implements OnInit {
   organizations: OrganizationModel;
   timeStamp;
   subscriptionCamera;
-  refreshImage: number = 50 * 1000;
+  refreshImage: number;
   formSearchCamera: FormGroup;
   query: object;
   imageModel;
@@ -52,6 +52,9 @@ export class CameraComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if(this.user.refresh_camera != 0) this.refreshImage = this.user.refresh_camera * 1000;
+    else this.refreshImage = 50 * 1000;
+    console.log(this.user)
     this.organizationService.index().subscribe((organization: OrganizationModel) => this.organizations = organization);
     this.formSearchCamera = this.formBuilder.group({
       state: ['3'],
