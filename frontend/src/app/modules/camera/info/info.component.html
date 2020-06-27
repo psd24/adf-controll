@@ -10,11 +10,11 @@
             <div class="card">
                 <div class="card-body p-0">
                     <div class="row">
-                        <div class="col-3 p-4 pl-0 border-right text-center">
-                            <i class="fas fa-thermometer-three-quarters fa-4x ml-2" style="color:#F6B400"></i>
+                        <div class="col-4 col-sm-3 p-4 pl-0 border-right text-center">
+                            <i class="fas fa-thermometer-three-quarters fa-3x ml-2" style="color:#F6B400"></i>
                         </div>
-                        <div class="col-9 p-4 pl-0 text-center">
-                            <p *ngIf="weather && weather.current" class="display-4 font-weight-bold"
+                        <div class="col-8 col-sm-9 p-4 pl-0 text-center">
+                            <p *ngIf="weather && weather.current" class="display-sm-4 h1 font-weight-bold"
                                 style="color: #F6B400">{{weather.current.temp}} °C</p>
                         </div>
                     </div>
@@ -26,11 +26,11 @@
             <div class="card">
                 <div class="card-body p-0">
                     <div class="row">
-                        <div class="col-3 p-4 pl-0 border-right text-center">
-                            <i class="fas fa-tint fa-4x ml-2" style="color:#F6B400"></i>
+                        <div class="col-4 col-sm-3 p-4 pl-0 border-right text-center">
+                            <i class="fas fa-tint fa-3x ml-2" style="color:#F6B400"></i>
                         </div>
-                        <div class="col-9 p-4 pl-0 text-center">
-                            <p *ngIf="weather && weather.current" class="display-4 font-weight-bold"
+                        <div class="col-8 col-sm-9 p-4 pl-0 text-center">
+                            <p *ngIf="weather && weather.current" class="h1 font-weight-bold"
                                 style="color: #F6B400">{{weather.current.humidity}} %
                             </p>
                         </div>
@@ -43,11 +43,11 @@
             <div class="card">
                 <div class="card-body p-0">
                     <div class="row">
-                        <div class="col-3 p-4 pl-0 border-right text-center">
-                            <i class="fas fa-clock fa-4x ml-2" style="color:#F6B400"></i>
+                        <div class="col-4 col-sm-3 p-4 pl-0 border-right text-center">
+                            <i class="fas fa-clock fa-3x ml-2" style="color:#F6B400"></i>
                         </div>
-                        <div class="col-9 p-4 pl-0 text-center">
-                            <p *ngIf="weather && weather.current" class="display-4 font-weight-bold"
+                        <div class="col-8 col-sm-9 p-4 pl-0 text-center">
+                            <p *ngIf="weather && weather.current" class="h1 font-weight-bold"
                                 style="color: #F6B400">{{weather.current.pressure}} hPa
                             </p>
                         </div>
@@ -60,12 +60,12 @@
             <div class="card">
                 <div class="card-body p-0">
                     <div class="row">
-                        <div class="col-3 p-4 pl-0 border-right text-center">
-                            <i class="fas fa-wind fa-4x ml-2" style="color:#F6B400"></i>
+                        <div class="col-4 col-sm-3 p-4 pl-0 border-right text-center">
+                            <i class="fas fa-wind fa-3x ml-2" style="color:#F6B400"></i>
                         </div>
-                        <div class="col-9 p-4 pl-0 text-center">
-                            <p *ngIf="weather && weather.current" class="display-4 font-weight-bold"
-                                style="color: #F6B400; font-size:3rem">
+                        <div class="col-8 col-sm-9 p-4 pl-0 text-center">
+                            <p *ngIf="weather && weather.current" class="h1 font-weight-bold"
+                                style="color: #F6B400;">
                                 {{weather.current.wind_speed}} km/h</p>
                         </div>
                     </div>

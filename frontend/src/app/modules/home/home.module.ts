@@ -5,7 +5,9 @@ import { HomeRoutingModule } from './home-routing.module';
 
 import { HomeComponent } from './home.component';
 
-import { GoogleMapsModule } from '@angular/google-maps'
+import { GoogleMapsModule } from '@angular/google-maps';
+
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 
 @NgModule({
@@ -13,7 +15,8 @@ import { GoogleMapsModule } from '@angular/google-maps'
   imports: [
     CommonModule,
     HomeRoutingModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    LeafletModule
   ]
 })
 export class HomeModule { }
