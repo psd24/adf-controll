@@ -187,8 +187,8 @@ export class BotService implements OnModuleInit {
     const isActiveUser = await this.userService.findByChatId(chatId);
 
     return isActiveUser
-      ? isActiveUser.authorizeConnection ===
-          botAuthorizingStatus.APPROVED.toString()
+      ? isActiveUser.authorizeConnection.toLocaleLowerCase() ===
+          botAuthorizingStatus.APPROVED.toString().toLocaleLowerCase()
       : false;
   };
 }

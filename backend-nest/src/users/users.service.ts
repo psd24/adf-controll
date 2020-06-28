@@ -29,6 +29,14 @@ export class UsersService {
             },
         });
     }
+    
+    async findById(id:number):Promise<User | undefined>{
+        return this.usersRepository.findOne({
+            where:{
+                id
+            }
+        })
+    }
 
     async register(userDto: RegisterUserDto): Promise<User> {
         const user = await this.findByEmail(userDto.email);
