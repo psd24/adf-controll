@@ -21,6 +21,7 @@ import { RegisterUserDto } from 'src/users/dtos/register-user.dto';
 import { UpdateUserDto } from 'src/users/dtos/update-user.dto';
 import { ResetPasswordDto } from 'src/users/dtos/reset-password.dto';
 import { UpdateTelegramUserDto } from '../users/dtos/update-telegram-user.dto';
+import {BotService} from "../bot/bot.service";
 
 
 @ApiTags('Authentication')
@@ -29,6 +30,8 @@ export class AuthController {
   constructor(
     private authService: AuthService,
     private usersService: UsersService,
+    private botService:BotService
+
   ) {}
 
   @Post('login')

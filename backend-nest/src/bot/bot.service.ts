@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import {
+  forwardRef,
+  Inject,
   Injectable,
   OnModuleInit,
   UnauthorizedException,
@@ -10,14 +12,9 @@ import { Camera } from 'src/entities/camera.entity';
 import request = require('request');
 import fs = require('fs');
 import { AppConfig } from '../app.config.template';
-import { async } from 'rxjs/internal/scheduler/async';
 import { AuthService } from 'src/auth/auth.service';
 import { UsersService } from 'src/users/users.service';
-import { getuid } from 'process';
 import { User } from 'src/entities/user.entity';
-import { use } from 'passport';
-import { Repository, getConnection } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
 import { botAuthorizingStatus } from 'src/const/statusType';
 
 @Injectable()
@@ -61,11 +58,14 @@ export class BotService implements OnModuleInit {
     return myArray;
   };
 
-  async getBotMessage() {
-    process.env.NTBA_FIX_319 = '1';
-    const token = AppConfig.telegramToken;
-    const bot = new TelegramBot(token, { polling: true });
+  async getBotMessage(isSend?:boolean, status?:string, botChatId?:number) {
 
+
+
+    process.env.NTBA_FIX_319 = '1';
+
+    const token = AppConfig.telegramToken;
+    const bot = new TelegramBot(token, { polling: false });
     bot.on('callback_query', async callbackQuery => {
       const message = callbackQuery.message;
 
@@ -92,6 +92,25 @@ export class BotService implements OnModuleInit {
         }),
       );
     });
+
+
+
+
+    if(isSend){
+      let botUseMessage
+      if(status.toLocaleLowerCase()===botAuthorizingStatus.APPROVED.toLocaleLowerCase().toString()){
+        botUseMessage ="<b>Hello, you have been authorized to use me</b>";
+      }else{
+        botUseMessage ="<b>Hello, you were not authorized to use me</b>"
+      }
+
+      bot.sendMessage(botChatId,botUseMessage, {
+        parse_mode:'HTML'
+      })
+
+    }
+
+
 
     bot.onText(/\/*/, async msg => {
       if (msg.text === '/start') {

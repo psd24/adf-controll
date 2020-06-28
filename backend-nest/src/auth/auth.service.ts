@@ -6,12 +6,15 @@ import { User } from 'src/entities/user.entity';
 import { RegisterUserDto } from 'src/users/dtos/register-user.dto';
 import {UpdateTelegramUserDto} from "../users/dtos/update-telegram-user.dto";
 import {botAuthorizingStatus} from "../const/statusType";
+import {BotService} from "../bot/bot.service";
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
+      @Inject(forwardRef(() => BotService))
+      private botService: BotService
   ) {}
 
   async validateUser(email: string, pass: string): Promise<User> {
@@ -33,13 +36,16 @@ export class AuthService {
   }
 
   async validateUserById(updateTelegramUserDto:UpdateTelegramUserDto):Promise<User>{
-    const user:User = await this.usersService.findById(updateTelegramUserDto.id)
+    let user:User = await this.usersService.findById(updateTelegramUserDto.id)
     if(!user || user === undefined){
       return null
     }
+
     user.authorizeConnection = updateTelegramUserDto.status
-    return await this.usersService.saveTelegramUser(user)
-    // this.botService.getBotMessage()
+    user= await this.usersService.saveTelegramUser(user)
+    this.botService.getBotMessage(true, updateTelegramUserDto.status, user.chatId)
+    return user
+
 
 
   }

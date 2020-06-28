@@ -12,10 +12,10 @@ import { CameraModule } from './camera/camera.module';
 
 import * as ormconfig from './ormconfig';
 import {BotService} from "./bot/bot.service";
+import {BotModule} from "./bot/bot.module";
 
 @Module({
-  imports: [TypeOrmModule.forRoot(ormconfig), AuthModule, UsersModule, SeedModule, RolesModule, OrganizationsModule, EventsModule, CameraModule],
+  imports: [TypeOrmModule.forRoot(ormconfig), AuthModule, UsersModule, SeedModule, RolesModule, OrganizationsModule, EventsModule, CameraModule,BotModule],
   controllers: [AppController],
-  providers: [BotService],
 })
 export class AppModule {}
