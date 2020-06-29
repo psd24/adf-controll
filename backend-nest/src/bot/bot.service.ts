@@ -11,7 +11,7 @@ import { CameraService } from 'src/camera/camera.service';
 import { Camera } from 'src/entities/camera.entity';
 import request = require('request');
 import fs = require('fs');
-import { AppConfig } from '../app.config.template';
+import { AppConfig } from '../app.config';
 import { AuthService } from 'src/auth/auth.service';
 import { UsersService } from 'src/users/users.service';
 import { User } from 'src/entities/user.entity';

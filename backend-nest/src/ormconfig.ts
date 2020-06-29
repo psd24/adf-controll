@@ -1,5 +1,5 @@
 import { ConnectionOptions } from "typeorm";
-import { AppConfig } from './app.config.template';
+import { AppConfig } from './app.config';
 
 const config: ConnectionOptions = {
     type: "mysql",
