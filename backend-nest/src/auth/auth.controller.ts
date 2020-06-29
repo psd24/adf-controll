@@ -1,4 +1,16 @@
-import { Controller, Post, Body, UnauthorizedException, UseGuards, Get, Request, Param, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UnauthorizedException,
+  UseGuards,
+  Get,
+  Request,
+  Param,
+  Delete,
+  Put,
+  NotAcceptableException
+} from '@nestjs/common';
 import { LoginDto } from 'src/users/dtos/login.dto';
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
@@ -8,6 +20,7 @@ import { User } from 'src/entities/user.entity';
 import { RegisterUserDto } from 'src/users/dtos/register-user.dto';
 import { UpdateUserDto } from 'src/users/dtos/update-user.dto';
 import { ResetPasswordDto } from 'src/users/dtos/reset-password.dto';
+import {UpdateTelegramUserDto} from "../users/dtos/update-telegram-user.dto";
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -75,10 +88,29 @@ export class AuthController {
       return this.usersService.getUser(params.id);
     }
 
-    @ApiBearerAuth()
-    @UseGuards(JwtAuthGuard)
-    @Delete('user/delete/:id')
-    async userDelete(@Param() params) {
-      return this.usersService.delete(params.id);
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Put('user/botapprove')
+  async botApprove(@Body() updateTelegramUserDto: UpdateTelegramUserDto) {
+    console.log(updateTelegramUserDto)
+
+    const isValidStatus = await this.authService.validateStatus(updateTelegramUserDto)
+      if(!isValidStatus){
+           throw new NotAcceptableException("Status must be Approved/DENIED")
+      }
+
+      const validateUser = await this.authService.validateUserById(updateTelegramUserDto)
+    if(!validateUser){
+      throw new NotAcceptableException(`User not found with id ${updateTelegramUserDto.id}`)
     }
+    return validateUser
+
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Delete('user/delete/:id')
+  async userDelete(@Param() params) {
+    return this.usersService.delete(params.id);
+  }
 }

@@ -29,6 +29,14 @@ export class UsersService {
             },
         });
     }
+    
+    async findById(id:number):Promise<User | undefined>{
+        return this.usersRepository.findOne({
+            where:{
+                id
+            }
+        })
+    }
 
     async register(userDto: RegisterUserDto): Promise<User> {
         const user = await this.findByEmail(userDto.email);
@@ -80,7 +88,17 @@ export class UsersService {
         if (!newUserUpdate.organization) {
             throw new BadRequestException('Invalid organization id.');
         }
-        return this.usersRepository.save(newUserUpdate)
+        return this.usersRepository.save(newUserUpdate);
+    }
+
+    async saveTelegramUser(user: User) {
+        return this.usersRepository.save(user);
+    }
+
+    async findByChatId(chatId: number) {
+        return this.usersRepository.findOne({
+            where: [{ chatId: chatId }],
+        });
     }
 
     async resetPassword(resetPasswordDto: ResetPasswordDto) {
