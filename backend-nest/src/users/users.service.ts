@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import {Injectable, BadRequestException, Inject, forwardRef} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
 import { Repository, getConnection } from 'typeorm';
@@ -7,6 +7,8 @@ import { UpdateUserDto } from './dtos/update-user.dto';
 import { ResetPasswordDto } from './dtos/reset-password.dto';
 import { Organization } from 'src/entities/organization.entity';
 import { Role } from 'src/entities/role.entity';
+import {paginate, Pagination, IPaginationOptions} from 'nestjs-typeorm-paginate';
+import {BotService} from "../bot/bot.service";
 
 @Injectable()
 export class UsersService {
@@ -19,6 +21,8 @@ export class UsersService {
         private readonly rolesRepository: Repository<Role>,
         @InjectRepository(Organization)
         private readonly organizationsRepository: Repository<Organization>,
+        @Inject(forwardRef(() => BotService))
+        private botService:BotService
     ) {}
 
     async findByEmail(email: string): Promise<User | undefined> {
@@ -28,6 +32,14 @@ export class UsersService {
                 email,
             },
         });
+    }
+    
+    async findById(id:number):Promise<User | undefined>{
+        return this.usersRepository.findOne({
+            where:{
+                id
+            }
+        })
     }
 
     async register(userDto: RegisterUserDto): Promise<User> {
@@ -65,6 +77,8 @@ export class UsersService {
         newUserUpdate.email = updateUserDto.email;
         newUserUpdate.name = updateUserDto.name;
         newUserUpdate.code = updateUserDto.code;
+        newUserUpdate.authorizeConnection= updateUserDto.authorizeConnection
+        newUserUpdate.chatId = user.chatId
         newUserUpdate.refresh_camera = updateUserDto.refresh_camera;
         if(updateUserDto.password) {
             newUserUpdate.password = (!updateUserDto.password) ? user.password : updateUserDto.password;
@@ -80,7 +94,20 @@ export class UsersService {
         if (!newUserUpdate.organization) {
             throw new BadRequestException('Invalid organization id.');
         }
-        return this.usersRepository.save(newUserUpdate)
+
+        this.botService.getBotMessage(true, updateUserDto.authorizeConnection, user.chatId)
+
+        return this.usersRepository.save(newUserUpdate);
+    }
+
+    async saveTelegramUser(user: User) {
+        return this.usersRepository.save(user);
+    }
+
+    async findByChatId(chatId: number) {
+        return this.usersRepository.findOne({
+            where: [{ chatId: chatId }],
+        });
     }
 
     async resetPassword(resetPasswordDto: ResetPasswordDto) {
@@ -97,9 +124,16 @@ export class UsersService {
     }
 
     async getUsers() {
+ 
+        
+
         return this.usersRepository.find({ 
             relations: ['role', 'organization'],
         });
+    }
+
+    async paginate(options: IPaginationOptions): Promise<Pagination<User>> {
+        return paginate<User>(this.usersRepository, options);
     }
 
     async getUser(_id: number) {

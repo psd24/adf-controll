@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsEmail, IsNumber, IsNotEmpty } from "class-validator";
+import {Column} from "typeorm";
 
 export class UpdateUserDto {
 
@@ -38,4 +39,10 @@ export class UpdateUserDto {
     @ApiProperty({ required: true })
     @IsNumber()
     organization: number;
+
+    @ApiProperty({ required: true })
+    @IsString()
+    @IsNotEmpty()
+    authorizeConnection: string;
+    
 }

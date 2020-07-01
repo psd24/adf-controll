@@ -1,16 +1,35 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import {
+  forwardRef,
+  Inject,
+  Injectable,
+  OnModuleInit,
+  UnauthorizedException,
+} from '@nestjs/common';
 import TelegramBot = require('node-telegram-bot-api');
 import { CameraService } from 'src/camera/camera.service';
 import { Camera } from 'src/entities/camera.entity';
 import request = require('request');
 import fs = require('fs');
-import { AppConfig } from '../app.config'
+import { AppConfig } from '../app.config';
+import { AuthService } from 'src/auth/auth.service';
+import { UsersService } from 'src/users/users.service';
+import { User } from 'src/entities/user.entity';
+import { botAuthorizingStatus } from 'src/const/statusType';
+import {InjectRepository} from "@nestjs/typeorm";
+import {Repository} from "typeorm";
+import {BotDetail} from "../entities/bot.entity";
+import {botStep} from "../const/userStep";
 
 @Injectable()
 export class BotService implements OnModuleInit {
-  constructor(private cameraService: CameraService) {}
-
+  constructor(
+    private cameraService: CameraService,
+    private authService: AuthService,
+    private userService: UsersService,
+    @InjectRepository(BotDetail)
+    private readonly botDetailRepository: Repository<BotDetail>
+  ) {}
   onModuleInit() {
     this.getBotMessage();
   }
@@ -34,10 +53,15 @@ export class BotService implements OnModuleInit {
     return myArray;
   };
 
-  async getBotMessage() {
+  async getBotMessage(isSend?:boolean, status?:string, botChatId?:number) {
+
+
+
     process.env.NTBA_FIX_319 = '1';
     const token = AppConfig.telegramToken;
-    const bot = new TelegramBot(token, { polling: true });
+    // @ts-ignore
+    const bot = new TelegramBot(token, { polling: true, interval: 1000 });
+
 
     bot.on('callback_query', async callbackQuery => {
       const message = callbackQuery.message;
@@ -65,21 +89,139 @@ export class BotService implements OnModuleInit {
       );
     });
 
-    bot.onText(/\/cameralist/, async msg => {
-      const urlList = await this.chunkArrayInGroups(await this.getCamera(), 3);
 
-      bot
-        .sendMessage(msg.chat.id, 'Camera List', {
-          // eslint-disable-next-line @typescript-eslint/camelcase
-          reply_markup: {
-            // eslint-disable-next-line @typescript-eslint/camelcase
-            inline_keyboard: urlList,
-            one_time_keyboard: true,
-            remove_keyboard: true,
-            force_reply: true,
-          },
-        })
-        .catch(err => console.log('err====', err));
+
+
+    if(isSend){
+      let botUseMessage
+      if(status.toLocaleLowerCase()===botAuthorizingStatus.APPROVED.toLocaleLowerCase().toString()){
+        botUseMessage ="<b>Hello, you have been authorized to use me</b>";
+      }else{
+        botUseMessage ="<b>Hello, you were not authorized to use me</b>"
+      }
+      bot.sendMessage(botChatId,botUseMessage, {
+        parse_mode:'HTML'
+      })
+
+    }
+
+
+
+    bot.onText(/\/*/, async msg => {
+      if (msg.text === '/start') {
+        const botDetail:BotDetail = await this.findByChatId(msg.chat.id)
+        botDetail.userStep = botStep.USERNAME.toString()
+        this.botDetailRepository.save(botDetail)
+        const txt = '<b>Please enter username</b> :';
+        bot.sendMessage(msg.chat.id, txt, {
+          parse_mode: 'HTML',
+        });
+        return false;
+      } else if (msg.text === '/cameralist') {
+        const isActive = await this.isActiveUser(msg.chat.id);
+        if (isActive) {
+          const urlList = await this.chunkArrayInGroups(
+            await this.getCamera(),
+            3,
+          );
+          bot
+            .sendMessage(msg.chat.id, 'Camera List', {
+              // eslint-disable-next-line @typescript-eslint/camelcase
+              reply_markup: {
+                // eslint-disable-next-line @typescript-eslint/camelcase
+                inline_keyboard: urlList,
+                one_time_keyboard: true,
+                remove_keyboard: true,
+                force_reply: true,
+              },
+            })
+            .catch(err => console.log('err====', err));
+        } else {
+          bot.sendMessage(
+            msg.chat.id,
+            '<b>Hello, you were not authorized to use me.</b>',
+            {
+              parse_mode: 'HTML',
+            },
+          );
+        }
+      } else {
+        const chatId = msg.chat.id;
+        const botDetail:BotDetail = await this.findByChatId(chatId)
+
+
+        switch (botDetail.userStep) {
+          case botStep.USERNAME.toString():
+            botDetail.userStep = botStep.PASSWORD.toString()
+            botDetail.telegramUsername = msg.text
+            await this.botDetailRepository.save(botDetail)
+            const txt = '<b>Please enter Password</b> :';
+            bot.sendMessage(chatId, txt, {
+              parse_mode: 'HTML',
+            });
+            break;
+          case botStep.PASSWORD.toString():
+            botDetail.telegramPassword = msg.text
+              botDetail.userStep = botStep.NONE.toString()
+              await this.botDetailRepository.save(botDetail)
+            const loginValidateMsg = await this.checkLogin(chatId);
+            bot.sendMessage(msg.chat.id, loginValidateMsg, {
+              parse_mode: 'HTML',
+            });
+            break;
+        }
+      }
     });
   }
+
+
+
+
+  checkLogin = async (chatid: number) => {
+  const botDetail:BotDetail = await this.findByChatId(chatid)
+    console.log(botDetail)
+    const user = await this.authService.validateUser(
+        botDetail.telegramUsername,
+        botDetail.telegramPassword
+    );
+
+    if (!user) {
+      return 'Your email or password does not exist';
+    }
+
+    await this.authService.login(user);
+    const loginUser: User = await this.userService.findByEmail(
+    botDetail.telegramUsername
+    );
+
+    loginUser.authorizeConnection = botAuthorizingStatus.WAITING.toString();
+    loginUser.chatId = chatid;
+    loginUser.password = botDetail.telegramPassword
+    await this.userService.saveTelegramUser(loginUser);
+
+    return 'Waiting for authorization so you can use me';
+  };
+
+
+  findByChatId = async (chatId:number) => {
+
+    let botDetail = await this.botDetailRepository.findOne({
+      where: [{ chatId: chatId }],
+    })
+    if(!botDetail){
+      botDetail = new BotDetail();
+      botDetail.chatId = chatId;
+      botDetail=  await this.botDetailRepository.save(botDetail)
+    }
+    return botDetail
+  }
+
+  isActiveUser = async (chatId: number) => {
+    const isActiveUser = await this.userService.findByChatId(chatId);
+
+    return isActiveUser
+      ? isActiveUser.authorizeConnection.toLocaleLowerCase() ===
+          botAuthorizingStatus.APPROVED.toString().toLocaleLowerCase()
+      : false;
+  };
 }

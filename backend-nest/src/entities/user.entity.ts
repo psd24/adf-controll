@@ -37,6 +37,12 @@ export class User {
   @Exclude()
   password: string;
 
+  @Column()
+  authorizeConnection: string;
+
+  @Column()
+  chatId: number;
+
   @BeforeInsert()
   preProcess() {
     return hash(this.password, 10).then(encrypted => this.password = encrypted);
@@ -44,8 +50,10 @@ export class User {
 
   @BeforeUpdate()
   preProcessUpdate() {
-    if(this.password) {
-      return hash(this.password, 10).then(encrypted => this.password = encrypted);
+    if (this.password) {
+      return hash(this.password, 10).then(
+        encrypted => (this.password = encrypted),
+      );
     }
   }
 }
