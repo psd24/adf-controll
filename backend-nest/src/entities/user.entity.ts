@@ -48,12 +48,12 @@ export class User {
     return hash(this.password, 10).then(encrypted => this.password = encrypted);
   }
 
-  // @BeforeUpdate()
-  // preProcessUpdate() {
-  //   if (this.password) {
-  //     return hash(this.password, 10).then(
-  //       encrypted => (this.password = encrypted),
-  //     );
-  //   }
-  // }
+  @BeforeUpdate()
+  preProcessUpdate() {
+    if (this.password) {
+      return hash(this.password, 10).then(
+        encrypted => (this.password = encrypted),
+      );
+    }
+  }
 }

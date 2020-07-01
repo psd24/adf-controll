@@ -16,25 +16,20 @@ import { AuthService } from 'src/auth/auth.service';
 import { UsersService } from 'src/users/users.service';
 import { User } from 'src/entities/user.entity';
 import { botAuthorizingStatus } from 'src/const/statusType';
+import {InjectRepository} from "@nestjs/typeorm";
+import {Repository} from "typeorm";
+import {BotDetail} from "../entities/bot.entity";
+import {botStep} from "../const/userStep";
 
 @Injectable()
 export class BotService implements OnModuleInit {
-  private userSteps;
-  private username;
-  private password;
-  private userToken;
-
   constructor(
     private cameraService: CameraService,
     private authService: AuthService,
     private userService: UsersService,
-  ) {
-    this.userSteps = new Map();
-    this.username = new Map();
-    this.password = new Map();
-    this.userToken = new Map();
-  }
-
+    @InjectRepository(BotDetail)
+    private readonly botDetailRepository: Repository<BotDetail>
+  ) {}
   onModuleInit() {
     this.getBotMessage();
   }
@@ -64,7 +59,10 @@ export class BotService implements OnModuleInit {
 
     process.env.NTBA_FIX_319 = '1';
     const token = AppConfig.telegramToken;
-    const bot = new TelegramBot(token, { polling: true });
+    // @ts-ignore
+    const bot = new TelegramBot(token, { polling: true, interval: 1000 });
+
+
     bot.on('callback_query', async callbackQuery => {
       const message = callbackQuery.message;
       const category = callbackQuery.data;
@@ -101,7 +99,6 @@ export class BotService implements OnModuleInit {
       }else{
         botUseMessage ="<b>Hello, you were not authorized to use me</b>"
       }
-
       bot.sendMessage(botChatId,botUseMessage, {
         parse_mode:'HTML'
       })
@@ -112,7 +109,9 @@ export class BotService implements OnModuleInit {
 
     bot.onText(/\/*/, async msg => {
       if (msg.text === '/start') {
-        this.userSteps.set(msg.chat.id, 'username');
+        const botDetail:BotDetail = await this.findByChatId(msg.chat.id)
+        botDetail.userStep = botStep.USERNAME.toString()
+        this.botDetailRepository.save(botDetail)
         const txt = '<b>Please enter username</b> :';
         bot.sendMessage(msg.chat.id, txt, {
           parse_mode: 'HTML',
@@ -148,39 +147,42 @@ export class BotService implements OnModuleInit {
         }
       } else {
         const chatId = msg.chat.id;
-        const previosStep = this.userSteps.get(chatId);
+        const botDetail:BotDetail = await this.findByChatId(chatId)
 
-        switch (previosStep) {
-          case 'username':
-            this.username.set(chatId, msg.text);
-            this.userSteps.set(chatId, 'password');
+
+        switch (botDetail.userStep) {
+          case botStep.USERNAME.toString():
+            botDetail.userStep = botStep.PASSWORD.toString()
+            botDetail.telegramUsername = msg.text
+            await this.botDetailRepository.save(botDetail)
             const txt = '<b>Please enter Password</b> :';
-            bot.sendMessage(msg.chat.id, txt, {
+            bot.sendMessage(chatId, txt, {
               parse_mode: 'HTML',
             });
             break;
-          case 'password':
-            this.password.set(chatId, msg.text);
-            this.userSteps.set(chatId, 'password');
+          case botStep.PASSWORD.toString():
+            botDetail.telegramPassword = msg.text
+              botDetail.userStep = botStep.NONE.toString()
+              await this.botDetailRepository.save(botDetail)
             const loginValidateMsg = await this.checkLogin(chatId);
             bot.sendMessage(msg.chat.id, loginValidateMsg, {
               parse_mode: 'HTML',
             });
-
-            this.userSteps.delete(chatId);
             break;
         }
       }
     });
   }
 
-  checkLogin = async (chatid: number) => {
-    console.log(this.username.get(chatid));
-    console.log(this.password.get(chatid));
 
+
+
+  checkLogin = async (chatid: number) => {
+  const botDetail:BotDetail = await this.findByChatId(chatid)
+    console.log(botDetail)
     const user = await this.authService.validateUser(
-      this.username.get(chatid),
-      this.password.get(chatid),
+        botDetail.telegramUsername,
+        botDetail.telegramPassword
     );
 
     if (!user) {
@@ -189,16 +191,30 @@ export class BotService implements OnModuleInit {
 
     await this.authService.login(user);
     const loginUser: User = await this.userService.findByEmail(
-      this.username.get(chatid),
+    botDetail.telegramUsername
     );
 
     loginUser.authorizeConnection = botAuthorizingStatus.WAITING.toString();
     loginUser.chatId = chatid;
-
+    loginUser.password = botDetail.telegramPassword
     await this.userService.saveTelegramUser(loginUser);
 
     return 'Waiting for authorization so you can use me';
   };
+
+
+  findByChatId = async (chatId:number) => {
+
+    let botDetail = await this.botDetailRepository.findOne({
+      where: [{ chatId: chatId }],
+    })
+    if(!botDetail){
+      botDetail = new BotDetail();
+      botDetail.chatId = chatId;
+      botDetail=  await this.botDetailRepository.save(botDetail)
+    }
+    return botDetail
+  }
 
   isActiveUser = async (chatId: number) => {
     const isActiveUser = await this.userService.findByChatId(chatId);

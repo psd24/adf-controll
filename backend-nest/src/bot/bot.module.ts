@@ -4,9 +4,11 @@ import { CameraModule } from 'src/camera/camera.module';
 import {UsersModule} from "../users/users.module";
 import {AuthService} from "../auth/auth.service";
 import {AuthModule} from "../auth/auth.module";
+import {TypeOrmModule} from "@nestjs/typeorm";
+import {BotDetail} from "../entities/bot.entity";
 
 @Module({
-  imports: [CameraModule,UsersModule,forwardRef(() =>AuthModule)],
+  imports: [TypeOrmModule.forFeature([BotDetail]), CameraModule, forwardRef(()=>AuthModule),forwardRef(() =>UsersModule)],
   providers: [BotService],
   exports: [BotService]
 })
