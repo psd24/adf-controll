@@ -7,7 +7,6 @@ import { UpdateUserDto } from './dtos/update-user.dto';
 import { ResetPasswordDto } from './dtos/reset-password.dto';
 import { Organization } from 'src/entities/organization.entity';
 import { Role } from 'src/entities/role.entity';
-import {paginate, Pagination, IPaginationOptions} from 'nestjs-typeorm-paginate';
 import {BotService} from "../bot/bot.service";
 
 @Injectable()
@@ -132,9 +131,6 @@ export class UsersService {
         });
     }
 
-    async paginate(options: IPaginationOptions): Promise<Pagination<User>> {
-        return paginate<User>(this.usersRepository, options);
-    }
 
     async getUser(_id: number) {
         return this.usersRepository.findOne({

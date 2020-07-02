@@ -20,6 +20,10 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
 import {BotDetail} from "../entities/bot.entity";
 import {botStep} from "../const/userStep";
+import {doc} from "prettier";
+import group = doc.builders.group;
+import {BotgroupService} from "../botGroup/botgroup.service";
+import {Botgroup} from "../entities/botgroup.entity";
 
 @Injectable()
 export class BotService implements OnModuleInit {
@@ -28,7 +32,9 @@ export class BotService implements OnModuleInit {
     private authService: AuthService,
     private userService: UsersService,
     @InjectRepository(BotDetail)
-    private readonly botDetailRepository: Repository<BotDetail>
+    private readonly botDetailRepository: Repository<BotDetail>,
+    @Inject(forwardRef(() => BotgroupService))
+    private botgroupService: BotgroupService
   ) {}
   onModuleInit() {
     this.getBotMessage();
@@ -53,14 +59,30 @@ export class BotService implements OnModuleInit {
     return myArray;
   };
 
+
+
+  async  botGroupDetail(bot:any,message:any){
+    let botgroup:Botgroup = await this.botgroupService.findByChatId(message.chat.id)
+    if(!botgroup){
+      botgroup = new Botgroup();
+      botgroup.chatId =message.chat.id
+      botgroup.name = message.chat.title
+      botgroup.authorizeConnection = botAuthorizingStatus.WAITING
+      botgroup = await this.botgroupService.create(botgroup);
+    }
+    const sendMessage = "<b>Hi, I'm waiting for authorization so you can use me in this group</b>";
+    bot.sendMessage(message.chat.id,sendMessage, {
+      parse_mode:'HTML'
+    })
+
+  }
+
   async getBotMessage(isSend?:boolean, status?:string, botChatId?:number) {
-
-
 
     process.env.NTBA_FIX_319 = '1';
     const token = AppConfig.telegramToken;
     // @ts-ignore
-    const bot = new TelegramBot(token, { polling: true, interval: 1000 });
+    const bot = new TelegramBot(token, { polling: true});
 
 
     bot.on('callback_query', async callbackQuery => {
@@ -91,7 +113,6 @@ export class BotService implements OnModuleInit {
 
 
 
-
     if(isSend){
       let botUseMessage
       if(status.toLocaleLowerCase()===botAuthorizingStatus.APPROVED.toLocaleLowerCase().toString()){
@@ -99,6 +120,7 @@ export class BotService implements OnModuleInit {
       }else{
         botUseMessage ="<b>Hello, you were not authorized to use me</b>"
       }
+      console.log('called.......')
       bot.sendMessage(botChatId,botUseMessage, {
         parse_mode:'HTML'
       })
@@ -108,7 +130,14 @@ export class BotService implements OnModuleInit {
 
 
     bot.onText(/\/*/, async msg => {
+
+      const isGroup = msg.chat.type ==="group" ? true :false
+
       if (msg.text === '/start') {
+
+        if(isGroup){
+          return this.botGroupDetail(bot,msg)
+        }
         const botDetail:BotDetail = await this.findByChatId(msg.chat.id)
         botDetail.userStep = botStep.USERNAME.toString()
         this.botDetailRepository.save(botDetail)
@@ -148,8 +177,6 @@ export class BotService implements OnModuleInit {
       } else {
         const chatId = msg.chat.id;
         const botDetail:BotDetail = await this.findByChatId(chatId)
-
-
         switch (botDetail.userStep) {
           case botStep.USERNAME.toString():
             botDetail.userStep = botStep.PASSWORD.toString()

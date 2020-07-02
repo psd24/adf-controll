@@ -21,11 +21,14 @@ import { RegisterUserDto } from 'src/users/dtos/register-user.dto';
 import { UpdateUserDto } from 'src/users/dtos/update-user.dto';
 import { ResetPasswordDto } from 'src/users/dtos/reset-password.dto';
 import {UpdateTelegramUserDto} from "../users/dtos/update-telegram-user.dto";
+import {BotgroupService} from "../botGroup/botgroup.service";
+import {BotgroupDto} from "../botGroup/dtos/botgroup.dto";
+import {Botgroup} from "../entities/botgroup.entity";
 
 @ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
-    constructor(private authService: AuthService, private usersService: UsersService) {}  
+    constructor(private authService: AuthService, private usersService: UsersService, private botgroupService:BotgroupService) {}
 
     @Post('login')
     async login(@Body() body: LoginDto) {
@@ -57,6 +60,15 @@ export class AuthController {
     @Put('register/update')
     async update(@Body() updateUserDto: UpdateUserDto) {
       return this.usersService.update(updateUserDto);
+    }
+
+
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    @ApiOkResponse({ type: Botgroup })
+    @Put('botGroup/update')
+    async updateBotGroup(@Body() botgroupDto: BotgroupDto) {
+        return this.botgroupService.update(botgroupDto)
     }
 
     @ApiBearerAuth()
