@@ -8,6 +8,7 @@ import { ResetPasswordDto } from './dtos/reset-password.dto';
 import { Organization } from 'src/entities/organization.entity';
 import { Role } from 'src/entities/role.entity';
 import {BotService} from "../bot/bot.service";
+import { Pagination, PaginationOptionsInterface } from './../paginate';
 
 @Injectable()
 export class UsersService {
@@ -121,15 +122,23 @@ export class UsersService {
     async delete(user: User) {
         return this.usersRepository.delete(user);
     }
+    
+    async paginate(
+        options: PaginationOptionsInterface,
+    ): Promise<Pagination<User>> {
+        const [results, total] = await this.usersRepository.findAndCount({
+            take: options.limit,
+            skip: options.page*options.limit,
+        });
 
-    async getUsers() {
- 
-        
+        // TODO add more tests for paginate
 
-        return this.usersRepository.find({ 
-            relations: ['role', 'organization'],
+        return new Pagination<User>({
+            results,
+            total,
         });
     }
+
 
 
     async getUser(_id: number) {
