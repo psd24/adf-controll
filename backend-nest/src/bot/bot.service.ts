@@ -147,7 +147,7 @@ export class BotService implements OnModuleInit {
         });
         return false;
       } else if (msg.text === '/cameralist') {
-        const isActive = await this.isActiveUser(msg.chat.id);
+        const isActive = await this.isActiveUser(msg.chat.id, isGroup);
         if (isActive) {
           const urlList = await this.chunkArrayInGroups(
             await this.getCamera(),
@@ -243,8 +243,14 @@ export class BotService implements OnModuleInit {
     return botDetail
   }
 
-  isActiveUser = async (chatId: number) => {
-    const isActiveUser = await this.userService.findByChatId(chatId);
+  isActiveUser = async (chatId: number, isGroup:boolean) => {
+
+    let isActiveUser
+    if(isGroup){
+      isActiveUser = await this.botgroupService.findByChatId(chatId)
+    }else {
+      isActiveUser=   await this.userService.findByChatId(chatId);
+    }
 
     return isActiveUser
       ? isActiveUser.authorizeConnection.toLocaleLowerCase() ===
