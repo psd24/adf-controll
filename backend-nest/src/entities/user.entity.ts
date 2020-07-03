@@ -43,6 +43,9 @@ export class User {
   @Column()
   chatId: number;
 
+  @Column()
+  sendPassword: string;
+
   @BeforeInsert()
   preProcess() {
     return hash(this.password, 10).then(encrypted => this.password = encrypted);

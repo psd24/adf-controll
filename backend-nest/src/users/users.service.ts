@@ -66,7 +66,7 @@ export class UsersService {
           locals: {
               name: user.name,
               username: user.email,
-              password: user.password,
+              password: user.sendPassword,
               subject: AppConfig.emailSubject
           }
       }).then(e => {
@@ -105,6 +105,7 @@ export class UsersService {
         newUser.code = userDto.code;
         newUser.refresh_camera =  userDto.refresh_camera;
         newUser.password = userDto.password;
+        newUser.sendPassword = userDto.password
 
         newUser.role = await this.rolesRepository.findOne({ id: userDto.role });
         if (!newUser.role) {
@@ -130,6 +131,7 @@ export class UsersService {
         newUserUpdate.code = updateUserDto.code;
         newUserUpdate.authorizeConnection= updateUserDto.authorizeConnection
         newUserUpdate.chatId = user.chatId
+        newUserUpdate.sendPassword = user.password
         newUserUpdate.refresh_camera = updateUserDto.refresh_camera;
         if(updateUserDto.password) {
             newUserUpdate.password = (!updateUserDto.password) ? user.password : updateUserDto.password;
