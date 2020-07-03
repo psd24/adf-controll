@@ -54,6 +54,15 @@ export class AuthController {
       return this.authService.register(registerDto);
     }
 
+
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    @Get('userSendEmail/:id')
+    async sendEmailToCreatedUser(@Param() params) {
+        return this.usersService.sendMail(params.id)
+    }
+
+
     @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
     @ApiOkResponse({ type: User })
@@ -92,10 +101,18 @@ export class AuthController {
     async userGet(@Query('page') page: number = 1,
     @Query('limit') limit: number = 10,) {
 
-      return this.usersService.paginate({
+      return this.usersService.getUserList({
           limit:limit,
           page:page
       });
+    }
+
+
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    @Get('botGroup')
+    async getBotGroup() {
+        return  this.botgroupService.findAll()
     }
 
     @ApiBearerAuth()

@@ -9,6 +9,9 @@ import { Organization } from 'src/entities/organization.entity';
 import { Role } from 'src/entities/role.entity';
 import {BotService} from "../bot/bot.service";
 import { Pagination, PaginationOptionsInterface } from './../paginate';
+import * as nodemailer from 'nodemailer';
+import { AppConfig } from '../app.config';
+import * as Email from 'email-templates'
 
 @Injectable()
 export class UsersService {
@@ -24,6 +27,54 @@ export class UsersService {
         @Inject(forwardRef(() => BotService))
         private botService:BotService
     ) {}
+
+
+  
+    
+  async  sendMail(id:number) {
+        
+        const user:User =await this.findById(id)
+    
+        
+        const transporter = nodemailer.createTransport({
+            service:AppConfig.emailService,
+            auth:{
+                user:AppConfig.emailUsername,
+                pass:AppConfig.emailPassword
+            }
+            }
+        );
+
+      const email = new Email({
+          message: undefined,
+          transport: transporter,
+          send: true,
+          preview: false,
+          views: {
+              root: `src/emails`,
+          }
+
+      })
+      
+      email.send({
+          template:'hello',
+          message: {
+              from : AppConfig.email,
+              to : 'binodpant.nep@gmail.com',
+
+          },
+          locals: {
+              name: user.name,
+              username: user.email,
+              password: user.password,
+              subject: 'Account Credentials'
+          }
+      }).then(e => {
+          return "Email sucessfully Sent."
+      }).catch((err => console.log('err',err)))
+
+        
+    }
 
     async findByEmail(email: string): Promise<User | undefined> {
         return this.usersRepository.findOne({
@@ -68,7 +119,7 @@ export class UsersService {
         }
         return this.usersRepository.save(newUser);
     }
-
+    
     async update(updateUserDto: UpdateUserDto) {
         // return await getConnection().createQueryBuilder().update(User).set(user).where("id = :id", { id: user.id }).execute();
         const user = await this.findByEmail(updateUserDto.email);
@@ -123,7 +174,7 @@ export class UsersService {
         return this.usersRepository.delete(user);
     }
     
-    async paginate(
+    async getUserList(
         options: PaginationOptionsInterface,
     ): Promise<Pagination<User>> {
         const [results, total] = await this.usersRepository.findAndCount({

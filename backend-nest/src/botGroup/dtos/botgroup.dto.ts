@@ -7,10 +7,6 @@ export class BotgroupDto {
     @IsNumber()
     id: number;
 
-    @ApiProperty({ required: true })
-    @IsString()
-    @IsNotEmpty()
-    name:string
 
     @ApiProperty({ required: true })
     @IsString()

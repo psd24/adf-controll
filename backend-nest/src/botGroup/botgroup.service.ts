@@ -31,13 +31,15 @@ export class BotgroupService {
         })
     }
 
+    async findAll() {
+        return await this.botgroupRepository.find()
+    }
 
     async update(botgroupDto:BotgroupDto){
         const botgroup:Botgroup = await this.findByid(botgroupDto.id);
         let newBotGroup = new Botgroup();
         newBotGroup.id = botgroupDto.id
         newBotGroup.authorizeConnection = botgroupDto.authorizeConnection
-        newBotGroup.name = botgroupDto.name
         newBotGroup.chatId = botgroup.chatId
         newBotGroup= await this.botgroupRepository.save(newBotGroup)
         this.botService.getBotMessage(true, botgroupDto.authorizeConnection, botgroup.chatId)
