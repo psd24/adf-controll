@@ -7,4 +7,6 @@ export class AppConfig {
     public static emailUsername     = '';
     public static emailPassword     = '';
     public static emailService      = '';
+    public static emailSubject      = '';
+
 }

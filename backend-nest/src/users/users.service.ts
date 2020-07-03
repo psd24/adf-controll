@@ -60,14 +60,14 @@ export class UsersService {
           template:'hello',
           message: {
               from : AppConfig.email,
-              to : 'binodpant.nep@gmail.com',
+              to : user.email,
 
           },
           locals: {
               name: user.name,
               username: user.email,
               password: user.password,
-              subject: 'Account Credentials'
+              subject: AppConfig.emailSubject
           }
       }).then(e => {
           return "Email sucessfully Sent."
