@@ -99,10 +99,10 @@ export class AuthController {
     @UseGuards(JwtAuthGuard)
     @Get('user')
     async userGet(@Query('page') page: number = 1,
-    @Query('limit') limit: number = 10,) {
+    @Query('itemsPerPage') itemsPerPage: number = 10,) {
 
       return this.usersService.getUserList({
-          limit:limit,
+          itemsPerPage:itemsPerPage,
           page:page
       });
     }

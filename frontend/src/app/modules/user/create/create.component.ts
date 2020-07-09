@@ -44,6 +44,7 @@ export class CreateComponent implements OnInit {
       refresh_camera: [''],
       organization: ['', [Validators.required, Validators.minLength(2)]],
       role: ['', [Validators.required, Validators.minLength(2)]],
+      authorizeConnection: ['']
     });
     if(this.userId) {
       this.usersService.view(this.userId).subscribe(
@@ -57,6 +58,7 @@ export class CreateComponent implements OnInit {
           this.formCreateUser.controls['organization'].setValue(this.user.organization.id);
           this.formCreateUser.controls['role'].setValue(this.user.role.id);
           this.formCreateUser.controls['refresh_camera'].setValue(this.user.refresh_camera);
+          this.formCreateUser.controls['authorizeConnection'].setValue(this.user.authorizeConnection);
         }
       );
     }

@@ -39,8 +39,8 @@ export class UserService {
         );
       }
     
-      getUsers(): Observable<any> {
-        return this.http.get(this.backendUrl + '/auth/user').pipe(
+      getUsers(params): Observable<any> {
+        return this.http.get(this.backendUrl + '/auth/user', {params: params}).pipe(
           map(res => {
             return res;
           }),

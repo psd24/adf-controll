@@ -36,6 +36,15 @@
                 </option>
             </select>
         </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Bot telegram<span class="text-danger">*</span></label>
+            <select formControlName="authorizeConnection" class="form-control" id="exampleFormControlSelect1">
+                <option ngValue="" selected disabled>Pendent de preguntar</option>
+                <option ngValue="APPROVED">Aprovat</option>
+                <option ngValue="DENIED">Denegar</option>
+                <option ngValue="WAITING">Esperant</option>
+            </select>
+        </div>
         <button type="submit" class="btn btn-success">Guardar</button>
     </form>
     <button class="btn btn-primary mt-4" [routerLink]="['/user']">Enrera</button>

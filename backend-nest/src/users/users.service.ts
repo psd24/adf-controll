@@ -179,10 +179,12 @@ export class UsersService {
     async getUserList(
         options: PaginationOptionsInterface,
     ): Promise<Pagination<User>> {
+        console.log(options.page - 1)
+        console.log(options.itemsPerPage - options.itemsPerPage)
         const [results, total] = await this.usersRepository.findAndCount({
             relations: ['role', 'organization'],
-            take: options.limit,
-            skip: options.page*options.limit,
+            take: options.itemsPerPage,
+            skip: (options.page - 1)*options.itemsPerPage,
         });
 
         // TODO add more tests for paginate

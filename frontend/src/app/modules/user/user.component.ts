@@ -12,6 +12,10 @@ export class UserComponent implements OnInit {
 
   public users: UserModel;
   public currentUser: UserModel;
+  currentPage = 0;
+  page: number;
+  totalItems: number;
+  itemsPerPage: number = 3;
 
   constructor(
     private userService: UserService,
@@ -20,12 +24,28 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.userService.getUsers().subscribe(
+    let params = {page: 1, itemsPerPage: this.itemsPerPage}
+    this.userService.getUsers(params).subscribe(
       (user: UserModel) => {
-        this.users = user;
+        console.log(user);
+        this.users = user['results'];
+        this.totalItems = user.total;
+        this.itemsPerPage = user.page_total;
       },
       (error) => {
         console.log(error);
+      }
+    );
+  }
+
+  pageChanged(event: any): void {
+    this.page = event;
+    console.log(this.page)
+    this.userService.getUsers(this.page).subscribe(
+      (user: UserModel) => {
+        this.users = user['results'];
+        this.totalItems = user.total;
+        this.itemsPerPage = this.itemsPerPage;
       }
     );
   }
