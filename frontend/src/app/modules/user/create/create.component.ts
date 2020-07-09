@@ -64,6 +64,11 @@ export class CreateComponent implements OnInit {
     }
   }
 
+  generatePassword() {
+    const pass = Math.random().toString(36).slice(3); 
+    this.formCreateUser.controls['password'].setValue(pass);
+  }
+
   submitForm() {
     if(this.userId) {
       if(!this.formCreateUser.controls['password'].value) this.formCreateUser.controls['password'].setValue('');
