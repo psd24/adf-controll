@@ -180,6 +180,7 @@ export class UsersService {
         options: PaginationOptionsInterface,
     ): Promise<Pagination<User>> {
         const [results, total] = await this.usersRepository.findAndCount({
+            relations: ['role', 'organization'],
             take: options.limit,
             skip: options.page*options.limit,
         });
