@@ -49,6 +49,28 @@ export class UserService {
           })
         );
       }
+
+      getBotGroup(): Observable<any> {
+        return this.http.get(this.backendUrl + '/auth/botGroup').pipe(
+          map(res => {
+            return res;
+          }),
+          catchError(error => {
+            return throwError(error.error)
+          })
+        );
+      }
+
+      updateBotGroup(params): Observable<any> {
+        return this.http.put(this.backendUrl + '/auth/botGroup/update', params).pipe(
+          map(res => {
+            return res;
+          }),
+          catchError(error => {
+            return throwError(error.error)
+          })
+        );
+      }
     
       view(userId): Observable<any> {
         return this.http.get(this.backendUrl + '/auth/user/' + userId).pipe(

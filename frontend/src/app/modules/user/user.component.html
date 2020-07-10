@@ -39,10 +39,46 @@
                                     (click)="updateUser(user.id)"></i></td>
                         </tr>
                     </tbody>
-                    <pagination class="mt-5" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+                    <pagination class="mt-5" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
+                        [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
                 </table>
             </div>
         </tab>
-        <tab heading="Grups">Basic content 1</tab>
+        <tab heading="Grups">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Codi</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Autorització bot</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let telegramGroup of telegramGroups">
+                            <td>{{telegramGroup.chatId}}</td>
+                            <td>{{telegramGroup.name}}</td>
+                            <td *ngIf="telegramGroup.authorizeConnection === 'APPROVED'" class="text-success">APROVAT
+                            </td>
+                            <td *ngIf="telegramGroup.authorizeConnection === 'DENIED'" class="text-danger">DENEGAT</td>
+                            <td *ngIf="telegramGroup.authorizeConnection === 'WAITING'" class="text-warning">ESPERANT
+                            </td>
+                            <td>
+                                <i class="fas fa-check-circle fa-lg mr-4"
+                                    [ngClass]="{'text-success': telegramGroup.authorizeConnection === 'APPROVED'}"
+                                    (click)="botSatus(telegramGroup.id, 'APPROVED')"></i>
+                                <i class="fas fa-times-circle fa-lg mr-4"
+                                    [ngClass]="{'text-danger': telegramGroup.authorizeConnection === 'DENIED'}"
+                                    (click)="botSatus(telegramGroup.id, 'DENIED')"></i>
+                                <i class="fas fa-exclamation-triangle fa-lg"
+                                    [ngClass]="{'text-warning': telegramGroup.authorizeConnection === 'WAITING'}"
+                                    (click)="botSatus(telegramGroup.id, 'WAITING')"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </tab>
     </tabset>
 </div>
