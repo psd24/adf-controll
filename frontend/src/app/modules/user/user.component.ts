@@ -82,4 +82,15 @@ export class UserComponent implements OnInit {
     );
   }
 
+  sendEmail(id) {
+  this.userService.sendEmail(id).subscribe(
+    res => {
+      console.log('send email');
+    },
+    error => {
+      console.log(error)
+    }
+  );
+  }
+
 }
