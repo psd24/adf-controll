@@ -18,6 +18,7 @@
                             <th scope="col">Autorització bot</th>
                             <th scope="col">Chat Id</th>
                             <th scope="col" *ngIf="currentUser && currentUser.role.name === 'superadmin'"></th>
+                            <th scope="col" *ngIf="currentUser && currentUser.role.name === 'superadmin'"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,6 +38,9 @@
                             <td *ngIf="user.chatId === 0"></td>
                             <td *ngIf="currentUser && currentUser.role.name === 'superadmin'"><i class="fas fa-edit"
                                     (click)="updateUser(user.id)"></i></td>
+                            <td *ngIf="currentUser && currentUser.role.name === 'superadmin'">
+                                <button type="button" class="btn btn-primary" (click)="sendEmail(user.id)">Enviar correu</button>
+                            </td>
                         </tr>
                     </tbody>
                     <pagination class="mt-5" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"

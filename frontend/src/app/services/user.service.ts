@@ -126,4 +126,15 @@ export class UserService {
             })
         );
       }
+
+      sendEmail(id): Observable<any> {
+        return this.http.get(this.backendUrl + '/auth/userSendEmail/' + id).pipe(
+          map(res => {
+            return res;
+          }),
+          catchError(error => {
+            return throwError(error.error)
+          })
+        );
+      }
 }

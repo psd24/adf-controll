@@ -7,6 +7,8 @@ import { OrganizationService } from '../../../services/organization.service';
 import { OrganizationModel } from '../../../models/organization.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { CamerasService } from '../../../services/cameras.service';
+import { CameraModel } from '../../../models/camera.model';
 
 @Component({
   selector: 'app-create',
@@ -20,6 +22,7 @@ export class CreateComponent implements OnInit {
   formCreateUser: FormGroup;
   userId: String;
   user: UserModel;
+  cameras: CameraModel;
 
   constructor(
     private router: Router,
@@ -27,7 +30,8 @@ export class CreateComponent implements OnInit {
     private organizationService: OrganizationService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private usersService: UserService
+    private usersService: UserService,
+    private camerasService: CamerasService
   ) { }
 
   ngOnInit(): void {
@@ -62,6 +66,14 @@ export class CreateComponent implements OnInit {
         }
       );
     }
+    this.camerasService.index({ "relations": ["organization", "cameraType"], "where": [{ "state": 1 }] }).subscribe(
+      (cameras:CameraModel) => {
+        this.cameras = cameras
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   generatePassword() {
