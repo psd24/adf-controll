@@ -70,7 +70,7 @@ export class BotService implements OnModuleInit {
       botgroup.authorizeConnection = botAuthorizingStatus.WAITING
       botgroup = await this.botgroupService.create(botgroup);
     }
-    const sendMessage = "<b>Hi, I'm waiting for authorization so you can use me in this group</b>";
+    const sendMessage = "<b>Hola, estic esperant l'autorització perquè em pugueu utilitzar en aquest grup</b>";
     bot.sendMessage(message.chat.id,sendMessage, {
       parse_mode:'HTML'
     })
@@ -116,9 +116,9 @@ export class BotService implements OnModuleInit {
     if(isSend){
       let botUseMessage
       if(status.toLocaleLowerCase()===botAuthorizingStatus.APPROVED.toLocaleLowerCase().toString()){
-        botUseMessage ="<b>Hello, you have been authorized to use me</b>";
+        botUseMessage ="<b>Hola, heu estat autoritzats a utilitzar-me</b>";
       }else{
-        botUseMessage ="<b>Hello, you were not authorized to use me</b>"
+        botUseMessage ="<b>Hola, no esteu autoritzat a utilitzar-me</b>"
       }
       console.log('called.......')
       bot.sendMessage(botChatId,botUseMessage, {
@@ -141,7 +141,7 @@ export class BotService implements OnModuleInit {
         const botDetail:BotDetail = await this.findByChatId(msg.chat.id)
         botDetail.userStep = botStep.USERNAME.toString()
         this.botDetailRepository.save(botDetail)
-        const txt = '<b>Please enter username</b> :';
+        const txt = '<b>Introduïu el nom d usuari</b> :';
         bot.sendMessage(msg.chat.id, txt, {
           parse_mode: 'HTML',
         });
@@ -168,7 +168,7 @@ export class BotService implements OnModuleInit {
         } else {
           bot.sendMessage(
             msg.chat.id,
-            '<b>Hello, you were not authorized to use me.</b>',
+            '<b>Hola, no esteu autoritzat a utilitzar-me.</b>',
             {
               parse_mode: 'HTML',
             },
@@ -182,7 +182,7 @@ export class BotService implements OnModuleInit {
             botDetail.userStep = botStep.PASSWORD.toString()
             botDetail.telegramUsername = msg.text
             await this.botDetailRepository.save(botDetail)
-            const txt = '<b>Please enter Password</b> :';
+            const txt = '<b>Introduïu la contrasenya</b> :';
             bot.sendMessage(chatId, txt, {
               parse_mode: 'HTML',
             });
@@ -213,7 +213,7 @@ export class BotService implements OnModuleInit {
     );
 
     if (!user) {
-      return 'Your email or password does not exist';
+      return 'El vostre correu electrònic o contrasenya no existeix';
     }
 
     await this.authService.login(user);
@@ -226,7 +226,7 @@ export class BotService implements OnModuleInit {
     loginUser.password = botDetail.telegramPassword
     await this.userService.saveTelegramUser(loginUser);
 
-    return 'Waiting for authorization so you can use me';
+    return 'Esperant l autorització perquè em pugueu fer servir';
   };
 
 
