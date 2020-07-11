@@ -13,8 +13,15 @@
             <input formControlName="email" type="text" class="form-control" id="exampleFormControlInput1">
         </div>
         <div class="form-group">
-            <label for="exampleFormControlInput1">Contrasenya<span class="text-danger">*</span></label>
-            <input formControlName="password" type="text" class="form-control" id="exampleFormControlInput1">
+            <div class="row">
+                <div class="col-10">
+                    <label for="exampleFormControlInput1">Contrasenya<span class="text-danger">*</span></label>
+                    <input formControlName="password" type="text" class="form-control" id="exampleFormControlInput1">
+                </div>
+                <div class="col-2 mt-4 pt-2">
+                    <button type="button" class="btn btn-primary" (click)="generatePassword()">Generar</button>
+                </div>
+            </div>
         </div>
         <div class="form-group">
             <label for="exampleFormControlInput1">Refrescar camera<span class="text-danger">*</span></label>
@@ -34,6 +41,15 @@
                 <option ngValue="" selected disabled>Organització</option>
                 <option *ngFor="let organization of organizations" [ngValue]="organization.id">{{organization.name}}
                 </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Bot telegram<span class="text-danger">*</span></label>
+            <select formControlName="authorizeConnection" class="form-control" id="exampleFormControlSelect1">
+                <option ngValue="" selected disabled>Pendent de preguntar</option>
+                <option ngValue="APPROVED">Aprovat</option>
+                <option ngValue="DENIED">Denegar</option>
+                <option ngValue="WAITING">Esperant</option>
             </select>
         </div>
         <button type="submit" class="btn btn-success">Guardar</button>

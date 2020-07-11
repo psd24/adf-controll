@@ -7,8 +7,11 @@ import { UpdateUserDto } from './dtos/update-user.dto';
 import { ResetPasswordDto } from './dtos/reset-password.dto';
 import { Organization } from 'src/entities/organization.entity';
 import { Role } from 'src/entities/role.entity';
-import {paginate, Pagination, IPaginationOptions} from 'nestjs-typeorm-paginate';
 import {BotService} from "../bot/bot.service";
+import { Pagination, PaginationOptionsInterface } from './../paginate';
+import * as nodemailer from 'nodemailer';
+import { AppConfig } from '../app.config';
+import * as Email from 'email-templates'
 
 @Injectable()
 export class UsersService {
@@ -24,6 +27,54 @@ export class UsersService {
         @Inject(forwardRef(() => BotService))
         private botService:BotService
     ) {}
+
+
+  
+    
+  async  sendMail(id:number) {
+        
+        const user:User =await this.findById(id)
+    
+        
+        const transporter = nodemailer.createTransport({
+            service:AppConfig.emailService,
+            auth:{
+                user:AppConfig.emailUsername,
+                pass:AppConfig.emailPassword
+            }
+            }
+        );
+
+      const email = new Email({
+          message: undefined,
+          transport: transporter,
+          send: true,
+          preview: false,
+          views: {
+              root: `src/emails`,
+          }
+
+      })
+      
+      email.send({
+          template:'hello',
+          message: {
+              from : AppConfig.email,
+              to : user.email,
+
+          },
+          locals: {
+              name: user.name,
+              username: user.email,
+              password: user.sendPassword,
+              subject: AppConfig.emailSubject
+          }
+      }).then(e => {
+          return "Email sucessfully Sent."
+      }).catch((err => console.log('err',err)))
+
+        
+    }
 
     async findByEmail(email: string): Promise<User | undefined> {
         return this.usersRepository.findOne({
@@ -54,6 +105,7 @@ export class UsersService {
         newUser.code = userDto.code;
         newUser.refresh_camera =  userDto.refresh_camera;
         newUser.password = userDto.password;
+        newUser.sendPassword = userDto.password
 
         newUser.role = await this.rolesRepository.findOne({ id: userDto.role });
         if (!newUser.role) {
@@ -68,7 +120,7 @@ export class UsersService {
         }
         return this.usersRepository.save(newUser);
     }
-
+    
     async update(updateUserDto: UpdateUserDto) {
         // return await getConnection().createQueryBuilder().update(User).set(user).where("id = :id", { id: user.id }).execute();
         const user = await this.findByEmail(updateUserDto.email);
@@ -79,6 +131,7 @@ export class UsersService {
         newUserUpdate.code = updateUserDto.code;
         newUserUpdate.authorizeConnection= updateUserDto.authorizeConnection
         newUserUpdate.chatId = user.chatId
+        newUserUpdate.sendPassword = user.password
         newUserUpdate.refresh_camera = updateUserDto.refresh_camera;
         if(updateUserDto.password) {
             newUserUpdate.password = (!updateUserDto.password) ? user.password : updateUserDto.password;
@@ -122,19 +175,25 @@ export class UsersService {
     async delete(user: User) {
         return this.usersRepository.delete(user);
     }
-
-    async getUsers() {
- 
-        
-
-        return this.usersRepository.find({ 
+    
+    async getUserList(
+        options: PaginationOptionsInterface,
+    ): Promise<Pagination<User>> {
+        const [results, total] = await this.usersRepository.findAndCount({
             relations: ['role', 'organization'],
+            take: options.itemsPerPage,
+            skip: (options.page - 1)*options.itemsPerPage,
+        });
+
+        // TODO add more tests for paginate
+
+        return new Pagination<User>({
+            results,
+            total,
         });
     }
 
-    async paginate(options: IPaginationOptions): Promise<Pagination<User>> {
-        return paginate<User>(this.usersRepository, options);
-    }
+
 
     async getUser(_id: number) {
         return this.usersRepository.findOne({

@@ -1,15 +1,15 @@
 import {
-  Controller,
-  Post,
-  Body,
-  UnauthorizedException,
-  UseGuards,
-  Get,
-  Request,
-  Param,
-  Delete,
-  Put,
-  NotAcceptableException
+    Controller,
+    Post,
+    Body,
+    UnauthorizedException,
+    UseGuards,
+    Get,
+    Request,
+    Param,
+    Delete,
+    Put,
+    NotAcceptableException, Query
 } from '@nestjs/common';
 import { LoginDto } from 'src/users/dtos/login.dto';
 import { AuthService } from './auth.service';
@@ -21,11 +21,14 @@ import { RegisterUserDto } from 'src/users/dtos/register-user.dto';
 import { UpdateUserDto } from 'src/users/dtos/update-user.dto';
 import { ResetPasswordDto } from 'src/users/dtos/reset-password.dto';
 import {UpdateTelegramUserDto} from "../users/dtos/update-telegram-user.dto";
+import {BotgroupService} from "../botGroup/botgroup.service";
+import {BotgroupDto} from "../botGroup/dtos/botgroup.dto";
+import {Botgroup} from "../entities/botgroup.entity";
 
 @ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
-    constructor(private authService: AuthService, private usersService: UsersService) {}  
+    constructor(private authService: AuthService, private usersService: UsersService, private botgroupService:BotgroupService) {}
 
     @Post('login')
     async login(@Body() body: LoginDto) {
@@ -51,12 +54,30 @@ export class AuthController {
       return this.authService.register(registerDto);
     }
 
+
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    @Get('userSendEmail/:id')
+    async sendEmailToCreatedUser(@Param() params) {
+        return this.usersService.sendMail(params.id)
+    }
+
+
     @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
     @ApiOkResponse({ type: User })
     @Put('register/update')
     async update(@Body() updateUserDto: UpdateUserDto) {
       return this.usersService.update(updateUserDto);
+    }
+
+
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    @ApiOkResponse({ type: Botgroup })
+    @Put('botGroup/update')
+    async updateBotGroup(@Body() botgroupDto: BotgroupDto) {
+        return this.botgroupService.update(botgroupDto)
     }
 
     @ApiBearerAuth()
@@ -77,8 +98,21 @@ export class AuthController {
     @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
     @Get('user')
-    async userGet() {
-      return this.usersService.getUsers();
+    async userGet(@Query('page') page: number = 1,
+    @Query('itemsPerPage') itemsPerPage: number = 10,) {
+
+      return this.usersService.getUserList({
+          itemsPerPage:itemsPerPage,
+          page:page
+      });
+    }
+
+
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    @Get('botGroup')
+    async getBotGroup() {
+        return  this.botgroupService.findAll()
     }
 
     @ApiBearerAuth()

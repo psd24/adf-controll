@@ -8,6 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { AuthController } from './auth.controller';
 import {BotModule} from "../bot/bot.module";
+import {BotgroupModule} from "../botGroup/botgroup.module";
 
 
 
@@ -19,7 +20,8 @@ import {BotModule} from "../bot/bot.module";
       //signOptions: { expiresIn: '2h' },
     }),
     UsersModule,
-      BotModule
+      BotModule,
+      BotgroupModule
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],
   exports: [AuthService],

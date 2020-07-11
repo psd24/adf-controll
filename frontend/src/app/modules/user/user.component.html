@@ -1,32 +1,84 @@
-<div class="container">
-    <div class="row mr-4 mb-4 float-sm-right">
-        <button type="button" class="btn btn-outline-primary ml-4" [routerLink]="['/user/create']">Afegir usuari</button>
-    </div>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Codi</th>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Correu</th>
-                    <th scope="col">Refrescar camera</th>
-                    <th scope="col">Organitazacio</th>
-                    <th scope="col">Rol</th>
-                    <th scope="col" *ngIf="currentUser && currentUser.role.name === 'superadmin'"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let user of users">
-                    <td>{{user.code}}</td>
-                    <td>{{user.name}}</td>
-                    <td>{{user.email}}</td>
-                    <td *ngIf="user.refresh_camera === 0">Per defecte (50s)</td>
-                    <td *ngIf="user.refresh_camera != 0">{{user.refresh_camera}}</td>
-                    <td>{{user.organization.name}}</td>
-                    <td>{{user.role.name}}</td>
-                    <td *ngIf="currentUser && currentUser.role.name === 'superadmin'"><i class="fas fa-edit" (click)="updateUser(user.id)"></i></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+<div class="container-fluid">
+    <tabset>
+        <tab heading="Usuaris" id="tab1">
+            <div class="row mt-4 mr-4 mb-4 float-sm-right">
+                <button type="button" class="btn btn-outline-primary ml-4" [routerLink]="['/user/create']">Afegir
+                    usuari</button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Codi</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Correu</th>
+                            <th scope="col">Refrescar camera</th>
+                            <th scope="col">Organitazacio</th>
+                            <th scope="col">Rol</th>
+                            <th scope="col">Autorització bot</th>
+                            <th scope="col">Chat Id</th>
+                            <th scope="col" *ngIf="currentUser && currentUser.role.name === 'superadmin'"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of users">
+                            <td>{{user.code}}</td>
+                            <td>{{user.name}}</td>
+                            <td>{{user.email}}</td>
+                            <td *ngIf="user.refresh_camera === 0">Per defecte (50 segons)</td>
+                            <td *ngIf="user.refresh_camera != 0">{{user.refresh_camera}} segons</td>
+                            <td>{{user.organization.name}}</td>
+                            <td>{{user.role.name}}</td>
+                            <td *ngIf="user.authorizeConnection === 'APPROVED'" class="text-success">APROVAT</td>
+                            <td *ngIf="user.authorizeConnection === 'DENIED'" class="text-danger">DENEGAT</td>
+                            <td *ngIf="user.authorizeConnection === 'WAITING'" class="text-warning">ESPERANT</td>
+                            <td *ngIf="user.authorizeConnection === ''">Pendent de preguntar</td>
+                            <td *ngIf="user.chatId != 0">{{user.chatId}}</td>
+                            <td *ngIf="user.chatId === 0"></td>
+                            <td *ngIf="currentUser && currentUser.role.name === 'superadmin'"><i class="fas fa-edit"
+                                    (click)="updateUser(user.id)"></i></td>
+                        </tr>
+                    </tbody>
+                    <pagination class="mt-5" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
+                        [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+                </table>
+            </div>
+        </tab>
+        <tab heading="Grups">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Codi</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Autorització bot</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let telegramGroup of telegramGroups">
+                            <td>{{telegramGroup.chatId}}</td>
+                            <td>{{telegramGroup.name}}</td>
+                            <td *ngIf="telegramGroup.authorizeConnection === 'APPROVED'" class="text-success">APROVAT
+                            </td>
+                            <td *ngIf="telegramGroup.authorizeConnection === 'DENIED'" class="text-danger">DENEGAT</td>
+                            <td *ngIf="telegramGroup.authorizeConnection === 'WAITING'" class="text-warning">ESPERANT
+                            </td>
+                            <td>
+                                <i class="fas fa-check-circle fa-lg mr-4"
+                                    [ngClass]="{'text-success': telegramGroup.authorizeConnection === 'APPROVED'}"
+                                    (click)="botSatus(telegramGroup.id, 'APPROVED')"></i>
+                                <i class="fas fa-times-circle fa-lg mr-4"
+                                    [ngClass]="{'text-danger': telegramGroup.authorizeConnection === 'DENIED'}"
+                                    (click)="botSatus(telegramGroup.id, 'DENIED')"></i>
+                                <i class="fas fa-exclamation-triangle fa-lg"
+                                    [ngClass]="{'text-warning': telegramGroup.authorizeConnection === 'WAITING'}"
+                                    (click)="botSatus(telegramGroup.id, 'WAITING')"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </tab>
+    </tabset>
 </div>

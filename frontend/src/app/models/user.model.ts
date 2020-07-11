@@ -8,8 +8,11 @@ export class UserModel{
     email: string;
     name: string;
     password: string;
+    authorizeConnection: string;
+    chatId: number;
     refresh_camera: number;
     organization: OrganizationModel;
     role: RoleModel;
-
+    total: number;
+    page_total: number;
 }
