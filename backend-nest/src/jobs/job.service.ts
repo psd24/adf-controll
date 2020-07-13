@@ -52,6 +52,8 @@ export class JobService {
 
         console.log(`published result`,publishResult)
 
+       await ig.account.logout()
+
 
     }
 
