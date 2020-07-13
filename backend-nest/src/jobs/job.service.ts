@@ -15,7 +15,7 @@ export class JobService {
 
 
     startJob = async () => {
-        const job = new CronJob("0 0 */5 * * *", () => {
+        const job = new CronJob("0 0 * * * *", () => {
             let hour = Math.floor(Math.random() * (22 - 8 + 1) + 8)
             if (hour >= 8 || hour <= 22) {
                 this.runRandomJob(hour)
