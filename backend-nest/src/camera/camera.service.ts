@@ -124,6 +124,26 @@ export class CameraService {
     return this.cameraTypeRepository.delete(cameraType);
   }
 
+
+  getRandomNumber = (totalResult:number)=>{
+    return Math.floor(Math.random() * (totalResult) + 1);
+  }
+
+ async getRandomActiveCamera () :Promise<Camera> {
+
+   const totalResult = await this.cameraRepository.count()
+    let camera
+   while(true){
+     camera =await this.cameraRepository.findOne({
+       where : [{id:this.getRandomNumber(totalResult), state:1}]
+     })
+     if(camera){
+       break;
+     }
+   }
+   return camera
+  }
+
   async countStateCamera() {
     const inactive = await this.cameraRepository.count({
       where: [{ state: 0 }], 

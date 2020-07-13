@@ -8,5 +8,7 @@ export class AppConfig {
     public static emailPassword     = 'gmail password';
     public static emailService      = 'gmail';
     public static emailSubject      = 'CDfsd';
+    public static instagramUsername = 'sd'
+    public static instagramPassword = ''
 
 }
