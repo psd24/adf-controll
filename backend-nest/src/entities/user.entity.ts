@@ -1,10 +1,20 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, ManyToOne, ManyToMany, BeforeUpdate } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  BeforeInsert,
+  ManyToOne,
+  ManyToMany,
+  BeforeUpdate,
+  OneToMany
+} from "typeorm";
 
 import { Exclude } from 'class-transformer';
 import { hash } from "bcryptjs";
 import { Role } from "./role.entity";
 import { Organization } from "./organization.entity";
 import { UserEvent } from "./user-event.entity";
+import {Camera} from "./camera.entity";
 
 @Entity({ name: 'user' })
 export class User {
@@ -32,6 +42,9 @@ export class User {
 
   @ManyToMany(() => UserEvent, event => event.users)
   events: UserEvent[];
+
+  @OneToMany(() => Camera, camera => camera.mainUser)
+  camera: Camera[];
 
   @Column()
   @Exclude()

@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { Organization } from './organization.entity';
 import { CameraType } from './camera-type.entity';
+import {User} from "./user.entity";
 
 @Entity('camera')
 export class Camera {
@@ -50,6 +51,11 @@ export class Camera {
   @ManyToOne( () => CameraType, cameraType => cameraType.camera)
   @JoinTable()
   cameraType: CameraType;
+
+
+  @ManyToOne( () => User, user => user.camera)
+  @JoinTable()
+  mainUser: User;
 
   @BeforeInsert()
   preProcess() {

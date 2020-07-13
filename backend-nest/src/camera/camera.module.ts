@@ -5,11 +5,13 @@ import { Camera } from '../entities/camera.entity';
 import { CameraType } from '../entities/camera-type.entity';
 import { Organization } from '../entities/organization.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import {UsersModule} from "../users/users.module";
+import {User} from "../entities/user.entity";
 
 @Module({
   providers: [CameraService],
   imports: [
-    TypeOrmModule.forFeature([Camera, CameraType, Organization])
+    TypeOrmModule.forFeature([Camera, CameraType, Organization, User])
   ],
   controllers: [CameraController],
   exports:[CameraService]

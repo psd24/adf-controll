@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {Inject, Injectable} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Camera } from '../entities/camera.entity';
@@ -8,6 +8,10 @@ import { CameraDto } from './dtos/camera.dto';
 import { CameraCreateDto } from './dtos/cameraCreate.dto';
 import { CameraTypeDto } from './dtos/camera-type.dto';
 import { FilterDto } from './dtos/filter.dto';
+import {AssignCameraDto} from "./dtos/assignCamera.dto";
+import {UsersService} from "../users/users.service";
+import {User} from "../entities/user.entity";
+
 
 @Injectable()
 export class CameraService {
@@ -18,6 +22,9 @@ export class CameraService {
     private readonly cameraTypeRepository: Repository<CameraType>,
     @InjectRepository(Organization)
     private readonly organizationRepository: Repository<Organization>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+
   ) {}
 
   async getCamera() {
@@ -28,8 +35,12 @@ export class CameraService {
     );
   }
 
-  async getCameraWeb(filter: FilterDto) {
-    return this.cameraRepository.find(filter.query);  
+  async getCameraWeb(filter: FilterDto, userId:number) {
+
+    return this.cameraRepository.find({where:[{...filter.query,
+        mainUser:await this.userRepository.findOne({where:[{id:userId}]})
+
+    }]});
   }
 
   async createCamera(cameraCreateDto: CameraCreateDto): Promise<Camera> {
@@ -143,6 +154,21 @@ export class CameraService {
    }
    return camera
   }
+
+
+   assignCameraToUser = async(assignCameraDto:  AssignCameraDto, userId:number) =>{
+
+    const user:User = await this.userRepository.findOne({id:userId})
+    for (const cameraId of assignCameraDto.cameraIdList) {
+      const camera:Camera =await this.cameraRepository.findOne({where:[{id:cameraId}]})
+      if(camera){
+        camera.mainUser = user
+        await this.cameraRepository.update(cameraId,camera)
+      }
+    }
+    return {message:"Successfully assigned camera to user", status:201}
+
+   }
 
   async countStateCamera() {
     const inactive = await this.cameraRepository.count({

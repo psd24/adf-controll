@@ -6,7 +6,7 @@ import {
   Body,
   Param,
   Put,
-  Delete,
+  Delete, Inject,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
@@ -17,11 +17,14 @@ import { CameraDto } from './dtos/camera.dto';
 import { CameraCreateDto } from './dtos/cameraCreate.dto';
 import { CameraTypeDto } from './dtos/camera-type.dto';
 import { FilterDto } from './dtos/filter.dto';
+import {AssignCameraDto} from "./dtos/assignCamera.dto";
+import { Request } from 'express';
+import {REQUEST} from "@nestjs/core";
 
 @ApiTags('Authentication')
 @Controller('camera')
 export class CameraController {
-  constructor(private cameraService: CameraService) {}
+  constructor(private cameraService: CameraService,@Inject(REQUEST) private readonly request: Request) {}
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
@@ -34,7 +37,18 @@ export class CameraController {
   @UseGuards(JwtAuthGuard)
   @Post('web')
   async getCameraWeb(@Body() filter: FilterDto) {
-    return this.cameraService.getCameraWeb(filter);
+    // @ts-ignore
+    return this.cameraService.getCameraWeb(filter, this.request.user.id);
+  }
+
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Post('assignCamera')
+  async assignCameraToUser(@Body() assignCameraDto: AssignCameraDto) {
+    // @ts-ignore
+   return await this.cameraService.assignCameraToUser(assignCameraDto,this.request.user.id)
+
   }
 
   @ApiBearerAuth()
