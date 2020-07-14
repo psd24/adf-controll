@@ -5,7 +5,11 @@ export class AssignCameraDto {
 
     @ApiProperty({required:true, type:[Number]})
     @IsArray()
-    cameraIdList:number[]
+    assignCameraIdList:number[]
+
+    @ApiProperty({required:true, type:[Number]})
+    @IsArray()
+    unAssignCameraIdList:number[]
 
 
 }

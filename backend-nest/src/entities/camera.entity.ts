@@ -53,10 +53,6 @@ export class Camera {
   cameraType: CameraType;
 
 
-  @ManyToOne( () => User, user => user.camera)
-  @JoinTable()
-  mainUser: User;
-
   @BeforeInsert()
   preProcess() {
     //console.log(this.cameraType);

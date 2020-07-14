@@ -15,6 +15,7 @@ import { Role } from "./role.entity";
 import { Organization } from "./organization.entity";
 import { UserEvent } from "./user-event.entity";
 import {Camera} from "./camera.entity";
+import {CameraUser} from "./cameraUser.entity";
 
 @Entity({ name: 'user' })
 export class User {
@@ -42,9 +43,6 @@ export class User {
 
   @ManyToMany(() => UserEvent, event => event.users)
   events: UserEvent[];
-
-  @OneToMany(() => Camera, camera => camera.mainUser)
-  camera: Camera[];
 
   @Column()
   @Exclude()
