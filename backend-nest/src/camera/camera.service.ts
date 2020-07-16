@@ -38,28 +38,52 @@ export class CameraService {
         );
     }
 
+
+     getFilterQuery = async (filter: FilterDto, userId: number) => {
+        if(filter.name && (filter.state>=0 || filter.state <=2)){
+            return  await this.cameraUserRepository.createQueryBuilder('cameraUser')
+                .innerJoinAndSelect('cameraUser.camera', 'camera')
+                .innerJoinAndSelect('cameraUser.organization', 'organization')
+                .innerJoinAndSelect('cameraUser.cameraType', 'cameraType')
+                .innerJoin('cameraUser.user', 'user')
+                .where('camera.state = :state and camera.name = :name and user.id = :userId',
+                    { state: filter.state, name:filter.name,userId:userId })
+                .getManyAndCount();
+        }else if(filter.name){
+            return  await this.cameraUserRepository.createQueryBuilder('cameraUser')
+                .innerJoinAndSelect('cameraUser.camera', 'camera')
+                .innerJoinAndSelect('cameraUser.organization', 'organization')
+                .innerJoinAndSelect('cameraUser.cameraType', 'cameraType')
+                .innerJoin('cameraUser.user', 'user')
+                .where('camera.name = :name and user.id = :userId',
+                    { name:filter.name,userId:userId })
+                .getManyAndCount();
+        }else if(filter.state>=0 || filter.state <=2 ){
+            return  await this.cameraUserRepository.createQueryBuilder('cameraUser')
+                .innerJoinAndSelect('cameraUser.camera', 'camera')
+                .innerJoinAndSelect('cameraUser.organization', 'organization')
+                .innerJoinAndSelect('cameraUser.cameraType', 'cameraType')
+                .innerJoin('cameraUser.user', 'user')
+                .where('camera.state = :state and user.id = :userId',
+                    { state: filter.state,userId:userId })
+                .getManyAndCount();
+        }else {
+            return  await this.cameraUserRepository.createQueryBuilder('cameraUser')
+                .innerJoinAndSelect('cameraUser.camera', 'camera')
+                .innerJoinAndSelect('cameraUser.organization', 'organization')
+                .innerJoinAndSelect('cameraUser.cameraType', 'cameraType')
+                .innerJoin('cameraUser.user', 'user')
+                .where('user.id = :userId',
+                    { userId:userId })
+                .getManyAndCount();
+        }
+
+}
+
+
     async getCameraWeb(filter: FilterDto, userId: number) {
 
-    return this.cameraRepository.find({where:[{...filter.query}]});
-
-
-
-        // const cameraList = await this.cameraUserRepository.find({
-        //     where: [{
-        //         camera: {
-        //             ...filter.query
-        //         },
-        //         user: await this.userRepository.findOne({where:[{id:userId}]})}],
-        //     join:{
-        //         alias:'cameraUser',
-        //         leftJoinAndSelect:{
-        //             "camera":"cameraUser.camera"
-        //         }
-        //     }
-        // })
-
-
-        // return cameraList
+        return await this.getFilterQuery(filter,userId)
   }
 
     async createCamera(cameraCreateDto: CameraCreateDto): Promise<Camera> {
@@ -193,18 +217,22 @@ export class CameraService {
             ]})
     }
 
-    assignCameraToUser = async (assignCameraDto: AssignCameraDto, userId: number) => {
+    assignCameraToUser = async (assignCameraDto: AssignCameraDto) => {
 
-        const user: User = await this.getUserById(userId)
+        const user: User = await this.getUserById(assignCameraDto.userId)
         for (const cameraId of assignCameraDto.assignCameraIdList) {
             const camera: Camera = await this.getCameraId(cameraId)
             if (camera) {
+                const cameraType:CameraType = await this.cameraTypeRepository.findOne({where:[{id:camera.cameraType.id}]})
+                const organization:Organization = await this.organizationRepository.findOne({where:[{id:camera.organization.id}]})
                 let cameraUser = await this.getCameraUser(user,camera)
                 if (!cameraUser) {
                     cameraUser = new CameraUser()
                 }
                 cameraUser.camera = camera
                 cameraUser.user = user
+                cameraUser.organization = organization
+                cameraUser.cameraType = cameraType
               await this.cameraUserRepository.save(cameraUser)
             }
         }

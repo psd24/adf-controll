@@ -47,7 +47,7 @@ export class CameraController {
   @Post('assignCamera')
   async assignCameraToUser(@Body() assignCameraDto: AssignCameraDto) {
     // @ts-ignore
-   return await this.cameraService.assignCameraToUser(assignCameraDto,this.request.user.id)
+   return await this.cameraService.assignCameraToUser(assignCameraDto)
 
   }
 

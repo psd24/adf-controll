@@ -16,6 +16,7 @@ import { Organization } from "./organization.entity";
 import { UserEvent } from "./user-event.entity";
 import {Camera} from "./camera.entity";
 import {User} from "./user.entity";
+import {CameraType} from "./camera-type.entity";
 
 @Entity({ name: 'CameraUser' })
 export class CameraUser {
@@ -29,5 +30,11 @@ export class CameraUser {
 
     @ManyToOne(() => User)
     user: User;
+
+    @ManyToOne(() => Organization)
+    organization:Organization
+
+    @ManyToOne(() => CameraType)
+    cameraType:CameraType
 
 }

@@ -11,5 +11,8 @@ export class AssignCameraDto {
     @IsArray()
     unAssignCameraIdList:number[]
 
+    @ApiProperty({required:true})
+    @IsNumber()
+    userId:number
 
 }
