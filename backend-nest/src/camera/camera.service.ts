@@ -8,6 +8,7 @@ import {CameraDto} from './dtos/camera.dto';
 import {CameraCreateDto} from './dtos/cameraCreate.dto';
 import {CameraTypeDto} from './dtos/camera-type.dto';
 import {FilterDto} from './dtos/filter.dto';
+import {FilterWebDto} from './dtos/filter-web.dto';
 import {AssignCameraDto} from "./dtos/assignCamera.dto";
 import {UsersService} from "../users/users.service";
 import {User} from "../entities/user.entity";
@@ -81,10 +82,14 @@ export class CameraService {
 }
 
 
-    async getCameraWeb(filter: FilterDto, userId: number) {
+    async getCameraUserWeb(filter: FilterDto, userId: number) {
 
         return await this.getFilterQuery(filter,userId)
-  }
+    }
+
+    async getCameraWeb(filterWeb: FilterWebDto) {
+        return this.cameraRepository.find(filterWeb.query);  
+    }
 
     async createCamera(cameraCreateDto: CameraCreateDto): Promise<Camera> {
         let url;

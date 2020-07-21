@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   public cameras;
   public currentUser: UserModel;
   mapLeaflet: L.Map;
+  allImages: any = [];
   query: any;
   markers = []
   optionsLeaflet = {
@@ -59,9 +60,29 @@ export class HomeComponent implements OnInit {
         const markers: Marker[] = [];
         this.cameras = camera;
         console.log(this.cameras)
+    
         this.cameras.forEach((camera) => {
           if (camera.lat && camera.lon) {
-            const popup = L.popup({ maxWidth: 300 }).setLatLng([camera.lat, camera.lon]).setContent("<img style='width:300px' src='" + camera.url + "'>")
+          const index = this.cameras.findIndex(camera2 => {
+            console.log(camera2)
+            camera.lat === camera2.lat || camera.lon === camera2.lon
+          })
+          if(index > -1) {
+            this.allImages.push(camera)
+          }
+          console.log(this.allImages)
+          //actully u can do one things u can do grouping of images with one lat long 
+            const popup = L.popup({ maxWidth: 300 }).setLatLng([camera.lat, camera.lon]).setContent(`
+            <div class="row" *ngIf = "allImage.length > 1">    
+              <ul>    
+                <li *ngFor="let img of allImages">       
+                    <img  style='width:300px' src='" + ${camera.url} + "'>    
+                  </a>    
+                </li>    
+              </ul>    
+            </div> 
+            <img *ngIf = "allImage.length === 1" style='width:300px' src='" + ${camera.url} + "'>
+           `)
             const m = marker([camera.lat, camera.lon], {
               icon: icon({
                 iconSize: [35, 51],

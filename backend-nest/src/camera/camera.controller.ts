@@ -17,6 +17,7 @@ import { CameraDto } from './dtos/camera.dto';
 import { CameraCreateDto } from './dtos/cameraCreate.dto';
 import { CameraTypeDto } from './dtos/camera-type.dto';
 import { FilterDto } from './dtos/filter.dto';
+import { FilterWebDto } from './dtos/filter-web.dto';
 import {AssignCameraDto} from "./dtos/assignCamera.dto";
 import { Request } from 'express';
 import {REQUEST} from "@nestjs/core";
@@ -35,10 +36,17 @@ export class CameraController {
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Post('web')
-  async getCameraWeb(@Body() filter: FilterDto) {
+  @Post('user/web')
+  async getCameraUserWeb(@Body() filter: FilterDto) {
     // @ts-ignore
-    return this.cameraService.getCameraWeb(filter, this.request.user.id);
+    return this.cameraService.getCameraUserWeb(filter, this.request.user.id);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Post('web')
+  async getCameraWeb(@Body() FilterWeb: FilterWebDto) {
+    return this.cameraService.getCameraWeb(FilterWeb);
   }
 
 

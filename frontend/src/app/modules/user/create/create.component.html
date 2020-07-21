@@ -63,22 +63,25 @@
             <button *ngIf="user && user.id" class="btn btn-danger mt-4 ml-4" (click)="deleteUser(user.id)">Eliminar
                 usuari</button>
         </tab>
+
+
+        
         <tab heading="Cameras" id="tab1">
             <div class="mt-4 ml-4">
-                <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" value="all" id="defaultCheck1">
+                <!-- <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" value="all" id="defaultCheck1" (change)="checkAllCamera($event)">
                     <label class="form-check-label" for="defaultCheck1">
-                        <strong>Totes</strong>
+                        <strong>All</strong>
                     </label>
-                </div>
-                <div class="form-check mb-2" *ngFor="let camera of cameras">
-                    <input class="form-check-input" type="checkbox" value="{{camera.id}}" id="defaultCheck1">
-                    <label class="form-check-label" for="defaultCheck1">
+                </div> -->
+                <div class="form-check mb-2" *ngFor="let i = index ; let camera of cameras">
+                    <input class="form-check-input"  type="checkbox" value="{{camera.id}}" (change)="checkedDevice(camera, $event)">
+                    <label class="form-check-label">
                         {{camera.name}}
                     </label>
                 </div>
                 <div class="mt-4">
-                    <button type="button" class="btn btn-success">Guardar</button>
+                    <button type="button" class="btn btn-success" (click)="sendUserCamera()">Guardar</button>
                 </div>
             </div>
         </tab>

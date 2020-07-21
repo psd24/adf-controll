@@ -94,4 +94,15 @@ export class CamerasService {
         );
     }
 
+    assignUserCamera(params): Observable<any> {
+        return this.http.post(this.backendUrl + '/camera/assignCamera', params).pipe(
+            map(res => {
+                return res;
+            }),
+            catchError(error => {
+                return throwError(error.error)
+            })
+        );
+    }
+
 }

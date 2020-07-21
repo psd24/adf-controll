@@ -9,6 +9,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CamerasService } from '../../../services/cameras.service';
 import { CameraModel } from '../../../models/camera.model';
+import { CameraListModel } from '../../../models/camera-list.model';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-create',
@@ -20,9 +22,13 @@ export class CreateComponent implements OnInit {
   roles: RoleModel;
   organizations: OrganizationModel;
   formCreateUser: FormGroup;
+  formUserCamera: FormGroup;
   userId: String;
   user: UserModel;
-  cameras: CameraModel;
+  cameras: CameraModel[];
+  cameraList: any[] = [];
+  unAssignList: any[] = [];
+  cameraUser: any;
 
   constructor(
     private router: Router,
@@ -36,8 +42,8 @@ export class CreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.route.snapshot.paramMap.get('id');
-    this.roleService.index().subscribe((role:RoleModel) => this.roles = role);
-    this.organizationService.index().subscribe((organization:OrganizationModel) => this.organizations = organization);
+    this.roleService.index().subscribe((role: RoleModel) => this.roles = role);
+    this.organizationService.index().subscribe((organization: OrganizationModel) => this.organizations = organization);
 
     this.formCreateUser = this.formBuilder.group({
       id: [''],
@@ -50,7 +56,7 @@ export class CreateComponent implements OnInit {
       role: ['', [Validators.required, Validators.minLength(2)]],
       authorizeConnection: ['']
     });
-    if(this.userId) {
+    if (this.userId) {
       this.usersService.view(this.userId).subscribe(
         (user: UserModel) => {
           this.user = user;
@@ -67,7 +73,7 @@ export class CreateComponent implements OnInit {
       );
     }
     this.camerasService.index({ "relations": ["organization", "cameraType"], "where": [{ "state": 1 }] }).subscribe(
-      (cameras:CameraModel) => {
+      (cameras: CameraModel[]) => {
         this.cameras = cameras
       },
       (error) => {
@@ -77,13 +83,13 @@ export class CreateComponent implements OnInit {
   }
 
   generatePassword() {
-    const pass = Math.random().toString(36).slice(3); 
+    const pass = Math.random().toString(36).slice(3);
     this.formCreateUser.controls['password'].setValue(pass);
   }
 
   submitForm() {
-    if(this.userId) {
-      if(!this.formCreateUser.controls['password'].value) this.formCreateUser.controls['password'].setValue('');
+    if (this.userId) {
+      if (!this.formCreateUser.controls['password'].value) this.formCreateUser.controls['password'].setValue('');
       this.usersService.update(this.formCreateUser.value).subscribe(
         (user: UserModel) => {
           this.router.navigate(['/user'])
@@ -92,7 +98,7 @@ export class CreateComponent implements OnInit {
           console.log(error)
         }
       );
-    }else{
+    } else {
       this.usersService.create(this.formCreateUser.value).subscribe(
         (user: UserModel) => {
           this.router.navigate(['/user'])
@@ -115,4 +121,61 @@ export class CreateComponent implements OnInit {
     );
   }
 
+  checkAllCamera(ev) {
+    /*if(this.cameraList.length === 0) {
+      this.cameraList = this.cameras;
+      console.log(ev)
+    } else {
+      this.cameraList =  [];
+    }*/
+  }
+
+  checkedDevice(camera, event) {
+    let obj = {
+      assignCameraIdList: [],
+      unAssignCameraIdList: [],
+      userId: Number(this.userId)
+    }
+    if (event.target.checked) {
+      this.unAssignList = [];
+      this.cameraList.push(camera.id);
+      this.cameras.map(x => {
+        const index1 = this.cameraList.findIndex(cmId => x.id === cmId);
+        if (x.id != camera.id && this.cameraList.length !== this.cameras.length) {
+          if (index1 === -1)
+            this.unAssignList.push(x.id);
+        } else if (x.id != camera.id && this.unAssignList.length) {
+
+          const index = this.unAssignList.findIndex(camera.id);
+          if (index > -1) {
+            this.unAssignList = this.unAssignList.splice(index, 1);
+          }
+        }
+      });
+    } else if (!event.target.checked) {
+      const index = this.cameraList.findIndex(x => x == camera.id);
+      console.log(this.cameraList[index])
+      if (index > -1) {
+        this.cameraList = this.cameraList.filter(x => x != camera.id);
+        this.unAssignList.push(camera.id);
+      }
+    }
+    obj.assignCameraIdList = this.cameraList;
+    obj.unAssignCameraIdList = [...this.unAssignList];
+    this.cameraUser = obj;
+    console.log(obj)
+  }
+
+  sendUserCamera() {
+    console.log(this.cameraUser)
+    this.camerasService.assignUserCamera(this.cameraUser).subscribe(
+      res => {
+        console.log(res)
+      },
+      error => {
+        console.log(error)
+      }
+    );
+    console.log('send')
+  }
 }
