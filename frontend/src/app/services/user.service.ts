@@ -137,4 +137,15 @@ export class UserService {
           })
         );
       }
+
+      userCamera(id): Observable<any> {
+        return this.http.get(this.backendUrl + '/camera/user/web/' + id).pipe(
+          map(res => {
+            return res;
+          }),
+          catchError(error => {
+            return throwError(error.error)
+          })
+        );
+      }
 }

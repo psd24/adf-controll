@@ -87,6 +87,16 @@ export class CameraService {
         return await this.getFilterQuery(filter,userId)
     }
 
+    async getCameraUserWebId(userId: number) {
+        return  this.cameraUserRepository.createQueryBuilder('cameraUser')
+                .innerJoinAndSelect('cameraUser.camera', 'camera')
+                .innerJoinAndSelect('cameraUser.organization', 'organization')
+                .innerJoinAndSelect('cameraUser.cameraType', 'cameraType')
+                .innerJoin('cameraUser.user', 'user')
+                .where('user.id = :userId',
+                    { userId:userId }).getManyAndCount()
+    }
+
     async getCameraWeb(filterWeb: FilterWebDto) {
         return this.cameraRepository.find(filterWeb.query);  
     }

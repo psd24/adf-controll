@@ -5,7 +5,7 @@ import { RoleService } from '../../../services/role.service';
 import { RoleModel } from '../../../models/role.model';
 import { OrganizationService } from '../../../services/organization.service';
 import { OrganizationModel } from '../../../models/organization.model';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CamerasService } from '../../../services/cameras.service';
 import { CameraModel } from '../../../models/camera.model';
@@ -29,6 +29,8 @@ export class CreateComponent implements OnInit {
   cameraList: any[] = [];
   unAssignList: any[] = [];
   cameraUser: any;
+  // cameraCheckList: FormControl = new FormControl();
+  cameraCheckList: any[] = [];
 
   constructor(
     private router: Router,
@@ -42,6 +44,7 @@ export class CreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.route.snapshot.paramMap.get('id');
+
     this.roleService.index().subscribe((role: RoleModel) => this.roles = role);
     this.organizationService.index().subscribe((organization: OrganizationModel) => this.organizations = organization);
 
@@ -69,6 +72,24 @@ export class CreateComponent implements OnInit {
           this.formCreateUser.controls['role'].setValue(this.user.role.id);
           this.formCreateUser.controls['refresh_camera'].setValue(this.user.refresh_camera);
           this.formCreateUser.controls['authorizeConnection'].setValue(this.user.authorizeConnection);
+        }
+      );
+    }
+    if (this.userId) {
+      this.usersService.userCamera(this.userId).subscribe(
+        res => {
+          console.log(res)
+          this.cameraCheckList = (res?.length && res[0]) || [];
+          const ids = [];
+          if (res[0]?.length) {
+            res[0].map(data => {
+              ids.push(data?.camera.id);
+            });
+            this.cameraList = [...ids];
+          }
+        },
+        error => {
+          console.log(error)
         }
       );
     }
@@ -177,5 +198,12 @@ export class CreateComponent implements OnInit {
       }
     );
     console.log('send')
+  }
+  isCheck(id) {
+    if (this.cameraCheckList.length) {
+      console.log(this.cameraCheckList)
+      return this.cameraCheckList.findIndex(x => x?.camera?.id == id) > -1;
+    }
+    return false;
   }
 }

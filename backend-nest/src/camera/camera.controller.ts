@@ -44,6 +44,13 @@ export class CameraController {
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @Get('user/web/:id')
+  async getCameraUserWebId(@Param() params) {
+    return this.cameraService.getCameraUserWebId(params.id);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Post('web')
   async getCameraWeb(@Body() FilterWeb: FilterWebDto) {
     return this.cameraService.getCameraWeb(FilterWeb);
