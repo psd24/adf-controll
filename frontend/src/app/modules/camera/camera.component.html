@@ -26,11 +26,41 @@
       </ul>
     </form>
   </div>
-  <div class="row">
+  <div *ngIf="user.role.name != 'superadmin' && user.role.name != 'admin'" class="row">
     <div class="alert alert-primary w-100 text-center" role="alert" *ngIf="cameras?.length === 0">
       <span class=""> No hi ha càmeres per mostrar</span>
     </div>
     <div class="col-sm-3" *ngFor="let camera of cameras">
+      <div class="card mb-3">
+        <img class="card-img-top img-fluid" src="{{camera.camera.url}}&time={{timeStamp}}"
+          (click)="openGallery(camera.camera.url)" alt="{{camera.camera.name}}" fallimg>
+        <div class="card-body">
+          <div class="row">
+            <div class="col ">
+              <h5 class="card-title">{{camera.camera.name}}</h5>
+            </div>
+            <div class="col text-right">
+              <span *ngIf="camera.camera.lat && camera.camera.lon" class="float-sm-right"><a
+                  [routerLink]="['/camera/info',camera.camera.id]"><i
+                    class="fas fa-info-circle fa-lg ml-3 "></i></a></span>
+              <span *ngIf="user && user.role.name === 'superadmin' || user && user.role.name === 'admin'"
+                class="float-sm-right"><i class="fas fa-edit fa-lg" aria-hidden="true"
+                  (click)="updateCamera(camera.camera.id)"></i></span>
+              <span *ngIf="camera.camera.state === 2"><i class="fas fa-exclamation-triangle text-warning fa-lg mr-3"
+                  tooltip="Camara pendent d'activar"></i></span>
+              <span *ngIf="camera.camera.state === 0"><i class="fas fa-exclamation-circle text-danger fa-lg mr-3"
+                  tooltip="Camara inactiva"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="user.role.name === 'superadmin' || user.role.name === 'admin'" class="row">
+    <div class="alert alert-primary w-100 text-center" role="alert" *ngIf="cameras?.length === 0">
+      <span class=""> No hi ha càmeres per mostrar</span>
+    </div>
+    <div *ngFor="let camera of cameras" class="col-sm-3">
       <div class="card mb-3">
         <img class="card-img-top img-fluid" src="{{camera.url}}&time={{timeStamp}}" (click)="openGallery(camera.url)"
           alt="{{camera.name}}" fallimg>
@@ -45,8 +75,10 @@
               <span *ngIf="user && user.role.name === 'superadmin' || user && user.role.name === 'admin'"
                 class="float-sm-right"><i class="fas fa-edit fa-lg" aria-hidden="true"
                   (click)="updateCamera(camera.id)"></i></span>
-              <span *ngIf="camera.state === 2"><i class="fas fa-exclamation-triangle text-warning fa-lg mr-3" tooltip="Camara pendent d'activar"></i></span>
-              <span *ngIf="camera.state === 0"><i class="fas fa-exclamation-circle text-danger fa-lg mr-3" tooltip="Camara inactiva"></i></span>
+              <span *ngIf="camera.state === 2"><i class="fas fa-exclamation-triangle text-warning fa-lg mr-3"
+                  tooltip="Camara pendent d'activar"></i></span>
+              <span *ngIf="camera.state === 0"><i class="fas fa-exclamation-circle text-danger fa-lg mr-3"
+                  tooltip="Camara inactiva"></i></span>
             </div>
           </div>
         </div>

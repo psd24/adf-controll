@@ -20,7 +20,7 @@ export class CameraComponent implements OnInit {
   @ViewChild('gallery', { static: true }) gallery: NgxGalleryComponent;
   modalRef: BsModalRef;
 
-  cameras: CameraModel[];
+  cameras: any;
   organizations: OrganizationModel;
   timeStamp;
   subscriptionCamera;
@@ -54,7 +54,6 @@ export class CameraComponent implements OnInit {
   ngOnInit(): void {
     if(this.user.refresh_camera != 0) this.refreshImage = this.user.refresh_camera * 1000;
     else this.refreshImage = 50 * 1000;
-    console.log(this.user)
     this.organizationService.index().subscribe((organization: OrganizationModel) => this.organizations = organization);
     this.formSearchCamera = this.formBuilder.group({
       state: ['3'],
@@ -72,7 +71,38 @@ export class CameraComponent implements OnInit {
   }
 
   getCameras() {
-    console.log(this.user.role.name)
+    if(this.user.role.name === 'superadmin' || this.user.role.name === 'admin') {
+      console.log('ok')
+      if (this.formSearchCamera.controls['state'].value === "3") {
+        this.query = { "relations": ["organization", "cameraType"] };
+      }
+      else if (this.formSearchCamera.controls['state'].value) {
+        this.query = { "relations": ["organization", "cameraType"], "where": [{ "state": this.formSearchCamera.controls['state'].value }] };
+      }
+      else {
+        this.query = { "relations": ["organization", "cameraType"] };
+      }
+      this.camerasService.index(this.query).subscribe(
+        (cameras: CameraModel[]) => {
+          this.cameras = cameras;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }else {
+      const state = this.formSearchCamera.controls['state'].value;
+      this.query = {name: '', state: 1}
+      this.camerasService.cameraUser(this.query).subscribe(
+        (cameras: CameraModel[]) => {
+          this.cameras = cameras[0];
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    /*console.log(this.user.role.name)
     if(this.user.role.name != 'superadmin' && this.user.role.name != 'admin') {
       this.query = { "relations": ["organization", "cameraType"], "where": [{ "state": 1 }] };
     }
@@ -94,7 +124,7 @@ export class CameraComponent implements OnInit {
       (error) => {
         console.log(error);
       }
-    );
+    );*/
   }
 
   updateCamera(cameraId) {

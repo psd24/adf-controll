@@ -68,7 +68,16 @@ export class CameraService {
                 .where('camera.state = :state and user.id = :userId',
                     { state: filter.state,userId:userId })
                 .getManyAndCount();
-        }else {
+        }
+        else if(filter.state === 3 ){
+            return  await this.cameraUserRepository.createQueryBuilder('cameraUser')
+                .innerJoinAndSelect('cameraUser.camera', 'camera')
+                .innerJoinAndSelect('cameraUser.organization', 'organization')
+                .innerJoinAndSelect('cameraUser.cameraType', 'cameraType')
+                .innerJoin('cameraUser.user', 'user')
+                .getManyAndCount();
+        }
+        else {
             return  await this.cameraUserRepository.createQueryBuilder('cameraUser')
                 .innerJoinAndSelect('cameraUser.camera', 'camera')
                 .innerJoinAndSelect('cameraUser.organization', 'organization')

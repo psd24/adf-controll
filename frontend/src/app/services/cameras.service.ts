@@ -105,4 +105,15 @@ export class CamerasService {
         );
     }
 
+    cameraUser(params): Observable<any> {
+        return this.http.post(this.backendUrl + '/camera/user/web', params).pipe(
+            map(res => {
+                return res;
+            }),
+            catchError(error => {
+                return throwError(error.error)
+            })
+        );
+    }
+
 }
