@@ -29,6 +29,7 @@ export class CreateComponent implements OnInit {
   cameraList: any[] = [];
   unAssignList: any[] = [];
   cameraUser: any;
+  toastCreate: boolean = false;
   // cameraCheckList: FormControl = new FormControl();
   cameraCheckList: any[] = [];
 
@@ -78,7 +79,6 @@ export class CreateComponent implements OnInit {
     if (this.userId) {
       this.usersService.userCamera(this.userId).subscribe(
         res => {
-          console.log(res)
           this.cameraCheckList = (res?.length && res[0]) || [];
           const ids = [];
           if (res[0]?.length) {
@@ -175,7 +175,6 @@ export class CreateComponent implements OnInit {
       });
     } else if (!event.target.checked) {
       const index = this.cameraList.findIndex(x => x == camera.id);
-      console.log(this.cameraList[index])
       if (index > -1) {
         this.cameraList = this.cameraList.filter(x => x != camera.id);
         this.unAssignList.push(camera.id);
@@ -184,24 +183,21 @@ export class CreateComponent implements OnInit {
     obj.assignCameraIdList = this.cameraList;
     obj.unAssignCameraIdList = [...this.unAssignList];
     this.cameraUser = obj;
-    console.log(obj)
   }
 
   sendUserCamera() {
     console.log(this.cameraUser)
     this.camerasService.assignUserCamera(this.cameraUser).subscribe(
       res => {
-        console.log(res)
+        this.toastCreate = true;
       },
       error => {
         console.log(error)
       }
     );
-    console.log('send')
   }
   isCheck(id) {
     if (this.cameraCheckList.length) {
-      console.log(this.cameraCheckList)
       return this.cameraCheckList.findIndex(x => x?.camera?.id == id) > -1;
     }
     return false;

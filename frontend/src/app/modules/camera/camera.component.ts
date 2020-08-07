@@ -72,7 +72,6 @@ export class CameraComponent implements OnInit {
 
   getCameras() {
     if(this.user.role.name === 'superadmin' || this.user.role.name === 'admin') {
-      console.log('ok')
       if (this.formSearchCamera.controls['state'].value === "3") {
         this.query = { "relations": ["organization", "cameraType"] };
       }

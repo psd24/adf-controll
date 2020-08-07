@@ -21,7 +21,6 @@ export class RoleComponent implements OnInit {
     this.roleService.index().subscribe(
       (roles: RoleModel) => {
         this.roles = roles
-        console.log(this.roles);
       },
       (error) => {
         console.log(error);

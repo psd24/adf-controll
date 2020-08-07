@@ -52,35 +52,59 @@ export class HomeComponent implements OnInit {
 
     if (this.currentUser.role.name === 'superadmin' || (this.currentUser.role.name === 'admin')) {
       this.query = { "relations": ["organization", "cameraType"] };
+      this.camerasService.index(this.query).subscribe(
+        (camera: CameraModel) => {
+          const markers: Marker[] = [];
+          this.cameras = camera;
+          this.cameras.forEach((camera) => {
+            if (camera.lat && camera.lon) {
+              const popup = L.popup({ maxWidth: 300 }).setLatLng([camera.lat, camera.lon]).setContent("<img style='width:300px' src='" + camera.url + "'>");
+              const m = marker([camera.lat, camera.lon], {
+                icon: icon({
+                  iconSize: [35, 51],
+                  iconAnchor: [13, 41],
+                  iconUrl: '/assets/img/icon-maker.png',
+                  iconRetinaUrl: '/assets/img/icon-maker.png',
+                })
+              }).bindPopup(popup).openPopup();
+              m.addTo(map)
+              markers.push(m)
+              this.mapLeaflet.fitBounds(markers.map(i => [i.getLatLng().lat, i.getLatLng().lng]))
+            }
+          });
+        },
+        (error) => {
+          console.log(error)
+        }
+      );
     } else {
-      this.query = { "relations": ["organization", "cameraType"], "where": [{ "state": 1 }] }
+      this.query = {name: '', state: 1}
+      this.camerasService.cameraUser(this.query).subscribe(
+        (cameras: CameraModel[]) => {
+          const markers: Marker[] = [];
+          this.cameras = cameras[0];
+          this.cameras.forEach((camera) => {
+            if (camera.camera.lat && camera.camera.lon) {
+              const popup = L.popup({ maxWidth: 300 }).setLatLng([camera.camera.lat, camera.camera.lon]).setContent("<img style='width:300px' src='" + camera.camera.url + "'>");
+              const m = marker([camera.camera.lat, camera.camera.lon], {
+                icon: icon({
+                  iconSize: [35, 51],
+                  iconAnchor: [13, 41],
+                  iconUrl: '/assets/img/icon-maker.png',
+                  iconRetinaUrl: '/assets/img/icon-maker.png',
+                })
+              }).bindPopup(popup).openPopup();
+              m.addTo(map)
+              markers.push(m)
+              this.mapLeaflet.fitBounds(markers.map(i => [i.getLatLng().lat, i.getLatLng().lng]))
+            }
+          });
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
-    this.camerasService.index(this.query).subscribe(
-      (camera: CameraModel) => {
-        const markers: Marker[] = [];
-        this.cameras = camera;
-    
-        this.cameras.forEach((camera) => {
-          if (camera.lat && camera.lon) {
-            const popup = L.popup({ maxWidth: 300 }).setLatLng([camera.lat, camera.lon]).setContent("<img style='width:300px' src='" + camera.url + "'>");
-            const m = marker([camera.lat, camera.lon], {
-              icon: icon({
-                iconSize: [35, 51],
-                iconAnchor: [13, 41],
-                iconUrl: '/assets/img/icon-maker.png',
-                iconRetinaUrl: '/assets/img/icon-maker.png',
-              })
-            }).bindPopup(popup).openPopup();
-            m.addTo(map)
-            markers.push(m)
-            this.mapLeaflet.fitBounds(markers.map(i => [i.getLatLng().lat, i.getLatLng().lng]))
-          }
-        });
-      },
-      (error) => {
-        console.log(error)
-      }
-    );
   }
 
   ngOnInit() {
