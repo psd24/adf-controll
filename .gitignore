@@ -2,3 +2,4 @@ backend/ormconfig.json
 app/src/app/app.config.ts
 backend-nest/src/app.config.ts
 backend-nest/dist
+frontend/src/favicon_old.ico
