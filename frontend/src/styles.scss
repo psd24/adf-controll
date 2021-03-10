@@ -1,0 +1,49 @@
+/*! `Custom` Bootstrap 4 theme */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
+$headings-font-family: 'Roboto Condensed';
+
+$enable-grid-classes: false;
+$primary: #3EA029;
+$secondary: #F6B400;
+// $success: #6d1896;
+// $danger: #dc3545;
+// $info: #bf4bf8;
+// $warning: #;
+$light: #F6B400;
+$dark: #3EA029;
+
+$enable-responsive-font-sizes: true;
+$border-color: #F6B400;
+$card-border-color: #3EA029;
+@import "node_modules/bootstrap/scss/bootstrap";
+
+// h5 {
+//   font-family: "Raleway";
+//   font-style: italic;
+//   font-size: 0.85rem;
+//   font-weight: 800;
+// }
+
+// Add SASS theme customizations here..
+html {
+  font-size: 0.8rem;
+}
+
+@include media-breakpoint-up(sm) {
+  html {
+    font-size: 0.9rem;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  html {
+    font-size: 0.9rem;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  html {
+    font-size: 1rem;
+  }
+}
