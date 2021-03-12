@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   //apiUrl : 'https://guaitacat.gq'
-  apiUrl : 'http://localhost:3000'
+  // apiUrl : 'http://localhost:3000'
+  apiUrl: 'http://185.254.205.14:3000'
 };
 
 /*

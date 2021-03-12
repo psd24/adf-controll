@@ -32,7 +32,7 @@
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.css",
-              "src/styles.css",
+              "src/styles.scss",
               "./node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": [
@@ -108,7 +108,7 @@
               "src/manifest.webmanifest"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
           }
@@ -144,5 +144,10 @@
   "defaultProject": "frontend",
   "cli": {
     "analytics": "8298fb1d-628b-412e-8fdd-9388b05b5c0f"
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleExt": "scss"
+    }
   }
 }
